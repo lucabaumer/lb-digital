@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="9" fill="#1D4ED8"/>
+  <!-- L -->
+  <rect x="7"  y="10" width="4" height="20" fill="white"/>
+  <rect x="7"  y="26" width="11" height="4" fill="white"/>
+  <!-- B -->
+  <rect x="20" y="10" width="4" height="20" fill="white"/>
+  <path d="M20,10 H24 Q34,14.5 24,19 H20 Z" fill="white"/>
+  <path d="M20,19 H24 Q36,24.5 24,30 H20 Z" fill="white"/>
+</svg>

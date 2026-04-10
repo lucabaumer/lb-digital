@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "title": "LB Digital – Webdesign Agentur Freiburg",
+    "description": "Professionelles Webdesign und SEO aus Freiburg. Individuelle Next.js-Websites, die bei Google gefunden werden und Kunden überzeugen. Kein Template, kein Baukasten."
+  },
+  "nav": {
+    "links": [
+      { "label": "Leistungen", "href": "#leistungen" },
+      { "label": "Über uns", "href": "#ueber-uns" },
+      { "label": "FAQ", "href": "#faq" },
+      { "label": "Kontakt", "href": "#kontakt" }
+    ],
+    "cta": "Kostenloses Gespräch"
+  },
+  "hero": {
+    "eyebrow": "Webagentur · Freiburg im Breisgau",
+    "headline_line1": "Ihre Vision,",
+    "headline_line2": "unsere digitale Exzellenz.",
+    "subheadline": "Maßgeschneidertes Webdesign für Ihr Unternehmen,",
+    "body": "Weil Mittelmäßigkeit keine Option ist.",
+    "cta_primary": "Kostenloses Gespräch",
+    "cta_secondary": "Mehr erfahren",
+    "pillars": ["Webdesign", "SEO", "Next.js", "Freiburg"]
+  },
+  "services": [
+    {
+      "id": "webdesign",
+      "eyebrow": "Leistung 01",
+      "title": "Webdesign & Entwicklung",
+      "description": "Keine Templates. Keine Baukästen. Jede Website wird von Grund auf für Ihr Unternehmen entworfen — mit durchdachtem Layout, starker Typografie und einer Nutzererfahrung, die Vertrauen schafft.",
+      "tags": ["Next.js", "TypeScript", "Mobile-First", "Responsive"]
+    },
+    {
+      "id": "branding",
+      "eyebrow": "Leistung 02",
+      "title": "Logo & Branding",
+      "description": "Ihr Logo ist das Erste, was Kunden sehen — und das Letzte, was sie vergessen. Wir gestalten Logos und visuelle Identitäten, die zu Ihrem Unternehmen passen, professionell wirken und auf jeder Fläche funktionieren.",
+      "tags": ["Logo Design", "Corporate Identity", "Farben & Schriften", "SVG & PNG"]
+    },
+    {
+      "id": "seo",
+      "eyebrow": "Leistung 03",
+      "title": "SEO & lokale Sichtbarkeit",
+      "description": "Damit Ihre Kunden Sie bei Google finden, bevor sie zur Konkurrenz gehen. Technisches SEO, lokale Optimierung und strukturierte Daten — alles aus einer Hand.",
+      "tags": ["Local SEO", "On-Page SEO", "Google My Business", "Schema.org"]
+    }
+  ],
+  "about": {
+    "eyebrow": "Warum LB Digital",
+    "headline": "Weniger Agentur. Mehr Partner.",
+    "body": "Kein anonymes Großstudio, kein Offshore-Team. Sie arbeiten direkt mit uns — einer kleinen, spezialisierten Einheit aus Freiburg, die weiß, was mittelständische Unternehmen wirklich brauchen.",
+    "usps": [
+      {
+        "number": "01",
+        "title": "Direkte Kommunikation",
+        "description": "Kein Projektmanager als Puffer. Sie sprechen direkt mit dem Entwickler — schnelle Entscheidungen, keine Missverständnisse."
+      },
+      {
+        "number": "02",
+        "title": "Kein Template",
+        "description": "Jede Website wird von Grund auf neu gebaut. Das kostet mehr Aufwand, macht aber den Unterschied zwischen einer Website und Ihrer Website."
+      },
+      {
+        "number": "03",
+        "title": "Freiburg kennt Freiburg",
+        "description": "Wir wissen, wie der lokale Markt tickt. Regionaler Fokus, persönliche Beratung — und bei Bedarf auch ein Treffen vor Ort."
+      },
+      {
+        "number": "04",
+        "title": "Technisch erstklassig",
+        "description": "Next.js, Core Web Vitals, sauberer Code — Ihre Website ist nicht nur schön, sondern auch schnell, sicher und wartbar."
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "Ablauf",
+    "headline": "Von der Idee zur fertigen Website.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Kennenlernen",
+        "description": "Kostenloses Erstgespräch. Wir verstehen Ihr Unternehmen, Ihre Zielgruppe und was Sie wirklich brauchen — kein Verkaufsgespräch.",
+        "duration": "1–2 Tage"
+      },
+      {
+        "number": "02",
+        "title": "Konzept & Design",
+        "description": "Maßgeschneidertes Design-Konzept auf Basis Ihrer Marke. Sie geben Feedback, wir feinen ab — bis es wirklich passt.",
+        "duration": "3–5 Tage"
+      },
+      {
+        "number": "03",
+        "title": "Entwicklung",
+        "description": "Technische Umsetzung in Next.js. Schnell, sauber, performant — mit regelmäßigen Updates und direktem Kontakt zu uns.",
+        "duration": "5–10 Tage"
+      },
+      {
+        "number": "04",
+        "title": "Launch & Betreuung",
+        "description": "Go-live und SEO-Setup. Wir bleiben als Partner — für Updates, Fragen und die Weiterentwicklung Ihrer Online-Präsenz.",
+        "duration": "Fortlaufend"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "headline": "Häufig gestellte Fragen",
+    "items": [
+      {
+        "q": "Was kostet eine professionelle Website?",
+        "a": "Eine maßgeschneiderte Website beginnt bei ca. 1.500 € und richtet sich nach Umfang und Anforderungen. Im Erstgespräch erstellen wir ein transparentes Angebot ohne versteckte Kosten."
+      },
+      {
+        "q": "Wie lange dauert die Erstellung?",
+        "a": "Eine Standard-Website ist in der Regel in 2–3 Wochen fertig. Komplexere Projekte planen wir individuell — immer mit einem klaren Zeitplan von Anfang an."
+      },
+      {
+        "q": "Kann ich meine Website danach selbst bearbeiten?",
+        "a": "Ja. Wir bauen auf Wunsch ein CMS ein, über das Sie Texte, Bilder und Inhalte eigenständig pflegen können — ohne Programmierkenntnisse."
+      },
+      {
+        "q": "Was ist der Unterschied zu einem Baukasten wie Jimdo?",
+        "a": "Baukästen liefern generische Templates, die wie tausend andere Seiten aussehen. Wir bauen Ihre Seite von Grund auf — individuell, schneller und technisch überlegen."
+      },
+      {
+        "q": "Übernehmen Sie auch bestehende Websites?",
+        "a": "Ja. Wir analysieren Ihre aktuelle Website kostenlos und zeigen, was sich verbessern lässt — ob Überarbeitung oder kompletter Neuaufbau sinnvoller ist."
+      },
+      {
+        "q": "Arbeiten Sie nur in Freiburg?",
+        "a": "Unser Schwerpunkt liegt in Freiburg und der Region, wir arbeiten aber remote mit Kunden in der gesamten DACH-Region zusammen."
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Nächster Schritt",
+    "headline": "Bereit für Ihre neue Website?",
+    "body": "Kostenloses Erstgespräch — kein Verkaufsdruck, keine Verpflichtung. Wir schauen gemeinsam, was für Ihr Unternehmen sinnvoll ist.",
+    "button": "Jetzt Gespräch vereinbaren"
+  },
+  "footer": {
+    "tagline": "Webdesign & SEO aus Freiburg.",
+    "email": "luca.baumer@web.de",
+    "phone": "01785881195",
+    "copyright": "© 2026 LB Digital"
+  }
+}
