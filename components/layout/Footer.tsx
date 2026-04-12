@@ -19,7 +19,7 @@ export default function Footer() {
               height={120}
               quality={90}
               sizes="(max-width: 768px) 200px, 240px"
-              className="h-32 w-auto mb-4"
+              className="h-16 md:h-20 w-auto mb-4"
             />
             <p className="text-sm leading-relaxed" style={{ color: "#6B7280" }}>
               {footer.tagline}

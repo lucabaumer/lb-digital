@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
-import { useRef, MouseEvent } from "react";
+import { useRef, MouseEvent, useState, useCallback } from "react";
 import Image from "next/image";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -103,6 +103,23 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
         }}
       />
 
+      {/* Ghost number background */}
+      <div
+        className="absolute bottom-4 right-6 select-none pointer-events-none"
+        aria-hidden="true"
+        style={{
+          fontSize: "120px",
+          fontFamily: "var(--font-bricolage)",
+          fontWeight: 800,
+          lineHeight: 1,
+          color: "rgba(255,255,255,0.04)",
+          letterSpacing: "-0.05em",
+          zIndex: 0,
+        }}
+      >
+        {service.number}
+      </div>
+
       <div className="relative z-10 flex flex-col gap-6 h-full">
         {/* Logo mark + accent line */}
         <div className="flex items-center gap-3">
@@ -185,6 +202,17 @@ function ScrollLine({ inView, delay = 0 }: { inView: boolean; delay?: number }) 
 export default function ServicesSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollTo = useCallback((index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const card = el.children[index] as HTMLElement;
+    if (!card) return;
+    el.scrollTo({ left: card.offsetLeft - 16, behavior: "smooth" });
+    setActiveIndex(index);
+  }, []);
 
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -219,7 +247,7 @@ export default function ServicesSection() {
           </motion.p>
           <motion.h2
             className="font-display font-bold leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(44px, 6.5vw, 80px)", color: "#0D0D0D" }}
+            style={{ fontSize: "clamp(32px, 6.5vw, 80px)", color: "#0D0D0D" }}
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08, ease }}
@@ -238,8 +266,99 @@ export default function ServicesSection() {
           </motion.p>
         </motion.div>
 
-        {/* Cards — 3 column on large, 1 col on mobile */}
-        <div className="grid lg:grid-cols-3 gap-6 relative">
+        {/* Cards — horizontal scroll on mobile, 3-col grid on desktop */}
+        <div className="lg:hidden">
+          <div
+            ref={scrollRef}
+            className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4"
+            style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
+          >
+            {services.map((s, i) => (
+              <div
+                key={s.id}
+                className="relative flex-shrink-0"
+                style={{ width: "78vw", maxWidth: "320px", scrollSnapAlign: "start" }}
+              >
+                <TiltCard service={s} index={i} inView={inView} />
+                <ScrollLine inView={inView} delay={0.4 + i * 0.18} />
+              </div>
+            ))}
+          </div>
+
+          {/* Arrows + dots */}
+          <div className="flex items-center justify-between mt-5 px-1">
+            {/* Dots */}
+            <div className="flex items-center gap-2">
+              {services.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollTo(i)}
+                  aria-label={`Karte ${i + 1}`}
+                  style={{
+                    width: activeIndex === i ? "20px" : "6px",
+                    height: "6px",
+                    borderRadius: "99px",
+                    background: activeIndex === i ? "#4F46E5" : "#D1D5DB",
+                    border: "none",
+                    padding: 0,
+                    transition: "all 0.25s ease",
+                    cursor: "pointer",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Prev / Next */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => scrollTo(Math.max(0, activeIndex - 1))}
+                disabled={activeIndex === 0}
+                aria-label="Vorherige Karte"
+                style={{
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "50%",
+                  border: "1px solid #E5E7EB",
+                  background: activeIndex === 0 ? "#F9FAFB" : "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: activeIndex === 0 ? "not-allowed" : "pointer",
+                  opacity: activeIndex === 0 ? 0.4 : 1,
+                  transition: "all 0.2s ease",
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M10 12L6 8L10 4" stroke="#0D0D0D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={() => scrollTo(Math.min(services.length - 1, activeIndex + 1))}
+                disabled={activeIndex === services.length - 1}
+                aria-label="Nächste Karte"
+                style={{
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "50%",
+                  border: "1px solid #E5E7EB",
+                  background: activeIndex === services.length - 1 ? "#F9FAFB" : "#4F46E5",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: activeIndex === services.length - 1 ? "not-allowed" : "pointer",
+                  opacity: activeIndex === services.length - 1 ? 0.4 : 1,
+                  transition: "all 0.2s ease",
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 4L10 8L6 12" stroke={activeIndex === services.length - 1 ? "#0D0D0D" : "#fff"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden lg:grid lg:grid-cols-3 gap-6 relative">
           {services.map((s, i) => (
             <div key={s.id} className="relative">
               <TiltCard service={s} index={i} inView={inView} />

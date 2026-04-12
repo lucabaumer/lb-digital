@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import Script from "next/script";
+import { MotionConfig } from "framer-motion";
 import LenisProvider from "@/components/providers/LenisProvider";
 import SchemaOrg from "./schema";
 import "./globals.css";
@@ -91,9 +92,11 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        <LenisProvider>
-          {children}
-        </LenisProvider>
+        <MotionConfig reducedMotion="user">
+          <LenisProvider>
+            {children}
+          </LenisProvider>
+        </MotionConfig>
       </body>
     </html>
   );

@@ -79,7 +79,7 @@ export default function TechSection() {
                       animate={
                         hovered === tool
                           ? { borderColor: "#818CF8", color: "#A5B4FC", backgroundColor: "rgba(79,70,229,0.12)" }
-                          : { borderColor: "rgba(255,255,255,0.08)", color: "#6B7280", backgroundColor: "transparent" }
+                          : { borderColor: "rgba(255,255,255,0.08)", color: "#6B7280", backgroundColor: "rgba(79,70,229,0)" }
                       }
                       transition={{ duration: 0.18 }}
                       className="text-xs font-medium px-3 py-1.5 rounded-full border cursor-default"

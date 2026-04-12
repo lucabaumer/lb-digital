@@ -2,8 +2,8 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import Link from "next/link";
 import page from "@/data/page.json";
+import { ArrowBtn } from "@/components/ui/ArrowBtn";
 
 const { hero } = page;
 
@@ -31,13 +31,25 @@ export default function HeroSection() {
         minHeight: "100svh",
       }}
     >
-      {/* Radial glow */}
+      {/* Radial glow desktop — left accent */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none hidden lg:block"
         style={{
           background:
             "radial-gradient(ellipse 55% 70% at 20% 50%, rgba(29,78,216,0.18) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* Radial glow mobile — centered blue lightbulb */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none lg:hidden"
+        style={{
+          background: [
+            "radial-gradient(ellipse 80% 50% at 50% 45%, rgba(59,130,246,0.28) 0%, transparent 65%)",
+            "radial-gradient(ellipse 50% 30% at 50% 40%, rgba(99,102,241,0.22) 0%, transparent 60%)",
+          ].join(", "),
         }}
       />
 
@@ -52,16 +64,17 @@ export default function HeroSection() {
           muted
           loop
           playsInline
+          disablePictureInPicture
           className="absolute inset-0 w-full h-full object-cover object-center"
           style={{ animation: "glow-pulse 4s ease-in-out infinite", opacity: 0.7 }}
         >
           <source src="/assets/hero.webm" type="video/webm" />
         </video>
 
-        {/* Mobile: full dark overlay so video is just subtle bg */}
+        {/* Mobile: dark overlay — lighter so glow shines through */}
         <div
           className="absolute inset-0 lg:hidden"
-          style={{ background: "rgba(10,22,40,0.82)" }}
+          style={{ background: "rgba(10,22,40,0.72)" }}
         />
 
         {/* Desktop: right-side gradient so text never overlaps video */}
@@ -85,9 +98,9 @@ export default function HeroSection() {
         className="container-xl relative z-10 w-full"
         style={{ y: contentY, opacity: contentOpacity }}
       >
-        {/* Mobile: centered | Desktop: right column */}
+        {/* Mobile: full width | Desktop: right column */}
         <div className="flex justify-end">
-          <div className="w-full lg:w-1/2 pt-28 pb-20 text-left lg:text-left">
+          <div className="w-full lg:w-1/2 pt-24 md:pt-28 pb-16 md:pb-20 text-left">
 
             {/* Eyebrow */}
             <motion.p
@@ -103,7 +116,7 @@ export default function HeroSection() {
             <motion.h1
               id="hero-heading"
               className="font-display font-extrabold leading-[1.05] tracking-tight text-white mb-5"
-              style={{ fontSize: "clamp(40px, 5.5vw, 76px)" }}
+              style={{ fontSize: "clamp(32px, 5.5vw, 76px)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.1 }}
@@ -140,12 +153,12 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.32 }}
             >
-              <Link href="#kontakt" className="btn-primary">
-                › {hero.cta_primary}
-              </Link>
-              <Link href="#leistungen" className="btn-ghost-light">
+              <ArrowBtn href="#kontakt" variant="primary">
+                {hero.cta_primary}
+              </ArrowBtn>
+              <ArrowBtn href="#leistungen" variant="ghost-light">
                 {hero.cta_secondary}
-              </Link>
+              </ArrowBtn>
             </motion.div>
 
             {/* Pillars */}

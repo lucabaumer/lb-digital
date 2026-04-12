@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import page from "@/data/page.json";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -18,14 +18,6 @@ const services = [
 export default function CTASection() {
   const ref   = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    const fn = () => setMobile(window.innerWidth < 768);
-    fn();
-    window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
-  }, []);
 
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
@@ -110,7 +102,7 @@ export default function CTASection() {
     <section id="kontakt" ref={ref} style={{ background: "#0A1628", padding: "160px 0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 24px" }}>
 
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr", gap: mobile ? "48px" : "80px", alignItems: "start" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
 
           {/* ── Left: copy ── */}
           <motion.div
@@ -228,7 +220,7 @@ export default function CTASection() {
                     exit={{ opacity: 0 }}
                     style={{ display: "flex", flexDirection: "column", gap: "20px" }}
                   >
-                    <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {field("name",  "Name",   "text",  "Max Mustermann")}
                       {field("email", "E-Mail", "email", "max@firma.de")}
                     </div>
@@ -278,13 +270,13 @@ export default function CTASection() {
                     <motion.button
                       type="submit"
                       disabled={status === "loading"}
-                      whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
+                      whileHover={{ scale: status === "loading" ? 1 : 1.02, background: "#1E40AF" }}
                       whileTap={{ scale: 0.98 }}
                       style={{
                         background: "#1D4ED8",
                         color: "#FFFFFF",
                         border: "none",
-                        borderRadius: "4px",
+                        borderRadius: "999px",
                         padding: "15px 32px",
                         fontSize: "13px",
                         fontWeight: 700,
@@ -296,11 +288,8 @@ export default function CTASection() {
                         alignItems: "center",
                         justifyContent: "center",
                         gap: "10px",
-                        transition: "background 0.2s",
                         width: "100%",
                       }}
-                      onMouseEnter={e => { if (status !== "loading") e.currentTarget.style.background = "#1E40AF"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "#1D4ED8"; }}
                     >
                       {status === "loading" ? (
                         <>

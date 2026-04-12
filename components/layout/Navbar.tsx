@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Lenis from "lenis";
 import page from "@/data/page.json";
+import { ArrowBtn } from "@/components/ui/ArrowBtn";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -74,7 +75,7 @@ export default function Navbar() {
                 priority
                 quality={90}
                 sizes="280px"
-                className="h-16 w-auto"
+                className="h-9 lg:h-14 w-auto"
                 style={{ filter: "brightness(0) invert(1)" }}
               />
             </Link>
@@ -96,13 +97,14 @@ export default function Navbar() {
 
             {/* CTA + hamburger */}
             <div className="flex items-center gap-3">
-              <Link
+              <ArrowBtn
                 href="#kontakt"
-                className="hidden lg:inline-flex btn-primary"
-                style={{ padding: "10px 20px", fontSize: "13px" }}
+                variant="primary"
+                className="hidden lg:inline-flex"
+                style={{ padding: "10px 20px", fontSize: "13px", whiteSpace: "nowrap" }}
               >
-                › {page.nav.cta}
-              </Link>
+                {page.nav.cta}
+              </ArrowBtn>
               <button
                 className="lg:hidden w-9 h-9 flex flex-col justify-center gap-[5px] pl-1"
                 onClick={() => setOpen(!open)}
@@ -132,73 +134,84 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile fullscreen menu */}
+      {/* Mobile compact dropdown */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, scale: 0.95, y: -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             data-lenis-prevent="true"
-            className="fixed inset-0 z-40 lg:hidden flex flex-col justify-center"
-            style={{ background: "#0A1628" }}
+            className="fixed top-[68px] right-4 z-40 lg:hidden"
+            style={{
+              background: "rgba(10,22,40,0.97)",
+              backdropFilter: "blur(16px)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "14px",
+              minWidth: "180px",
+              overflow: "hidden",
+            }}
             role="dialog"
             aria-modal="true"
           >
-            <div className="container-xl" style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ padding: "8px" }}>
               {page.nav.links.map((link, i) => (
-                <div
+                <motion.div
                   key={link.href}
-                  style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}
+                  initial={{ opacity: 0, x: 8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.18, delay: i * 0.04 }}
                 >
-                  <motion.div
-                    initial={{ y: "115%" }}
-                    animate={{ y: "0%" }}
-                    exit={{ y: "115%" }}
-                    transition={{
-                      duration: 0.55,
-                      delay: i * 0.06,
-                      ease: [0.76, 0, 0.24, 1],
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    style={{
+                      display: "block",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      color: "rgba(255,255,255,0.75)",
+                      textDecoration: "none",
+                      padding: "10px 14px",
+                      borderRadius: "8px",
+                      transition: "background 0.15s ease, color 0.15s ease",
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.color = "#fff";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "rgba(255,255,255,0.75)";
                     }}
                   >
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-bricolage)",
-                        fontSize: "clamp(36px, 8vw, 60px)",
-                        fontWeight: 800,
-                        color: "#FFFFFF",
-                        textDecoration: "none",
-                        letterSpacing: "-0.03em",
-                        padding: "18px 0",
-                        lineHeight: 1,
-                        transition: "color 0.2s ease",
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#3B82F6")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#FFFFFF")}
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                </div>
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
+              <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", margin: "6px 8px" }} />
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, delay: 0.36 }}
-                style={{ marginTop: "36px" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, delay: 0.2 }}
+                style={{ padding: "6px 6px 2px" }}
               >
                 <Link
                   href="#kontakt"
                   onClick={() => setOpen(false)}
-                  className="btn-primary"
-                  style={{ display: "inline-flex" }}
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#fff",
+                    textDecoration: "none",
+                    padding: "10px 14px",
+                    borderRadius: "8px",
+                    background: "#4F46E5",
+                    textAlign: "center",
+                  }}
                 >
-                  › {page.nav.cta}
+                  {page.nav.cta}
                 </Link>
               </motion.div>
             </div>

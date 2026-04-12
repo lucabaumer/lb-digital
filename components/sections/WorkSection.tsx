@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowBtn } from "@/components/ui/ArrowBtn";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -209,13 +210,6 @@ export default function WorkSection() {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [hovered, setHovered] = useState<string | null>(null);
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    const fn = () => setMobile(window.innerWidth < 768);
-    fn();
-    window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
-  }, []);
 
   return (
     <section
@@ -241,14 +235,15 @@ export default function WorkSection() {
           : "none",
       }} />
 
-      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: mobile ? "0 24px" : "0 56px" }}>
+      <div className="container-xl">
 
         {/* Header row */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease }}
-          style={{ marginBottom: "80px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "24px" }}
+          className="mb-16 md:mb-20 flex flex-col md:flex-row md:justify-between md:items-end gap-6"
+          style={{  }}
         >
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "20px" }}>
@@ -258,7 +253,7 @@ export default function WorkSection() {
               </span>
             </div>
             <h2 style={{
-              fontSize: "clamp(36px, 5vw, 64px)",
+              fontSize: "clamp(28px, 5vw, 64px)",
               fontWeight: 800,
               letterSpacing: "-0.04em",
               lineHeight: 1.0,
@@ -272,7 +267,7 @@ export default function WorkSection() {
         </motion.div>
 
         {/* Cards grid */}
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "repeat(3, 1fr)", gap: mobile ? "40px" : "28px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-7">
           {projects.map((p, i) => (
             <motion.div
               key={p.slug}
@@ -350,18 +345,9 @@ export default function WorkSection() {
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.22)", marginBottom: "24px" }}>
             Ihre Branche ist auch dabei — wir bauen für jeden Markt.
           </p>
-          <Link href="#kontakt" style={{
-            display: "inline-flex", alignItems: "center", gap: "10px",
-            fontSize: "11px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase",
-            color: "#070C17", background: "#3B82F6",
-            padding: "14px 40px", textDecoration: "none",
-            transition: "opacity 0.2s",
-          }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-          >
-            Projekt anfragen →
-          </Link>
+          <ArrowBtn href="#kontakt" variant="primary">
+            Projekt anfragen
+          </ArrowBtn>
         </motion.div>
 
       </div>

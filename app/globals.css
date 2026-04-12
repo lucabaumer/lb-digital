@@ -122,6 +122,17 @@ nextjs-portal { display: none !important; }
   background-clip: text;
 }
 
+/* Accent line — used in WhySection eyebrow */
+.accent-line {
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: #1D4ED8;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 /* Eyebrow label */
 .eyebrow {
   display: inline-flex;
@@ -257,6 +268,11 @@ nextjs-portal { display: none !important; }
 /* ═══════════════════════════════════════
    ANIMATIONS
 ═══════════════════════════════════════ */
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
