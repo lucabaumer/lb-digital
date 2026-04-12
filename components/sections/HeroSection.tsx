@@ -41,22 +41,23 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Radial glow mobile — centered blue lightbulb */}
+      {/* Radial glow mobile — bright centered lightbulb effect */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none lg:hidden"
         style={{
           background: [
-            "radial-gradient(ellipse 80% 50% at 50% 45%, rgba(59,130,246,0.28) 0%, transparent 65%)",
-            "radial-gradient(ellipse 50% 30% at 50% 40%, rgba(99,102,241,0.22) 0%, transparent 60%)",
+            "radial-gradient(ellipse 90% 55% at 50% 50%, rgba(59,130,246,0.38) 0%, transparent 60%)",
+            "radial-gradient(ellipse 55% 35% at 50% 48%, rgba(99,102,241,0.32) 0%, transparent 55%)",
+            "radial-gradient(ellipse 30% 20% at 50% 46%, rgba(147,197,253,0.18) 0%, transparent 50%)",
           ].join(", "),
         }}
       />
 
-      {/* ── Video (parallax layer) ── */}
+      {/* ── Video (parallax layer, desktop only — iOS doesn't support WebM) ── */}
       <motion.div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none hidden lg:block"
         style={{ y: videoY }}
       >
         <video
@@ -70,12 +71,6 @@ export default function HeroSection() {
         >
           <source src="/assets/hero.webm" type="video/webm" />
         </video>
-
-        {/* Mobile: dark overlay — lighter so glow shines through */}
-        <div
-          className="absolute inset-0 lg:hidden"
-          style={{ background: "rgba(10,22,40,0.72)" }}
-        />
 
         {/* Desktop: right-side gradient so text never overlaps video */}
         <div

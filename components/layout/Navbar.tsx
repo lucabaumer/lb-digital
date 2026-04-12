@@ -97,14 +97,15 @@ export default function Navbar() {
 
             {/* CTA + hamburger */}
             <div className="flex items-center gap-3">
-              <ArrowBtn
-                href="#kontakt"
-                variant="primary"
-                className="hidden lg:inline-flex"
-                style={{ padding: "10px 20px", fontSize: "13px", whiteSpace: "nowrap" }}
-              >
-                {page.nav.cta}
-              </ArrowBtn>
+              <div className="hidden lg:block">
+                <ArrowBtn
+                  href="#kontakt"
+                  variant="primary"
+                  style={{ padding: "10px 20px", fontSize: "13px", whiteSpace: "nowrap" }}
+                >
+                  {page.nav.cta}
+                </ArrowBtn>
+              </div>
               <button
                 className="lg:hidden w-9 h-9 flex flex-col justify-center gap-[5px] pl-1"
                 onClick={() => setOpen(!open)}
