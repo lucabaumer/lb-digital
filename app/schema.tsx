@@ -44,6 +44,7 @@ export default function SchemaOrg() {
     },
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Nonnenbach 7",
       addressLocality: "Freiburg im Breisgau",
       postalCode: "79100",
       addressCountry: "DE",

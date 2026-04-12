@@ -4,6 +4,7 @@ import Script from "next/script";
 import { MotionConfig } from "framer-motion";
 import LenisProvider from "@/components/providers/LenisProvider";
 import SchemaOrg from "./schema";
+import CookieBanner from "@/components/ui/CookieBanner";
 import "./globals.css";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -83,12 +84,15 @@ export default function RootLayout({
         <SchemaOrg />
         {GA_ID && (
           <>
+            <Script id="ga4-consent-default" strategy="beforeInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{analytics_storage:'denied'});`}
+            </Script>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
               strategy="afterInteractive"
             />
             <Script id="ga4-init" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}',{page_path:window.location.pathname});`}
+              {`gtag('js',new Date());gtag('config','${GA_ID}',{page_path:window.location.pathname});`}
             </Script>
           </>
         )}
@@ -97,6 +101,7 @@ export default function RootLayout({
             {children}
           </LenisProvider>
         </MotionConfig>
+        <CookieBanner />
       </body>
     </html>
   );

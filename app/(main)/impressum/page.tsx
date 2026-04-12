@@ -33,7 +33,9 @@ export default function ImpressumPage() {
             <p>
               Luca Baumer<br />
               LB Digital<br />
-              Freiburg im Breisgau, Deutschland
+              Nonnenbach 7<br />
+              79100 Freiburg im Breisgau<br />
+              Deutschland
             </p>
           </section>
 
