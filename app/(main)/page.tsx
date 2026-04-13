@@ -6,7 +6,6 @@ import WhySection from "@/components/sections/WhySection";
 import ProcessSection from "@/components/sections/ProcessSection";
 import TechSection from "@/components/sections/TechSection";
 import FAQSection from "@/components/sections/FAQSection";
-import CTASection from "@/components/sections/CTASection";
 import SectionReveal from "@/components/ui/SectionReveal";
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
       <SectionReveal><WhySection /></SectionReveal>
       <SectionReveal><ProcessSection /></SectionReveal>
       <SectionReveal><TechSection /></SectionReveal>
-      <SectionReveal><CTASection /></SectionReveal>
       <SectionReveal><FAQSection /></SectionReveal>
     </>
   );

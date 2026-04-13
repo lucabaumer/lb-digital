@@ -54,10 +54,10 @@ export default function HeroSection() {
         }}
       />
 
-      {/* ── Video (parallax layer, desktop only — iOS doesn't support WebM) ── */}
+      {/* ── Video (parallax layer — alle Screens, mp4 + webm für maximale Kompatibilität) ── */}
       <motion.div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none hidden lg:block"
+        className="absolute inset-0 pointer-events-none"
         style={{ y: videoY }}
       >
         <video
@@ -67,13 +67,19 @@ export default function HeroSection() {
           playsInline
           disablePictureInPicture
           className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ animation: "glow-pulse 4s ease-in-out infinite", opacity: 0.7 }}
+          style={{ animation: "glow-pulse 4s ease-in-out infinite", opacity: 0.75 }}
         >
           <source src="/assets/hero.mp4" type="video/mp4" />
           <source src="/assets/hero.webm" type="video/webm" />
         </video>
 
-        {/* Desktop: right-side gradient so text never overlaps video */}
+        {/* Mobile: leichtes Overlay damit Text lesbar bleibt */}
+        <div
+          className="absolute inset-0 lg:hidden"
+          style={{ background: "rgba(10,22,40,0.55)" }}
+        />
+
+        {/* Desktop: rechts abdunkeln damit Text nicht über Video liegt */}
         <div
           className="absolute inset-y-0 right-0 hidden lg:block"
           style={{

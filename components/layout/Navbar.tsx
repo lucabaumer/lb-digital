@@ -7,12 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import Lenis from "lenis";
 import page from "@/data/page.json";
 import { ArrowBtn } from "@/components/ui/ArrowBtn";
+import { useContactModal } from "@/components/ui/ContactModalProvider";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden,   setHidden]   = useState(false);
   const [open,     setOpen]     = useState(false);
   const lastScrollY = useRef(0);
+  const { openModal } = useContactModal();
 
   // Lenis scroll — hide/show + scrolled state
   useEffect(() => {
@@ -197,23 +199,24 @@ export default function Navbar() {
                 transition={{ duration: 0.2, delay: 0.2 }}
                 style={{ padding: "6px 6px 2px" }}
               >
-                <Link
-                  href="#kontakt"
-                  onClick={() => setOpen(false)}
+                <button
+                  onClick={() => { setOpen(false); openModal(); }}
                   style={{
                     display: "block",
+                    width: "100%",
                     fontSize: "13px",
                     fontWeight: 600,
                     color: "#fff",
-                    textDecoration: "none",
+                    border: "none",
                     padding: "10px 14px",
                     borderRadius: "8px",
                     background: "#4F46E5",
                     textAlign: "center",
+                    cursor: "pointer",
                   }}
                 >
                   {page.nav.cta}
-                </Link>
+                </button>
               </motion.div>
             </div>
           </motion.div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, ReactNode } from "react";
 import { MagneticButton } from "./MagneticButton";
+import { useContactModal } from "./ContactModalProvider";
 
 interface ArrowBtnProps {
   href?: string;
@@ -48,6 +49,7 @@ export function ArrowBtn({
   style,
 }: ArrowBtnProps) {
   const [hovered, setHovered] = useState(false);
+  const { openModal } = useContactModal();
   const cls = `btn-${variant} ${className}`;
 
   const inner = (
@@ -56,6 +58,24 @@ export function ArrowBtn({
       <Arrow hovered={hovered} />
     </>
   );
+
+  // #kontakt → open modal
+  if (href === "#kontakt") {
+    return (
+      <MagneticButton>
+        <button
+          type="button"
+          onClick={openModal}
+          className={cls}
+          style={style}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          {inner}
+        </button>
+      </MagneticButton>
+    );
+  }
 
   if (href) {
     return (
