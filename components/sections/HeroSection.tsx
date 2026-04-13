@@ -69,6 +69,7 @@ export default function HeroSection() {
           className="absolute inset-0 w-full h-full object-cover object-center"
           style={{ animation: "glow-pulse 4s ease-in-out infinite", opacity: 0.7 }}
         >
+          <source src="/assets/hero.mp4" type="video/mp4" />
           <source src="/assets/hero.webm" type="video/webm" />
         </video>
 
