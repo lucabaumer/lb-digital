@@ -49,9 +49,39 @@ const fakten = [
   { zahl: "46 %", text: "aller Google-Suchen haben lokalen Bezug" },
 ];
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "SEO Freiburg",
+  description: "Lokale Suchmaschinenoptimierung für Unternehmen in Freiburg im Breisgau. Mehr Google-Sichtbarkeit, mehr Anfragen aus der Region.",
+  provider: {
+    "@type": "LocalBusiness",
+    "@id": "https://www.lb-digital.agency/#business",
+    name: "LB Digital",
+    url: "https://www.lb-digital.agency",
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Freiburg im Breisgau",
+  },
+  serviceType: "Suchmaschinenoptimierung (SEO)",
+  url: "https://www.lb-digital.agency/seo-freiburg",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Startseite", item: "https://www.lb-digital.agency" },
+    { "@type": "ListItem", position: 2, name: "SEO Freiburg", item: "https://www.lb-digital.agency/seo-freiburg" },
+  ],
+};
+
 export default function SEOFreiburgPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section
         style={{ background: "#fff", paddingTop: "clamp(80px, 12vw, 140px)", paddingBottom: "clamp(60px, 8vw, 100px)" }}

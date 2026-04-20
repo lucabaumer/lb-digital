@@ -1,27 +1,63 @@
-const faqItems = [
+export const faqItems = [
   {
-    q: "Was kostet eine professionelle Website?",
-    a: "Eine maßgeschneiderte Website beginnt bei ca. 1.500 € und richtet sich nach Umfang und Anforderungen. Im Erstgespräch erstellen wir ein transparentes Angebot ohne versteckte Kosten.",
+    q: "Was kostet eine professionelle Website in Freiburg?",
+    a: "Eine maßgeschneiderte Website beginnt bei ca. 1.500 € und richtet sich nach Umfang und Anforderungen. Im kostenlosen Erstgespräch erstellen wir ein transparentes Festpreis-Angebot — kein Stundensatz, keine versteckten Kosten.",
   },
   {
-    q: "Wie lange dauert die Erstellung?",
-    a: "Eine Standard-Website ist in der Regel in 2–3 Wochen fertig. Komplexere Projekte planen wir individuell — immer mit einem klaren Zeitplan von Anfang an.",
+    q: "Wie lange dauert die Erstellung einer Website?",
+    a: "Eine Standard-Website (3–5 Seiten) ist in der Regel in 2–3 Wochen fertig. Komplexere Projekte mit mehr Seiten, CMS oder individuellen Funktionen planen wir individuell — immer mit einem klaren Zeitplan von Anfang an.",
   },
   {
     q: "Kann ich meine Website danach selbst bearbeiten?",
-    a: "Ja. Wir bauen auf Wunsch ein CMS ein, über das Sie Texte, Bilder und Inhalte eigenständig pflegen können — ohne Programmierkenntnisse.",
+    a: "Ja. Wir bauen auf Wunsch ein CMS (z. B. Sanity) ein, über das Sie Texte, Bilder und Inhalte eigenständig pflegen können — ohne Programmierkenntnisse. Alternativ übernehmen wir die Pflege für Sie.",
   },
   {
-    q: "Was ist der Unterschied zu einem Baukasten wie Jimdo?",
-    a: "Baukästen liefern generische Templates, die wie tausend andere Seiten aussehen. Wir bauen Ihre Seite von Grund auf — individuell, schneller und technisch überlegen.",
+    q: "Was ist der Unterschied zu einem Baukasten wie Jimdo oder Wix?",
+    a: "Baukästen liefern generische Templates, die wie tausende andere Seiten aussehen. LB Digital baut Ihre Seite von Grund auf — individuell, bis zu 10× schneller als WordPress und technisch überlegen. Lighthouse-Score 95+ auf allen Metriken.",
   },
   {
     q: "Übernehmen Sie auch bestehende Websites?",
-    a: "Ja. Wir analysieren Ihre aktuelle Website kostenlos und zeigen, was sich verbessern lässt — ob Überarbeitung oder kompletter Neuaufbau sinnvoller ist.",
+    a: "Ja. Wir analysieren Ihre aktuelle Website kostenlos und zeigen, was sich verbessern lässt — ob gezielte Überarbeitung oder kompletter Neuaufbau sinnvoller ist. Die Analyse ist kostenlos und unverbindlich.",
   },
   {
     q: "Arbeiten Sie nur in Freiburg?",
-    a: "Unser Schwerpunkt liegt in Freiburg und der Region, wir arbeiten aber remote mit Kunden in der gesamten DACH-Region zusammen.",
+    a: "Unser Schwerpunkt liegt in Freiburg im Breisgau und der Region (Emmendingen, Breisach, Müllheim, Offenburg, Lörrach). Wir arbeiten aber remote mit Kunden in der gesamten DACH-Region zusammen.",
+  },
+  {
+    q: "Warum Next.js statt WordPress?",
+    a: "Next.js-Websites laden 5–10× schneller als WordPress, sind deutlich sicherer (kein angreifbares CMS-Backend), benötigen weniger Hosting-Kosten und erzielen bessere Google-Rankings durch höhere Core Web Vitals. Wir empfehlen WordPress nur, wenn selbstständige Content-Pflege Priorität hat.",
+  },
+  {
+    q: "Machen Sie auch SEO für lokale Unternehmen in Freiburg?",
+    a: "Ja. Lokales SEO ist eine unserer Kernleistungen. Wir optimieren Ihre Website technisch und inhaltlich für Google, richten Google My Business ein und sorgen für bessere Sichtbarkeit bei Suchanfragen aus Freiburg und der Region.",
+  },
+  {
+    q: "Wie viel kostet SEO-Betreuung monatlich?",
+    a: "Unsere monatliche SEO-Betreuung beginnt bei 300 € und umfasst technisches SEO, Content-Optimierung und monatliches Reporting. Der genaue Umfang wird individuell auf Ihre Ziele abgestimmt.",
+  },
+  {
+    q: "Erstellen Sie auch Logos und Corporate Identity?",
+    a: "Ja. Wir entwickeln professionelle Logos, Farbpaletten, Typografie und visuelle Identitäten für Unternehmen — ab 500 €. Branding und Website können als Gesamtpaket günstiger realisiert werden.",
+  },
+  {
+    q: "Was ist ein kostenloses Erstgespräch bei LB Digital?",
+    a: "Das Erstgespräch dauert ca. 30 Minuten (telefonisch oder persönlich in Freiburg) und ist völlig kostenlos und unverbindlich. Wir besprechen Ihre Ziele, zeigen mögliche Lösungen und erstellen danach ein konkretes Angebot.",
+  },
+  {
+    q: "Welche Branchen betreuen Sie besonders?",
+    a: "Wir haben Erfahrung mit Immobilienmaklern, Rechtsanwaltskanzleien, Steuerberatern, Arztpraxen, Gastronomie, Handwerksbetrieben und lokalen Dienstleistern im Raum Freiburg.",
+  },
+  {
+    q: "Wie hoch ist der Lighthouse-Score Ihrer Websites?",
+    a: "Unsere Websites erzielen regelmäßig Lighthouse-Scores von 95+ in den Kategorien Performance, SEO, Accessibility und Best Practices. Das ist messbar besser als die meisten WordPress-Seiten und ein direkter Google-Rankingfaktor.",
+  },
+  {
+    q: "Bieten Sie auch Hosting und Domain-Verwaltung an?",
+    a: "Ja. Wir übernehmen Deployment, Domain-Einrichtung und SSL-Zertifikat. Für Hosting nutzen wir Vercel — eine der schnellsten und zuverlässigsten Plattformen für Next.js-Websites.",
+  },
+  {
+    q: "Was kostet eine Website für einen Immobilienmakler in Freiburg?",
+    a: "Eine professionelle Immobilienmakler-Website mit Exposé-Übersicht, Kontaktformular und lokaler SEO-Optimierung beginnt bei ca. 2.500 €. Auf Wunsch integrieren wir ein CMS für eigenständige Exposé-Pflege.",
   },
 ];
 
@@ -30,7 +66,7 @@ export default function SchemaOrg() {
 
   const localBusiness = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": `${base}/#business`,
     name: "LB Digital",
     description:
@@ -54,10 +90,27 @@ export default function SchemaOrg() {
       latitude: 47.999,
       longitude: 7.842,
     },
-    areaServed: {
-      "@type": "City",
-      name: "Freiburg im Breisgau",
-    },
+    areaServed: [
+      { "@type": "City", name: "Freiburg im Breisgau" },
+      { "@type": "City", name: "Breisach" },
+      { "@type": "City", name: "Emmendingen" },
+      { "@type": "City", name: "Müllheim" },
+      { "@type": "City", name: "Offenburg" },
+      { "@type": "City", name: "Lörrach" },
+      { "@type": "City", name: "Titisee-Neustadt" },
+    ],
+    knowsAbout: [
+      "Webdesign",
+      "Next.js Entwicklung",
+      "React Entwicklung",
+      "SEO Optimierung",
+      "Lokales SEO Freiburg",
+      "Core Web Vitals",
+      "TypeScript",
+      "Tailwind CSS",
+      "Corporate Identity",
+      "Logo Design",
+    ],
     serviceType: ["Webdesign", "Webentwicklung", "SEO", "Next.js Entwicklung"],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
@@ -90,13 +143,18 @@ export default function SchemaOrg() {
       ],
     },
     sameAs: [
-      base,
       "https://www.instagram.com/lb.digital.agency",
       "https://www.linkedin.com/company/lb-digital-agency",
     ],
     priceRange: "€€",
-    openingHours: "Mo-Fr 09:00-18:00",
+    openingHours: ["Mo-Fr 09:00-18:00"],
     image: `${base}/opengraph-image`,
+    currenciesAccepted: "EUR",
+    paymentAccepted: ["Banküberweisung", "PayPal"],
+    slogan: "Kein Template. Kein Baukasten. Nur Ihre Website.",
+    foundingDate: "2023",
+    numberOfEmployees: { "@type": "QuantitativeValue", value: 1 },
+    award: "Lighthouse Score 95+ auf allen Websites",
   };
 
   const website = {
@@ -108,19 +166,11 @@ export default function SchemaOrg() {
     description: "Webdesign & SEO Agentur Freiburg",
     publisher: { "@id": `${base}/#business` },
     inLanguage: "de-DE",
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.a,
-      },
-    })),
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${base}/?s={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (
@@ -132,10 +182,6 @@ export default function SchemaOrg() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
       />
     </>
   );

@@ -1,4 +1,25 @@
+import type { Metadata } from "next";
 import HeroSection from "@/components/sections/HeroSection";
+import { faqItems } from "@/app/schema";
+
+export const metadata: Metadata = {
+  title: "LB Digital – Webdesign & SEO Agentur Freiburg",
+  description:
+    "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg. Kein Template, kein Baukasten — maßgeschneidert für Ihre Marke.",
+  alternates: {
+    canonical: "https://www.lb-digital.agency",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
 import MarqueeSection from "@/components/sections/MarqueeSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import WorkSection from "@/components/sections/WorkSection";
@@ -11,6 +32,10 @@ import SectionReveal from "@/components/ui/SectionReveal";
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <HeroSection />
       <SectionReveal><ServicesSection /></SectionReveal>
       <SectionReveal><WorkSection /></SectionReveal>

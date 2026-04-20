@@ -44,9 +44,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Luca Baumer", url: "https://www.lb-digital.agency" }],
   creator: "LB Digital",
   publisher: "LB Digital",
-  alternates: {
-    canonical: "https://www.lb-digital.agency",
-  },
   openGraph: {
     title: "LB Digital – Webdesign & SEO Agentur Freiburg",
     description:

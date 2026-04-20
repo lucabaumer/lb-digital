@@ -50,9 +50,49 @@ const prozess = [
   { nr: "04", title: "Launch", text: "Deployment, Domain, SSL – alles aus einer Hand." },
 ];
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Webdesign Freiburg",
+  description: "Individuelle Next.js-Websites für Unternehmen in Freiburg im Breisgau. Mobile-first, Lighthouse 95+, kein Template.",
+  provider: {
+    "@type": "LocalBusiness",
+    "@id": "https://www.lb-digital.agency/#business",
+    name: "LB Digital",
+    url: "https://www.lb-digital.agency",
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Freiburg im Breisgau",
+  },
+  serviceType: "Webdesign & Webentwicklung",
+  url: "https://www.lb-digital.agency/webdesign-freiburg",
+  offers: {
+    "@type": "Offer",
+    price: "1500",
+    priceCurrency: "EUR",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      minPrice: "1500",
+      priceCurrency: "EUR",
+    },
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Startseite", item: "https://www.lb-digital.agency" },
+    { "@type": "ListItem", position: 2, name: "Webdesign Freiburg", item: "https://www.lb-digital.agency/webdesign-freiburg" },
+  ],
+};
+
 export default function WebdesignFreiburgPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section
         style={{ background: "#fff", paddingTop: "clamp(80px, 12vw, 140px)", paddingBottom: "clamp(60px, 8vw, 100px)" }}
