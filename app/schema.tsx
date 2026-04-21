@@ -90,6 +90,13 @@ export default function SchemaOrg() {
       latitude: 47.999,
       longitude: 7.842,
     },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      reviewCount: "12",
+      bestRating: "5",
+      worstRating: "1",
+    },
     areaServed: [
       { "@type": "City", name: "Freiburg im Breisgau" },
       { "@type": "City", name: "Breisach" },

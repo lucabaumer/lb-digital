@@ -3,9 +3,9 @@ import HeroSection from "@/components/sections/HeroSection";
 import { faqItems } from "@/app/schema";
 
 export const metadata: Metadata = {
-  title: "LB Digital – Webdesign & SEO Agentur Freiburg",
+  title: "Webdesign Freiburg – LB Digital | Individuelle Websites & SEO",
   description:
-    "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg. Kein Template, kein Baukasten — maßgeschneidert für Ihre Marke.",
+    "Webdesign Freiburg: Individuelle Next.js-Websites & lokales SEO für Unternehmen in Freiburg und der Region. Kein Template, kein Baukasten — Lighthouse 95+, schnell, maßgeschneidert.",
   alternates: {
     canonical: "https://www.lb-digital.agency",
   },

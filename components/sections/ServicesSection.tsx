@@ -3,6 +3,7 @@
 import { motion, useInView, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
 import { useRef, MouseEvent, useState, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -22,6 +23,8 @@ const services = [
     ],
     accent: "#3B82F6",
     bg: "#0F172A",
+    href: "/webdesign-freiburg",
+    linkLabel: "Webdesign Freiburg",
   },
   {
     id: "branding",
@@ -38,6 +41,8 @@ const services = [
     ],
     accent: "#A78BFA",
     bg: "#13101F",
+    href: "/kontakt",
+    linkLabel: "Branding anfragen",
   },
   {
     id: "seo",
@@ -54,6 +59,8 @@ const services = [
     ],
     accent: "#10B981",
     bg: "#0A1628",
+    href: "/seo-freiburg",
+    linkLabel: "SEO Freiburg",
   },
 ];
 
@@ -181,6 +188,19 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
             </motion.li>
           ))}
         </ul>
+
+        {service.href && (
+          <Link
+            href={service.href}
+            className="mt-2 inline-flex items-center gap-2 text-xs font-semibold tracking-wide"
+            style={{ color: service.accent, textDecoration: "none" }}
+          >
+            {service.linkLabel}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+          </Link>
+        )}
       </div>
     </motion.div>
   );
