@@ -25,14 +25,6 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lb-digital.agency"),
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png" },
-    ],
-    apple: { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
-    shortcut: "/favicon.ico",
-  },
   title: {
     default: "LB Digital – Webdesign & SEO Agentur Freiburg",
     template: "%s | LB Digital",
