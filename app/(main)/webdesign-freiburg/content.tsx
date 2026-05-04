@@ -36,11 +36,11 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
   );
 }
 
-function StaggerReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function StaggerReveal({ children, className = "", style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div ref={ref} variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className={className}>
+    <motion.div ref={ref} variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className={className} style={style}>
       {children}
     </motion.div>
   );
