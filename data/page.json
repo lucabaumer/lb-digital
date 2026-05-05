@@ -14,13 +14,13 @@
   },
   "hero": {
     "eyebrow": "Webagentur · Freiburg im Breisgau",
-    "headline_line1": "Webdesign Freiburg —",
-    "headline_line2": "individuell, schnell, wirkungsvoll.",
-    "subheadline": "Maßgeschneiderte Websites & SEO für Unternehmen in Freiburg,",
-    "body": "Weil Mittelmäßigkeit keine Option ist.",
+    "headline_line1": "Mehr Anfragen",
+    "headline_line2": "aus Freiburg.",
+    "subheadline": "Durch Webdesign, das Google und Menschen überzeugt.",
+    "body": "Für Kanzleien, Handwerker und Architekten — die wachsen wollen.",
     "cta_primary": "Kostenloses Gespräch",
-    "cta_secondary": "Mehr erfahren",
-    "pillars": ["Webdesign", "SEO", "Next.js", "Freiburg"]
+    "cta_secondary": "Projekte ansehen",
+    "pillars": ["Rechtsanwälte", "Handwerker", "Architekten", "Freiburg"]
   },
   "services": [
     {
@@ -48,7 +48,7 @@
   "about": {
     "eyebrow": "Warum LB Digital",
     "headline": "Weniger Agentur. Mehr Partner.",
-    "body": "Kein anonymes Großstudio, kein Offshore-Team. Sie arbeiten direkt mit uns — einer kleinen, spezialisierten Einheit aus Freiburg, die weiß, was mittelständische Unternehmen wirklich brauchen.",
+    "body": "Kein anonymes Großstudio, kein Offshore-Team. Sie arbeiten direkt mit uns — einer kleinen, spezialisierten Einheit aus Freiburg, die weiß, was Kanzleien, Handwerksbetriebe und Architekten wirklich brauchen.",
     "usps": [
       {
         "number": "01",
@@ -67,8 +67,8 @@
       },
       {
         "number": "04",
-        "title": "Technisch erstklassig",
-        "description": "Next.js, Core Web Vitals, sauberer Code — Ihre Website ist nicht nur schön, sondern auch schnell, sicher und wartbar."
+        "title": "Schnell online",
+        "description": "Kein monatelanger Prozess. Eine Standard-Website ist in 2–3 Wochen fertig — mit klarem Zeitplan, der eingehalten wird."
       }
     ]
   },
