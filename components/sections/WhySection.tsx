@@ -1,111 +1,153 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const usps = [
   {
     num: "01",
     title: "Schnelle Lieferung",
-    body: "Von Briefing bis Launch in 2–4 Wochen. Kein endloses Hin-und-Her, keine monatelangen Wartezeiten.",
+    short: "2–4 Wochen",
+    detail: "Kein endloses Hin-und-Her. Von Briefing bis Launch in 2–4 Wochen.",
   },
   {
     num: "02",
     title: "Alles aus einer Hand",
-    body: "Design, Entwicklung, Texte, SEO, Hosting — ein Ansprechpartner, kein Koordinationsaufwand.",
+    short: "Design, Dev, SEO",
+    detail: "Ein Ansprechpartner für alles — kein Koordinationsaufwand zwischen Gewerken.",
   },
   {
     num: "03",
-    title: "Jedes Projekt ist ein Unikat",
-    body: "Kein Template, kein Copy-Paste. Ihr Auftritt ist so einzigartig wie Ihr Unternehmen.",
+    title: "Kein Template. Nie.",
+    short: "Ihr Unikat",
+    detail: "Jede Website wird von Grund auf für Sie gebaut — nicht für alle.",
   },
   {
     num: "04",
     title: "Messbare Ergebnisse",
-    body: "Wir optimieren auf Anfragen und Sichtbarkeit. Zahlen statt Versprechen.",
+    short: "Anfragen. Nicht nur Besucher.",
+    detail: "Wir optimieren auf neue Kunden — nicht auf Klicks, die nichts bringen.",
   },
 ];
 
-function UspItem({ usp, index }: { usp: (typeof usps)[0]; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+function UspRow({ usp, index, inView }: { usp: (typeof usps)[0]; index: number; inView: boolean }) {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <div ref={ref} className="flex gap-6 group">
-      {/* Left: accent line + number */}
-      <div className="flex flex-col items-center gap-0 flex-shrink-0 pt-1">
-        <motion.div
-          initial={{ scaleY: 0 }}
-          animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-          style={{ transformOrigin: "top" }}
-          className="w-0.5 h-14 bg-[#4F46E5] mb-3"
-        />
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: 0.12 + index * 0.07, ease: EASE }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      className="group relative border-t cursor-default select-none"
+      style={{
+        borderColor: hovered ? "rgba(18,100,241,0.25)" : "rgba(255,255,255,0.07)",
+        transition: "border-color 0.3s ease",
+      }}
+    >
+      <div className="py-6 lg:py-7 flex items-start gap-5 lg:gap-10">
+        {/* Number */}
         <span
-          className="text-[11px] font-bold text-[#4F46E5] tracking-[0.05em]"
-          style={{ fontFamily: "var(--font-bricolage)" }}
+          className="text-[11px] font-mono tracking-widest flex-shrink-0 pt-1.5"
+          style={{
+            color: hovered ? "var(--color-accent)" : "rgba(255,255,255,0.18)",
+            transition: "color 0.25s ease",
+            minWidth: "2rem",
+          }}
         >
           {usp.num}
         </span>
-      </div>
 
-      {/* Right: content */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-        transition={{ duration: 0.6, delay: 0.1 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="pb-10 last:pb-0 flex-1"
-      >
-        <h3
-          className="font-bold mb-2 text-lg"
-          style={{ fontFamily: "var(--font-bricolage)", color: "#F2F0ED" }}
-        >
-          {usp.title}
-        </h3>
-        <p className="text-sm leading-relaxed" style={{ color: "#8A8680" }}>{usp.body}</p>
-      </motion.div>
-    </div>
+        {/* Main content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-8">
+            <h3
+              className="font-display font-bold leading-tight"
+              style={{
+                fontSize: "clamp(20px, 2.8vw, 38px)",
+                color: hovered ? "var(--color-accent)" : "#F0EDE8",
+                transition: "color 0.25s ease",
+              }}
+            >
+              {usp.title}
+            </h3>
+            <span
+              className="text-sm font-medium flex-shrink-0 sm:text-right"
+              style={{
+                color: hovered ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.22)",
+                transition: "color 0.25s ease",
+              }}
+            >
+              {usp.short}
+            </span>
+          </div>
+
+          {/* Detail — slides in on hover */}
+          <AnimatePresence>
+            {hovered && (
+              <motion.p
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: EASE }}
+                className="text-sm leading-relaxed mt-2 max-w-lg"
+                style={{ color: "rgba(255,255,255,0.32)" }}
+              >
+                {usp.detail}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
 export default function WhySection() {
-  return (
-    <section id="warum" className="section-py" style={{ background: "#0F1014" }}>
-      <div className="container-xl">
-        <div className="grid lg:grid-cols-[1fr_480px] xl:grid-cols-[1fr_520px] gap-12 lg:gap-20 items-start">
-          {/* ── Left: Heading ─────────────────── */}
-          <div className="lg:sticky lg:top-32">
-            <p className="eyebrow mb-6">
-              <span className="accent-line" />
-              Warum LB Digital
-            </p>
-            <h2
-              className="font-display font-bold leading-tight mb-6"
-              style={{
-                fontFamily: "var(--font-bricolage)",
-                fontSize: "clamp(32px, 4.5vw, 52px)",
-                color: "#F2F0ED",
-              }}
-            >
-              Wir bauen keine
-              <br />
-              Templates.
-              <br />
-              <em className="not-italic text-gradient">Wir bauen Ergebnisse.</em>
-            </h2>
-            <p className="leading-relaxed max-w-sm" style={{ color: "#8A8680" }}>
-              Vier Gründe warum Unternehmen sich für LB Digital entscheiden —
-              und gerne zurückkommen.
-            </p>
-          </div>
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
-          {/* ── Right: USPs ───────────────────── */}
-          <div className="mt-4 lg:mt-0">
-            {usps.map((usp, i) => (
-              <UspItem key={usp.num} usp={usp} index={i} />
-            ))}
-          </div>
+  return (
+    <section id="warum" className="section-py" style={{ background: "#07101F" }}>
+      <div className="container-xl" ref={ref}>
+
+        {/* Headline block */}
+        <div className="mb-14 lg:mb-20">
+          <motion.p
+            className="eyebrow mb-5"
+            initial={{ opacity: 0, y: 10 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.45, ease: EASE }}
+          >
+            Warum LB Digital
+          </motion.p>
+          <motion.h2
+            className="font-display font-bold leading-[1.05] tracking-tight"
+            style={{ fontSize: "clamp(28px, 4.5vw, 58px)", color: "#F0EDE8" }}
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.07, ease: EASE }}
+          >
+            Wir bauen keine Templates.{" "}
+            <span style={{ color: "rgba(255,255,255,0.25)" }}>Wir bauen Ergebnisse.</span>
+          </motion.h2>
         </div>
+
+        {/* Editorial USP rows */}
+        <div>
+          {usps.map((usp, i) => (
+            <UspRow key={usp.num} usp={usp} index={i} inView={inView} />
+          ))}
+          {/* Bottom border */}
+          <div
+            style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+            aria-hidden="true"
+          />
+        </div>
+
       </div>
     </section>
   );

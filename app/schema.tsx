@@ -45,7 +45,7 @@ export const faqItems = [
   },
   {
     q: "Welche Branchen betreuen Sie besonders?",
-    a: "Wir haben Erfahrung mit Immobilienmaklern, Rechtsanwaltskanzleien, Steuerberatern, Arztpraxen, Gastronomie, Handwerksbetrieben und lokalen Dienstleistern im Raum Freiburg.",
+    a: "Unser Schwerpunkt liegt auf Rechtsanwaltskanzleien, Handwerksbetrieben und Architekturbüros im Raum Freiburg. Diese Branchen profitieren am stärksten von lokaler Google-Sichtbarkeit und einer professionellen Online-Präsenz. Wir arbeiten auch mit Physiotherapeuten, Steuerberatern und anderen lokalen Dienstleistern.",
   },
   {
     q: "Wie hoch ist der Lighthouse-Score Ihrer Websites?",
@@ -56,8 +56,8 @@ export const faqItems = [
     a: "Ja. Wir übernehmen Deployment, Domain-Einrichtung und SSL-Zertifikat. Für Hosting nutzen wir Vercel — eine der schnellsten und zuverlässigsten Plattformen für Next.js-Websites.",
   },
   {
-    q: "Was kostet eine Website für einen Immobilienmakler in Freiburg?",
-    a: "Eine professionelle Immobilienmakler-Website mit Exposé-Übersicht, Kontaktformular und lokaler SEO-Optimierung beginnt bei ca. 2.500 €. Auf Wunsch integrieren wir ein CMS für eigenständige Exposé-Pflege.",
+    q: "Was kostet eine Website für eine Kanzlei oder ein Handwerksunternehmen?",
+    a: "Eine professionelle Website für Rechtsanwälte oder Handwerksbetriebe beginnt bei ca. 1.500–2.500 €, je nach Umfang. Inklusive lokalem SEO, Kontaktformular und Lighthouse 95+. Im Erstgespräch erhalten Sie ein konkretes Festpreis-Angebot.",
   },
 ];
 
@@ -70,7 +70,7 @@ export default function SchemaOrg() {
     "@id": `${base}/#business`,
     name: "LB Digital",
     description:
-      "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg. Kein Template, kein Baukasten — maßgeschneidert für Ihre Marke.",
+      "Individuelle Websites und lokales SEO für Rechtsanwälte, Handwerker und Architekten in Freiburg. Kein Template, kein Baukasten — maßgeschneidert, damit Ihre Kunden Sie bei Google finden.",
     url: base,
     telephone: "+49 178 5881195",
     email: "hallo@lb-digital.agency",
@@ -117,6 +117,11 @@ export default function SchemaOrg() {
       "Tailwind CSS",
       "Corporate Identity",
       "Logo Design",
+      "Website für Rechtsanwälte Freiburg",
+      "Website für Handwerker Freiburg",
+      "Website für Architekten Freiburg",
+      "Kanzlei Website",
+      "Handwerker Website",
     ],
     serviceType: ["Webdesign", "Webentwicklung", "SEO", "Next.js Entwicklung"],
     hasOfferCatalog: {

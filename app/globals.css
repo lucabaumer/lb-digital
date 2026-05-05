@@ -2,22 +2,22 @@
 
 @theme {
   /* ── Colors ───────────────────────────── */
-  --color-navy:         #0A1628;
-  --color-dark-card:    #111318;
+  --color-navy:         #07101F;
+  --color-dark-card:    #0D1828;
   --color-white:        #FFFFFF;
-  --color-off-white:    #F9FAFB;
+  --color-off-white:    #F4F3EF;
   --color-ink:          #0D0D0D;
   --color-ink-muted:    #6B7280;
   --color-ink-subtle:   #9CA3AF;
   --color-border:       #E5E7EB;
 
-  --color-accent:       #1D4ED8;
-  --color-accent-hover: #1E40AF;
-  --color-accent-dim:   rgba(29, 78, 216, 0.08);
+  --color-accent:       #1264F1;
+  --color-accent-hover: #0D52D4;
+  --color-accent-dim:   rgba(18, 100, 241, 0.08);
 
   /* ── Fonts ───────────────────────────── */
   --font-display: var(--font-bricolage);
-  --font-body:    var(--font-inter);
+  --font-body:    var(--font-jakarta);
 }
 
 /* ═══════════════════════════════════════
@@ -64,7 +64,7 @@ button:hover .nav-link-hover::after  { transform: translateY(-100%); }
 body {
   background: #FFFFFF;
   color: #0D0D0D;
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -116,7 +116,7 @@ nextjs-portal { display: none !important; }
 
 /* Blue gradient text — used sparingly */
 .text-gradient {
-  background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+  background: linear-gradient(135deg, #1264F1 0%, #4B8BFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -127,7 +127,7 @@ nextjs-portal { display: none !important; }
   display: inline-block;
   width: 28px;
   height: 2px;
-  background: #1D4ED8;
+  background: #1264F1;
   border-radius: 2px;
   vertical-align: middle;
   margin-right: 8px;
@@ -142,7 +142,7 @@ nextjs-portal { display: none !important; }
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #1D4ED8;
+  color: #1264F1;
 }
 
 /* ═══════════════════════════════════════
@@ -153,7 +153,7 @@ nextjs-portal { display: none !important; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #1D4ED8;
+  background: #1264F1;
   color: #FFFFFF;
   padding: 13px 26px;
   font-size: 14px;
@@ -162,16 +162,18 @@ nextjs-portal { display: none !important; }
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  transition: background 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1), transform 0.2s cubic-bezier(0.22,1,0.36,1);
   white-space: nowrap;
   text-decoration: none;
 }
 
 .btn-primary:hover {
-  background: #1E40AF;
-  box-shadow: 0 4px 20px rgba(29, 78, 216, 0.35);
+  background: #0D52D4;
+  box-shadow: 0 4px 24px rgba(18, 100, 241, 0.38);
   transform: translateY(-1px);
 }
+
+.btn-primary:active { transform: scale(0.98); }
 
 .btn-ghost-light {
   display: inline-flex;
@@ -302,3 +304,64 @@ nextjs-portal { display: none !important; }
   from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ═══════════════════════════════════════
+   HERO ANIMATED MESH BLOBS
+═══════════════════════════════════════ */
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+.blob-1 {
+  width: 65vw;
+  height: 65vw;
+  left: -18vw;
+  top: -18vw;
+  background: radial-gradient(circle, rgba(18,100,241,0.22) 0%, transparent 70%);
+  animation: blob-drift-1 16s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 48vw;
+  height: 48vw;
+  right: 2vw;
+  top: 15vh;
+  background: radial-gradient(circle, rgba(18,100,241,0.11) 0%, transparent 70%);
+  animation: blob-drift-2 20s ease-in-out infinite;
+}
+
+.blob-3 {
+  width: 32vw;
+  height: 32vw;
+  left: 35vw;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(13,24,40,0.6) 0%, transparent 70%);
+  animation: blob-drift-3 13s ease-in-out infinite;
+}
+
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(3vw, 2vh) scale(1.04); }
+  66%       { transform: translate(-2vw, 4vh) scale(0.97); }
+}
+
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-4vw, -3vh) scale(1.06); }
+  70%       { transform: translate(2vw, -2vh) scale(0.94); }
+}
+
+@keyframes blob-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(2vw, -4vh) scale(1.08); }
+}
+
+/* ── Focus & selection updated for new accent ── */
+::selection { background: #1264F1; color: #FFFFFF; }
+::-webkit-scrollbar-thumb:hover { background: #1264F1; }
+:focus-visible { outline-color: #1264F1; }

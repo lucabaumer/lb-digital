@@ -1,67 +1,100 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowBtn } from "@/components/ui/ArrowBtn";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-// ─── Project data ──────────────────────────────────────────────────
 const projects = [
   {
-    slug:      "immobilien",
-    href:      "/projekte/immobilien",
-    client:    "Müller Immobilien",
-    industry:  "Immobilienmakler · Freiburg",
-    tags:      ["Branding", "Webdesign", "SEO"],
-    accent:    "#C9A870",
-    accentDim: "rgba(201,168,112,0.12)",
-    preview:   { bg: "#0C0A07", accent: "#C9A870", style: "luxury" as const },
+    slug:      "immo-template",
+    href:      "https://immo-template.vercel.app",
+    client:    "Immo Template",
+    industry:  "Immobilien Website · Next.js + Sanity CMS",
+    tags:      ["Next.js", "Sanity CMS", "Webdesign", "SEO"],
+    accent:    "#D4AF6A",
+    accentDim: "rgba(212,175,106,0.13)",
+    preview:   { bg: "#0D0B08", accent: "#D4AF6A", style: "immo" as const },
+    label:     "Live Projekt",
   },
   {
     slug:      "kanzlei",
-    href:      "/projekte/kanzlei",
+    href:      "#kontakt",
     client:    "Wagner & Partner",
     industry:  "Rechtsanwaltskanzlei · Freiburg",
     tags:      ["Branding", "Webdesign", "Lead Gen"],
     accent:    "#C41E1E",
     accentDim: "rgba(196,30,30,0.12)",
     preview:   { bg: "#0A0907", accent: "#C41E1E", style: "legal" as const },
+    label:     "Referenz",
   },
   {
     slug:      "steuerberatung",
-    href:      "/projekte/steuerberatung",
+    href:      "#kontakt",
     client:    "Hoffmann Steuerberatung",
     industry:  "Steuerberatung · Freiburg",
     tags:      ["Webdesign", "Conversion", "SEO"],
     accent:    "#00EEFF",
     accentDim: "rgba(0,238,255,0.10)",
     preview:   { bg: "#040407", accent: "#00EEFF", style: "fintech" as const },
+    label:     "Referenz",
+  },
+  {
+    slug:      "handwerk",
+    href:      "#kontakt",
+    client:    "Baumeister Söhne GmbH",
+    industry:  "Handwerksbetrieb · Freiburg",
+    tags:      ["Webdesign", "SEO", "Google Maps"],
+    accent:    "#F97316",
+    accentDim: "rgba(249,115,22,0.12)",
+    preview:   { bg: "#090704", accent: "#F97316", style: "craft" as const },
+    label:     "Referenz",
   },
 ];
 
-// ─── Style-specific mini previews ─────────────────────────────────
-function LuxuryPreview({ accent }: { accent: string }) {
+// ─── Previews ─────────────────────────────────────────────────────
+
+function ImmoPreview({ accent }: { accent: string }) {
   return (
-    <div style={{ position: "absolute", inset: 0, top: "28px", padding: "20px 18px" }}>
-      {[{ x: 65, y: 25, s: 3 }, { x: 80, y: 55, s: 2 }, { x: 20, y: 60, s: 2.5 }].map((p, i) => (
-        <div key={i} style={{ position: "absolute", left: `${p.x}%`, top: `${p.y}%`, width: `${p.s}px`, height: `${p.s}px`, borderRadius: "50%", background: accent, boxShadow: `0 0 6px ${accent}`, opacity: 0.7 }} />
-      ))}
-      <div style={{ width: "28px", height: "1px", background: accent, marginBottom: "12px" }} />
-      <div style={{ fontSize: "7px", color: "rgba(245,240,232,0.35)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "10px" }}>Est. 1998 · Freiburg</div>
-      <div style={{ fontFamily: "Georgia, serif", fontSize: "24px", fontWeight: 300, color: "#F5F0E8", lineHeight: 1.0, letterSpacing: "-0.02em" }}>Außergewöhnliche</div>
-      <div style={{ fontFamily: "Georgia, serif", fontSize: "24px", fontWeight: 300, fontStyle: "italic", color: accent, lineHeight: 1.0 }}>Immobilien</div>
-      <div style={{ marginTop: "14px", display: "flex", gap: "8px" }}>
-        <div style={{ background: accent, padding: "5px 12px" }}>
-          <div style={{ width: "60px", height: "5px", borderRadius: "1px", background: "rgba(0,0,0,0.3)" }} />
+    <div style={{ position: "absolute", inset: 0, top: "28px" }}>
+      {/* Hero image placeholder */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "110px", background: `linear-gradient(135deg, #1a150a 0%, #2c2010 100%)`, overflow: "hidden" }}>
+        {/* Subtle grid */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${accent}08 1px, transparent 1px), linear-gradient(90deg, ${accent}08 1px, transparent 1px)`, backgroundSize: "24px 24px" }} />
+        {/* Property silhouette */}
+        <div style={{ position: "absolute", bottom: 0, left: "20px", width: "80px", height: "60px", background: `${accent}15`, border: `1px solid ${accent}25` }} />
+        <div style={{ position: "absolute", bottom: 0, left: "50px", width: "50px", height: "80px", background: `${accent}10`, border: `1px solid ${accent}20` }} />
+        <div style={{ position: "absolute", bottom: 0, right: "20px", width: "70px", height: "50px", background: `${accent}12`, border: `1px solid ${accent}20` }} />
+        {/* Overlay gradient */}
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, #0D0B08 0%, transparent 60%)` }} />
+        {/* Badge */}
+        <div style={{ position: "absolute", top: "10px", right: "12px", background: accent, padding: "3px 8px" }}>
+          <span style={{ fontSize: "7px", fontWeight: 700, letterSpacing: "0.1em", color: "#0D0B08" }}>VERFÜGBAR</span>
         </div>
       </div>
-      <div style={{ position: "absolute", bottom: "12px", left: "18px", right: "18px", display: "flex", gap: "6px" }}>
+
+      {/* Content */}
+      <div style={{ position: "absolute", top: "118px", left: 0, right: 0, padding: "0 18px" }}>
+        <div style={{ marginBottom: "4px", display: "flex", alignItems: "center", gap: "6px" }}>
+          <div style={{ width: "14px", height: "1px", background: accent }} />
+          <span style={{ fontSize: "6px", color: accent, letterSpacing: "0.18em", textTransform: "uppercase" }}>Freiburg · Altstadt</span>
+        </div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: "16px", fontWeight: 400, color: "#F5EDD8", lineHeight: 1.1, marginBottom: "8px" }}>Exklusive<br /><em style={{ color: accent }}>Stadtvilla</em></div>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+          {["4 Zi.", "180 m²", "€ 1,2 M"].map((s, i) => (
+            <div key={i} style={{ padding: "3px 8px", background: `${accent}12`, border: `1px solid ${accent}22`, fontSize: "7px", color: "rgba(245,237,216,0.7)", fontWeight: 600 }}>{s}</div>
+          ))}
+        </div>
+      </div>
+
+      {/* Property cards row */}
+      <div style={{ position: "absolute", bottom: "4px", left: "10px", right: "10px", display: "flex", gap: "6px" }}>
         {[0, 1].map(i => (
-          <div key={i} style={{ flex: 1, background: `${accent}10`, border: `1px solid ${accent}20`, padding: "6px 8px" }}>
-            <div style={{ width: "100%", height: "28px", background: "rgba(255,255,255,0.06)", marginBottom: "5px" }} />
-            <div style={{ width: "70%", height: "4px", background: accent, opacity: 0.5, borderRadius: "1px" }} />
+          <div key={i} style={{ flex: 1, background: "#181208", border: `1px solid ${accent}15`, padding: "7px 8px" }}>
+            <div style={{ width: "100%", height: "22px", background: `${accent}08`, marginBottom: "5px" }} />
+            <div style={{ width: "70%", height: "4px", background: accent, opacity: 0.45, borderRadius: "1px", marginBottom: "3px" }} />
+            <div style={{ width: "50%", height: "3px", background: "rgba(255,255,255,0.1)", borderRadius: "1px" }} />
           </div>
         ))}
       </div>
@@ -105,11 +138,7 @@ function FintechPreview({ accent }: { accent: string }) {
           ))}
         </div>
       ))}
-      <div style={{
-        position: "absolute", inset: 0,
-        backgroundImage: `linear-gradient(${accent}08 1px, transparent 1px), linear-gradient(90deg, ${accent}08 1px, transparent 1px)`,
-        backgroundSize: "20px 20px",
-      }} />
+      <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${accent}08 1px, transparent 1px), linear-gradient(90deg, ${accent}08 1px, transparent 1px)`, backgroundSize: "20px 20px" }} />
       <div style={{ position: "relative", zIndex: 2 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "14px" }}>
           <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: accent, boxShadow: `0 0 8px ${accent}` }} />
@@ -137,17 +166,50 @@ function FintechPreview({ accent }: { accent: string }) {
   );
 }
 
-// ─── Browser mockup wrapper ───────────────────────────────────────
+function CraftPreview({ accent }: { accent: string }) {
+  return (
+    <div style={{ position: "absolute", inset: 0, top: "28px", padding: "20px 18px" }}>
+      {/* Texture grid */}
+      <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(45deg, ${accent}04 0px, ${accent}04 1px, transparent 1px, transparent 8px)` }} />
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "16px" }}>
+          <div style={{ width: "20px", height: "2px", background: accent, borderRadius: "1px" }} />
+          <div style={{ fontSize: "6px", color: accent, letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 700 }}>Seit 1978 · Freiburg</div>
+        </div>
+        <div style={{ fontSize: "26px", fontWeight: 900, color: "#FFFFFF", lineHeight: 1.0, letterSpacing: "-0.03em" }}>Qualität,</div>
+        <div style={{ fontSize: "26px", fontWeight: 900, color: accent, lineHeight: 1.0, letterSpacing: "-0.03em" }}>die hält.</div>
+        <div style={{ marginTop: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
+          {["Dachdeckerei", "Fassadenbau", "Sanierung"].map((s, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ width: "4px", height: "4px", background: accent, flexShrink: 0 }} />
+              <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>{s}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: "14px", background: accent, display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px" }}>
+          <div style={{ width: "50px", height: "5px", background: "rgba(0,0,0,0.35)", borderRadius: "1px" }} />
+          <div style={{ width: "8px", height: "8px", borderRight: "2px solid rgba(0,0,0,0.5)", borderTop: "2px solid rgba(0,0,0,0.5)", transform: "rotate(45deg)" }} />
+        </div>
+      </div>
+      <div style={{ position: "absolute", bottom: "12px", right: "14px", width: "48px", height: "48px", border: `1px solid ${accent}30`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontSize: "8px", fontWeight: 800, color: accent, textAlign: "center", lineHeight: 1.2 }}>4.9<br /><span style={{ fontSize: "6px", opacity: 0.6 }}>★★★★★</span></div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Browser Mockup ───────────────────────────────────────────────
+
 function BrowserMockup({ p, hovered }: { p: typeof projects[0]; hovered: boolean }) {
   const { preview: pv, accent } = p;
   return (
     <div style={{
-      borderRadius: "10px",
+      borderRadius: "12px",
       overflow: "hidden",
       border: `1px solid ${hovered ? accent + "44" : "rgba(255,255,255,0.08)"}`,
       boxShadow: hovered
-        ? `0 24px 70px rgba(0,0,0,0.7), 0 0 0 1px ${accent}22`
-        : "0 10px 40px rgba(0,0,0,0.4)",
+        ? `0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px ${accent}22`
+        : "0 12px 48px rgba(0,0,0,0.5)",
       transition: "border-color 0.4s, box-shadow 0.4s",
     }}>
       {/* Chrome bar */}
@@ -168,8 +230,8 @@ function BrowserMockup({ p, hovered }: { p: typeof projects[0]; hovered: boolean
         </div>
       </div>
 
-      {/* Preview area */}
-      <div style={{ background: pv.bg, height: "230px", position: "relative", overflow: "hidden" }}>
+      {/* Preview */}
+      <div style={{ background: pv.bg, height: "240px", position: "relative", overflow: "hidden" }}>
         {/* Mini nav */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: "28px",
@@ -187,11 +249,11 @@ function BrowserMockup({ p, hovered }: { p: typeof projects[0]; hovered: boolean
           </div>
         </div>
 
-        {pv.style === "luxury"  && <LuxuryPreview  accent={pv.accent} />}
-        {pv.style === "legal"   && <LegalPreview   accent={pv.accent} />}
-        {pv.style === "fintech" && <FintechPreview  accent={pv.accent} />}
+        {pv.style === "immo"   && <ImmoPreview   accent={pv.accent} />}
+        {pv.style === "legal"  && <LegalPreview  accent={pv.accent} />}
+        {pv.style === "fintech" && <FintechPreview accent={pv.accent} />}
+        {pv.style === "craft"  && <CraftPreview  accent={pv.accent} />}
 
-        {/* Hover radial glow */}
         <motion.div
           animate={{ opacity: hovered ? 1 : 0 }}
           transition={{ duration: 0.35 }}
@@ -205,122 +267,193 @@ function BrowserMockup({ p, hovered }: { p: typeof projects[0]; hovered: boolean
   );
 }
 
+// ─── Progress Dot (hook must be inside its own component) ─────────
+
+function ProgressDot({ accent, progress, index, total }: {
+  accent: string;
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  index: number;
+  total: number;
+}) {
+  const opacity = useTransform(progress, [index / total - 0.05, index / total + 0.2], [0.2, 1]);
+  return (
+    <motion.div style={{ width: "6px", height: "6px", borderRadius: "50%", background: accent, opacity }} />
+  );
+}
+
 // ─── Section ──────────────────────────────────────────────────────
+
 export default function WorkSection() {
-  const ref    = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const containerRef  = useRef<HTMLDivElement>(null);
+  const stickyRef     = useRef<HTMLDivElement>(null);
+  const trackRef      = useRef<HTMLDivElement>(null);
+  const headerRef     = useRef<HTMLDivElement>(null);
+  const inView        = useInView(headerRef, { once: true, margin: "-80px" });
   const [hovered, setHovered] = useState<string | null>(null);
+  const [trackOffset, setTrackOffset] = useState(0);
+
+  useEffect(() => {
+    function measure() {
+      if (!trackRef.current || !stickyRef.current) return;
+      const trackW   = trackRef.current.scrollWidth;
+      const viewW    = stickyRef.current.clientWidth;
+      setTrackOffset(Math.max(0, trackW - viewW + 80));
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const xRaw    = useTransform(scrollYProgress, [0, 1], [0, -trackOffset]);
+  const x       = useSpring(xRaw, { stiffness: 80, damping: 22, restDelta: 0.5 });
+
 
   return (
-    <section
-      ref={ref}
+    <div
+      ref={containerRef}
       id="projekte"
-      aria-label="Referenzprojekte"
-      style={{
-        background: "#070C17",
-        padding: "160px 0",
-        position: "relative",
-        overflow: "hidden",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-      }}
+      style={{ position: "relative", height: "320vh" }}
     >
-      {/* Background shifts with hovered card */}
-      <div aria-hidden="true" style={{
-        position: "absolute", inset: 0, pointerEvents: "none",
-        transition: "background 0.6s ease",
-        background:
-          hovered === "immobilien"    ? "radial-gradient(ellipse 55% 60% at 17% 50%, rgba(201,168,112,0.05) 0%, transparent 70%)"
-          : hovered === "kanzlei"     ? "radial-gradient(ellipse 55% 60% at 50% 50%, rgba(196,30,30,0.05) 0%, transparent 70%)"
-          : hovered === "steuerberatung" ? "radial-gradient(ellipse 55% 60% at 83% 50%, rgba(0,238,255,0.05) 0%, transparent 70%)"
-          : "none",
-      }} />
-
-      <div className="container-xl">
-
-        {/* Header row */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease }}
-          className="mb-16 md:mb-20 flex flex-col md:flex-row md:justify-between md:items-end gap-6"
-          style={{  }}
-        >
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "20px" }}>
+      <div
+        ref={stickyRef}
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflow: "hidden",
+          background: "#070C17",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {/* Header */}
+        <div ref={headerRef} style={{ padding: "0 max(5vw, 32px)", marginBottom: "40px", flexShrink: 0 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "16px" }}>
               <div style={{ width: "28px", height: "1px", background: "#3B82F6" }} />
               <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#3B82F6" }}>
                 Referenzprojekte
               </span>
             </div>
-            <h2 style={{
-              fontSize: "clamp(28px, 5vw, 64px)",
-              fontWeight: 800,
-              letterSpacing: "-0.04em",
-              lineHeight: 1.0,
-              color: "#FFFFFF",
-              margin: 0,
-            }}>
-              Unsere Arbeit —<br />
-              <span style={{ color: "rgba(255,255,255,0.28)" }}>für sich selbst sprechend.</span>
-            </h2>
-          </div>
-        </motion.div>
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+              <h2 style={{
+                fontSize: "clamp(24px, 4vw, 56px)",
+                fontWeight: 800,
+                letterSpacing: "-0.04em",
+                lineHeight: 1.0,
+                color: "#FFFFFF",
+                margin: 0,
+              }}>
+                Unsere Arbeit —<br />
+                <span style={{ color: "rgba(255,255,255,0.28)" }}>für sich selbst sprechend.</span>
+              </h2>
+              {/* Scroll hint */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.5 }}
+                style={{ display: "flex", alignItems: "center", gap: "8px", color: "rgba(255,255,255,0.25)", fontSize: "11px", letterSpacing: "0.06em", flexShrink: 0 }}
+              >
+                <motion.span
+                  animate={{ x: [0, 6, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                >
+                  →
+                </motion.span>
+                Scrollen zum Erkunden
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-7">
+        {/* Horizontal track */}
+        <motion.div
+          ref={trackRef}
+          style={{
+            x,
+            display: "flex",
+            gap: "28px",
+            paddingLeft: "max(5vw, 32px)",
+            paddingRight: "max(5vw, 32px)",
+            alignItems: "center",
+            flexShrink: 0,
+          }}
+        >
           {projects.map((p, i) => (
             <motion.div
               key={p.slug}
-              initial={{ opacity: 0, y: 64 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.85, delay: i * 0.16, ease }}
+              transition={{ duration: 0.75, delay: i * 0.1, ease }}
               onMouseEnter={() => setHovered(p.slug)}
               onMouseLeave={() => setHovered(null)}
+              style={{ flexShrink: 0, width: "clamp(300px, 30vw, 420px)" }}
             >
               <Link href={p.href} style={{ textDecoration: "none", display: "block" }}>
                 <motion.div
                   animate={{
                     y:     hovered === p.slug ? -10 : 0,
-                    scale: hovered === p.slug ? 1.025 : 1,
+                    scale: hovered === p.slug ? 1.02 : 1,
                   }}
                   transition={{ type: "spring", stiffness: 180, damping: 20 }}
                 >
                   <BrowserMockup p={p} hovered={hovered === p.slug} />
 
-                  {/* Info row */}
-                  <div style={{ padding: "22px 2px 0" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                  {/* Info */}
+                  <div style={{ padding: "20px 2px 0" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                       <div>
-                        <h3 style={{
-                          fontSize: "17px", fontWeight: 800, letterSpacing: "-0.02em",
-                          color: hovered === p.slug ? p.accent : "#FFFFFF",
-                          margin: "0 0 4px",
-                          transition: "color 0.3s",
-                        }}>
-                          {p.client}
-                        </h3>
-                        <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", margin: 0, letterSpacing: "0.03em" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                          <h3 style={{
+                            fontSize: "16px", fontWeight: 800, letterSpacing: "-0.02em",
+                            color: hovered === p.slug ? p.accent : "#FFFFFF",
+                            margin: 0,
+                            transition: "color 0.3s",
+                          }}>
+                            {p.client}
+                          </h3>
+                          <span style={{
+                            fontSize: "9px", fontWeight: 700, letterSpacing: "0.1em",
+                            padding: "2px 7px",
+                            background: `${p.accent}18`,
+                            color: p.accent,
+                            border: `1px solid ${p.accent}30`,
+                            borderRadius: "2px",
+                          }}>
+                            {p.label}
+                          </span>
+                        </div>
+                        <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.28)", margin: 0, letterSpacing: "0.03em" }}>
                           {p.industry}
                         </p>
                       </div>
                       <motion.span
                         animate={{ opacity: hovered === p.slug ? 1 : 0, x: hovered === p.slug ? 0 : 6 }}
-                        transition={{ duration: 0.22 }}
-                        style={{ fontSize: "22px", color: p.accent, lineHeight: 1 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ fontSize: "20px", color: p.accent, lineHeight: 1, flexShrink: 0 }}
                       >
                         →
                       </motion.span>
                     </div>
-
-                    {/* Tags */}
                     <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                       {p.tags.map(tag => (
                         <span key={tag} style={{
-                          fontSize: "10px", fontWeight: 600, letterSpacing: "0.08em",
-                          padding: "4px 10px",
+                          fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em",
+                          padding: "3px 9px",
                           background: hovered === p.slug ? p.accentDim : "rgba(255,255,255,0.05)",
-                          color: hovered === p.slug ? p.accent : "rgba(255,255,255,0.3)",
-                          border: `1px solid ${hovered === p.slug ? p.accent + "33" : "rgba(255,255,255,0.08)"}`,
+                          color: hovered === p.slug ? p.accent : "rgba(255,255,255,0.28)",
+                          border: `1px solid ${hovered === p.slug ? p.accent + "33" : "rgba(255,255,255,0.07)"}`,
                           borderRadius: "2px",
                           transition: "all 0.3s",
                         }}>
@@ -333,24 +466,29 @@ export default function WorkSection() {
               </Link>
             </motion.div>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          style={{ marginTop: "80px", textAlign: "center" }}
-        >
-          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.22)", marginBottom: "24px" }}>
-            Ihre Branche ist auch dabei — wir bauen für jeden Markt.
-          </p>
-          <ArrowBtn href="#kontakt" variant="primary">
-            Projekt anfragen
-          </ArrowBtn>
         </motion.div>
 
+        {/* Progress bar */}
+        <div style={{ position: "absolute", bottom: "32px", left: "max(5vw, 32px)", right: "max(5vw, 32px)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.06)", position: "relative", overflow: "hidden", borderRadius: "1px" }}>
+              <motion.div
+                style={{
+                  position: "absolute", top: 0, left: 0, bottom: 0,
+                  background: "linear-gradient(to right, #3B82F6, #6366F1)",
+                  scaleX: scrollYProgress,
+                  transformOrigin: "left",
+                }}
+              />
+            </div>
+            <div style={{ display: "flex", gap: "8px" }}>
+              {projects.map((p, i) => (
+                <ProgressDot key={p.slug} accent={p.accent} progress={scrollYProgress} index={i} total={projects.length} />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

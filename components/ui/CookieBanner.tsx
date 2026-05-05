@@ -42,7 +42,7 @@ export default function CookieBanner() {
         border: "1px solid rgba(255,255,255,0.08)",
         borderRadius: "20px",
         padding: "28px 24px 24px",
-        boxShadow: "0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(79,70,229,0.15)",
+        boxShadow: "0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(18,100,241,0.15)",
         width: "100%",
         maxWidth: "360px",
       }}
@@ -54,20 +54,20 @@ export default function CookieBanner() {
             width: "52px",
             height: "52px",
             borderRadius: "14px",
-            background: "rgba(79,70,229,0.12)",
-            border: "1px solid rgba(79,70,229,0.25)",
+            background: "rgba(18,100,241,0.12)",
+            border: "1px solid rgba(18,100,241,0.25)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="#818CF8" strokeWidth="1.5" />
-            <circle cx="8.5" cy="9.5" r="1.5" fill="#818CF8" />
-            <circle cx="14" cy="8" r="1.1" fill="#818CF8" />
-            <circle cx="15" cy="14" r="1.5" fill="#818CF8" />
-            <circle cx="9" cy="15.5" r="1" fill="#818CF8" />
-            <circle cx="12" cy="12" r="0.9" fill="#818CF8" />
+            <circle cx="12" cy="12" r="10" stroke="#4B8BFF" strokeWidth="1.5" />
+            <circle cx="8.5" cy="9.5" r="1.5" fill="#4B8BFF" />
+            <circle cx="14" cy="8" r="1.1" fill="#4B8BFF" />
+            <circle cx="15" cy="14" r="1.5" fill="#4B8BFF" />
+            <circle cx="9" cy="15.5" r="1" fill="#4B8BFF" />
+            <circle cx="12" cy="12" r="0.9" fill="#4B8BFF" />
           </svg>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function CookieBanner() {
         Wir nutzen Google Analytics um zu verstehen, wie Besucher die Seite verwenden.{" "}
         <Link
           href="/datenschutz"
-          style={{ color: "#818CF8", textDecoration: "underline", textUnderlineOffset: "2px" }}
+          style={{ color: "#4B8BFF", textDecoration: "underline", textUnderlineOffset: "2px" }}
         >
           Mehr erfahren
         </Link>
@@ -103,10 +103,10 @@ export default function CookieBanner() {
             fontSize: "14px",
             fontWeight: 600,
             color: "#fff",
-            background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)",
+            background: "linear-gradient(135deg, #1264F1 0%, #4B8BFF 100%)",
             border: "none",
             cursor: "pointer",
-            boxShadow: "0 4px 16px rgba(79,70,229,0.4)",
+            boxShadow: "0 4px 16px rgba(18,100,241,0.4)",
             transition: "all 0.15s ease",
           }}
         >

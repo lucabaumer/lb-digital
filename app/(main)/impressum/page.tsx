@@ -2,6 +2,10 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Impressum – LB Digital",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function ImpressumPage() {

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://www.hoffmann-steuerberatung-freiburg.de",
+    canonical: "https://www.lb-digital.agency/projekte/steuerberatung",
   },
 };
 

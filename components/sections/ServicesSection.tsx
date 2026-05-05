@@ -12,16 +12,16 @@ const services = [
     id: "webdesign",
     number: "01",
     title: "Webdesign &\nEntwicklung",
-    hook: "Ihre Website ist Ihr bester Vertriebsmitarbeiter — oder Ihr schlechtester.",
+    hook: "Ihre nächsten Kunden googeln Sie — bevor sie anrufen.",
     description:
-      "Ein Template sagt: 'Wir haben keine Persönlichkeit.' Eine individuelle Website sagt: 'Wir wissen, was wir tun.' Wir bauen Ihnen Letzteres — schnell, sauber, in Next.js.",
+      "Ob Kanzlei, Handwerksbetrieb oder Architekturbüro: Wer online nicht professionell wirkt, verliert den Auftrag noch vor dem ersten Gespräch. Wir bauen Websites, die Vertrauen schaffen — schnell, sauber, in Next.js.",
     benefits: [
       "Kein Template. Kein Baukasten. Nur Ihre Marke.",
       "Lädt in unter 1 Sekunde — Lighthouse 95+",
       "Mobile-first, barrierefrei, DSGVO-konform",
       "Direkte Kommunikation — kein Projektmanager",
     ],
-    accent: "#3B82F6",
+    accent: "#1264F1",
     bg: "#0F172A",
     href: "/webdesign-freiburg",
     linkLabel: "Webdesign Freiburg",
@@ -39,7 +39,7 @@ const services = [
       "Alle Formate: SVG, PNG, PDF — druckfertig",
       "Unbegrenzte Revisionen bis es passt",
     ],
-    accent: "#A78BFA",
+    accent: "#F59E0B",
     bg: "#13101F",
     href: "/kontakt",
     linkLabel: "Branding anfragen",
@@ -48,9 +48,9 @@ const services = [
     id: "seo",
     number: "03",
     title: "SEO &\nSichtbarkeit",
-    hook: "95% aller Klicks gehen an die erste Seite bei Google.",
+    hook: "Wer nicht auf Seite 1 bei Google steht, existiert für neue Kunden nicht.",
     description:
-      "Wenn Ihre Kunden nach Ihnen suchen und die Konkurrenz finden, ist das ein bezahlbares Problem. Lokales SEO in Freiburg ist unser Spielfeld — wir kennen den Markt.",
+      "Rechtsanwalt, Handwerker oder Architekt in Freiburg — lokale Google-Sichtbarkeit entscheidet, ob der Anruf bei Ihnen oder der Konkurrenz landet. Wir sorgen dafür, dass Sie gefunden werden.",
     benefits: [
       "Lokal sichtbar: Google Maps, My Business, lokale Keywords",
       "Technisches SEO direkt beim Bau integriert",
@@ -58,7 +58,7 @@ const services = [
       "Transparente Reports — keine leeren Versprechen",
     ],
     accent: "#10B981",
-    bg: "#0A1628",
+    bg: "#07101F",
     href: "/seo-freiburg",
     linkLabel: "SEO Freiburg",
   },
@@ -213,7 +213,7 @@ function ScrollLine({ inView, delay = 0 }: { inView: boolean; delay?: number }) 
       initial={{ scaleX: 0 }}
       animate={inView ? { scaleX: 1 } : {}}
       transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
-      style={{ transformOrigin: "left", height: "1px", background: "linear-gradient(to right, #1D4ED8, transparent)" }}
+      style={{ transformOrigin: "left", height: "1px", background: "linear-gradient(to right, #1264F1, transparent)" }}
       className="absolute bottom-0 left-0 right-0"
     />
   );
@@ -250,7 +250,7 @@ export default function ServicesSection() {
         className="absolute top-0 left-0 right-0 h-px"
         aria-hidden="true"
       >
-        <div style={{ height: "1px", background: "linear-gradient(to right, #1D4ED8, #3B82F6, transparent)" }} />
+        <div style={{ height: "1px", background: "linear-gradient(to right, #1264F1, #4B8BFF, transparent)" }} />
       </motion.div>
 
       <div className="container-xl" ref={ref}>
@@ -272,8 +272,8 @@ export default function ServicesSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08, ease }}
           >
-            Unsere{" "}
-            <span className="text-gradient">Leistungen.</span>
+            Drei Dinge.{" "}
+            <span className="text-gradient">Richtig gemacht.</span>
           </motion.h2>
           <motion.p
             className="mt-5 text-base leading-relaxed max-w-xl"
@@ -318,7 +318,7 @@ export default function ServicesSection() {
                     width: activeIndex === i ? "20px" : "6px",
                     height: "6px",
                     borderRadius: "99px",
-                    background: activeIndex === i ? "#4F46E5" : "#D1D5DB",
+                    background: activeIndex === i ? "#1264F1" : "#D1D5DB",
                     border: "none",
                     padding: 0,
                     transition: "all 0.25s ease",
@@ -361,7 +361,7 @@ export default function ServicesSection() {
                   height: "38px",
                   borderRadius: "50%",
                   border: "1px solid #E5E7EB",
-                  background: activeIndex === services.length - 1 ? "#F9FAFB" : "#4F46E5",
+                  background: activeIndex === services.length - 1 ? "#F9FAFB" : "#1264F1",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -378,13 +378,23 @@ export default function ServicesSection() {
           </div>
         </div>
 
-        <div className="hidden lg:grid lg:grid-cols-3 gap-6 relative">
-          {services.map((s, i) => (
-            <div key={s.id} className="relative">
-              <TiltCard service={s} index={i} inView={inView} />
-              <ScrollLine inView={inView} delay={0.4 + i * 0.18} />
-            </div>
-          ))}
+        {/* Asymmetric grid — 1 wide card left, 2 stacked right */}
+        <div
+          className="hidden lg:grid gap-6 relative"
+          style={{ gridTemplateColumns: "1.4fr 1fr" }}
+        >
+          <div className="relative">
+            <TiltCard service={services[0]} index={0} inView={inView} />
+            <ScrollLine inView={inView} delay={0.4} />
+          </div>
+          <div className="flex flex-col gap-6">
+            {services.slice(1).map((s, i) => (
+              <div key={s.id} className="relative flex-1">
+                <TiltCard service={s} index={i + 1} inView={inView} />
+                <ScrollLine inView={inView} delay={0.4 + (i + 1) * 0.18} />
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>
