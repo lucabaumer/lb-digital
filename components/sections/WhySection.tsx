@@ -8,27 +8,27 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const usps = [
   {
     num: "01",
-    title: "Schnelle Lieferung",
-    short: "2–4 Wochen",
-    detail: "Kein endloses Hin-und-Her. Von Briefing bis Launch in 2–4 Wochen.",
+    title: "Websites, die Anfragen bringen",
+    short: "Conversion first",
+    detail: "Wir bauen nicht schön — wir bauen wirkungsvoll. Klare CTAs, psychologisch durchdachte Struktur, mobil optimiert für Ihre Zielgruppe.",
   },
   {
     num: "02",
-    title: "Alles aus einer Hand",
-    short: "Design, Dev, SEO",
-    detail: "Ein Ansprechpartner für alles — kein Koordinationsaufwand zwischen Gewerken.",
+    title: "In 2–3 Wochen live",
+    short: "Kein Warten",
+    detail: "Kein monatelanger Prozess. Briefing, Design, Entwicklung, Launch — in unter vier Wochen. Mit klarem Zeitplan, der eingehalten wird.",
   },
   {
     num: "03",
     title: "Kein Template. Nie.",
     short: "Ihr Unikat",
-    detail: "Jede Website wird von Grund auf für Sie gebaut — nicht für alle.",
+    detail: "Jede Website wird von Grund auf für Sie gebaut — nicht für tausend andere. Das macht den Unterschied zwischen sichtbar und unsichtbar.",
   },
   {
     num: "04",
-    title: "Messbare Ergebnisse",
-    short: "Anfragen. Nicht nur Besucher.",
-    detail: "Wir optimieren auf neue Kunden — nicht auf Klicks, die nichts bringen.",
+    title: "Ein Ansprechpartner für alles",
+    short: "Design, Dev, SEO",
+    detail: "Sie sprechen direkt mit dem Entwickler — kein Projektmanager als Puffer, keine Missverständnisse, keine versteckten Kosten.",
   },
 ];
 
@@ -131,8 +131,8 @@ export default function WhySection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.07, ease: EASE }}
           >
-            Wir bauen keine Templates.{" "}
-            <span style={{ color: "rgba(255,255,255,0.25)" }}>Wir bauen Ergebnisse.</span>
+            Keine Templates.{" "}
+            <span style={{ color: "rgba(255,255,255,0.25)" }}>Keine leeren Versprechen.</span>
           </motion.h2>
         </div>
 

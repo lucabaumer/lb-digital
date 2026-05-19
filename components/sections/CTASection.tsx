@@ -8,34 +8,18 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 type Status = "idle" | "loading" | "success" | "error";
 
-const services = [
-  "Website / Webdesign",
-  "SEO & Sichtbarkeit",
-  "Beides",
-  "Sonstiges",
-];
-
 export default function CTASection() {
   const ref   = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const [status, setStatus] = useState<Status>("idle");
-  const [form, setForm] = useState({
-    name:    "",
-    email:   "",
-    phone:   "",
-    service: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", phone: "", message: "" });
   const [errors, setErrors] = useState<Partial<typeof form>>({});
 
   const validate = () => {
     const e: Partial<typeof form> = {};
-    if (!form.name.trim())    e.name    = "Bitte Namen eingeben";
-    if (!form.email.trim())   e.email   = "Bitte E-Mail eingeben";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-                              e.email   = "Ungültige E-Mail-Adresse";
-    if (!form.message.trim()) e.message = "Bitte kurz beschreiben, worum es geht";
+    if (!form.phone.trim()) e.phone = "Bitte Telefonnummer eingeben";
+    if (!form.name.trim())  e.name  = "Bitte Namen eingeben";
     return e;
   };
 
@@ -54,7 +38,7 @@ export default function CTASection() {
       });
       if (res.ok) {
         setStatus("success");
-        setForm({ name: "", email: "", phone: "", service: "", message: "" });
+        setForm({ name: "", phone: "", message: "" });
       } else {
         setStatus("error");
       }
@@ -63,43 +47,28 @@ export default function CTASection() {
     }
   };
 
-  const field = (
-    id: keyof typeof form,
-    label: string,
-    type = "text",
-    placeholder = ""
-  ) => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      <label htmlFor={id} style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>
-        {label}
-        {id !== "phone" && id !== "service" && <span style={{ color: "#3B82F6", marginLeft: "3px" }}>*</span>}
-      </label>
-      <input
-        id={id}
-        type={type}
-        value={form[id]}
-        placeholder={placeholder}
-        onChange={e => setForm(f => ({ ...f, [id]: e.target.value }))}
-        style={{
-          background: errors[id] ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)",
-          border: `1px solid ${errors[id] ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
-          borderRadius: "4px",
-          padding: "12px 16px",
-          fontSize: "14px",
-          color: "#FFFFFF",
-          outline: "none",
-          transition: "border-color 0.2s, background 0.2s",
-          width: "100%",
-        }}
-        onFocus={e => { e.currentTarget.style.borderColor = "#3B82F6"; e.currentTarget.style.background = "rgba(59,130,246,0.06)"; }}
-        onBlur={e => { e.currentTarget.style.borderColor = errors[id] ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"; e.currentTarget.style.background = errors[id] ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)"; }}
-      />
-      {errors[id] && <span style={{ fontSize: "11px", color: "#F87171" }}>{errors[id]}</span>}
-    </div>
-  );
+  const inputStyle = (hasError: boolean) => ({
+    background: hasError ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)",
+    border: `1px solid ${hasError ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
+    borderRadius: "6px",
+    padding: "14px 16px",
+    fontSize: "15px",
+    color: "#FFFFFF",
+    outline: "none",
+    transition: "border-color 0.2s, background 0.2s",
+    width: "100%",
+  });
+
+  const labelStyle = {
+    fontSize: "11px",
+    fontWeight: 600 as const,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase" as const,
+    color: "rgba(255,255,255,0.45)",
+  };
 
   return (
-    <section id="kontakt" ref={ref} style={{ background: "#0A1628", padding: "160px 0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+    <section id="kontakt" ref={ref} style={{ background: "#07101F", padding: "140px 0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 24px" }}>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
@@ -111,8 +80,8 @@ export default function CTASection() {
             transition={{ duration: 0.7, ease }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
-              <div style={{ width: "24px", height: "1px", background: "#3B82F6" }} />
-              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#3B82F6" }}>
+              <div style={{ width: "24px", height: "1px", background: "var(--color-accent)" }} />
+              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--color-accent)" }}>
                 {page.cta.eyebrow}
               </span>
             </div>
@@ -121,17 +90,17 @@ export default function CTASection() {
               {page.cta.headline}
             </h2>
 
-            <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", lineHeight: 1.8, marginBottom: "48px", maxWidth: "400px" }}>
+            <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", lineHeight: 1.8, marginBottom: "40px", maxWidth: "400px" }}>
               {page.cta.body}
             </p>
 
             {/* Trust signals */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "40px" }}>
               {[
-                { icon: "✓", text: "Antwort innerhalb von 24 Stunden" },
-                { icon: "✓", text: "Kein Verkaufsdruck, keine Verpflichtung" },
-                { icon: "✓", text: "Kostenloses Erstgespräch" },
-              ].map((item, i) => (
+                "Rückruf innerhalb von 2 Stunden",
+                "Kostenloses Erstgespräch — kein Verkaufsdruck",
+                "Konkretes Angebot in 24 Stunden",
+              ].map((text, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -16 }}
@@ -139,33 +108,41 @@ export default function CTASection() {
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease }}
                   style={{ display: "flex", alignItems: "center", gap: "12px" }}
                 >
-                  <span style={{ width: "20px", height: "20px", background: "rgba(59,130,246,0.15)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", color: "#3B82F6", flexShrink: 0 }}>
-                    {item.icon}
+                  <span style={{ width: "18px", height: "18px", background: "rgba(18,100,241,0.15)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "var(--color-accent)", flexShrink: 0 }}>
+                    ✓
                   </span>
-                  <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)" }}>{item.text}</span>
+                  <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)" }}>{text}</span>
                 </motion.div>
               ))}
             </div>
 
-            {/* Direct contact */}
-            <div style={{ marginTop: "48px", paddingTop: "40px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-              <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}>Oder direkt:</p>
-              <a href={`mailto:${page.footer.email}`} style={{ display: "block", fontSize: "14px", color: "rgba(255,255,255,0.5)", textDecoration: "none", marginBottom: "6px", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-              >
-                {page.footer.email}
-              </a>
-              <a href={`tel:${page.footer.phone}`} style={{ display: "block", fontSize: "14px", color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-              >
-                {page.footer.phone}
-              </a>
-            </div>
+            {/* Direct phone CTA */}
+            <a
+              href={`tel:+49${page.footer.phone.replace(/^0/, "")}`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "15px",
+                fontWeight: 600,
+                color: "#FFFFFF",
+                textDecoration: "none",
+                padding: "14px 24px",
+                border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: "999px",
+                transition: "border-color 0.2s, background 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.background = "transparent"; }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.15 3.38 2 2 0 0 1 3.12 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/>
+              </svg>
+              +49 178 5881195
+            </a>
           </motion.div>
 
-          {/* ── Right: form ── */}
+          {/* ── Right: simplified form ── */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -174,13 +151,12 @@ export default function CTASection() {
             <div style={{
               background: "rgba(255,255,255,0.03)",
               border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "8px",
+              borderRadius: "10px",
               padding: "40px",
               position: "relative",
               overflow: "hidden",
             }}>
-              {/* Top glow */}
-              <div aria-hidden style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: "1px", background: "linear-gradient(to right, transparent, rgba(59,130,246,0.5), transparent)" }} />
+              <div aria-hidden style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: "1px", background: "linear-gradient(to right, transparent, rgba(18,100,241,0.5), transparent)" }} />
 
               <AnimatePresence mode="wait">
                 {status === "success" ? (
@@ -200,10 +176,10 @@ export default function CTASection() {
                       ✓
                     </motion.div>
                     <h3 style={{ fontSize: "22px", fontWeight: 700, color: "#FFFFFF", marginBottom: "12px" }}>
-                      Nachricht erhalten!
+                      Wir melden uns!
                     </h3>
                     <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
-                      Ich melde mich innerhalb von 24 Stunden bei Ihnen. Bis gleich.
+                      Ich rufe Sie innerhalb von 2 Stunden zurück.
                     </p>
                     <button
                       onClick={() => setStatus("idle")}
@@ -220,68 +196,90 @@ export default function CTASection() {
                     exit={{ opacity: 0 }}
                     style={{ display: "flex", flexDirection: "column", gap: "20px" }}
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {field("name",  "Name",   "text",  "Max Mustermann")}
-                      {field("email", "E-Mail", "email", "max@firma.de")}
-                    </div>
+                    <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginBottom: "4px" }}>
+                      Hinterlassen Sie Ihre Nummer — ich rufe zurück.
+                    </p>
 
-                    <div>
-                      {field("phone", "Telefon (optional)", "tel", "+49 ...")}
-                    </div>
-
-                    {/* Message */}
+                    {/* Phone — first and prominent */}
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      <label htmlFor="message" style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>
-                        Nachricht <span style={{ color: "#3B82F6" }}>*</span>
+                      <label htmlFor="phone" style={labelStyle}>
+                        Telefonnummer <span style={{ color: "var(--color-accent)", marginLeft: "3px" }}>*</span>
+                      </label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={form.phone}
+                        placeholder="+49 ..."
+                        autoComplete="tel"
+                        onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                        style={{ ...inputStyle(!!errors.phone), fontSize: "16px", padding: "16px" }}
+                        onFocus={e => { e.currentTarget.style.borderColor = "var(--color-accent)"; e.currentTarget.style.background = "rgba(18,100,241,0.06)"; }}
+                        onBlur={e => { e.currentTarget.style.borderColor = errors.phone ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"; e.currentTarget.style.background = errors.phone ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)"; }}
+                      />
+                      {errors.phone && <span style={{ fontSize: "11px", color: "#F87171" }}>{errors.phone}</span>}
+                    </div>
+
+                    {/* Name */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <label htmlFor="name" style={labelStyle}>
+                        Name <span style={{ color: "var(--color-accent)", marginLeft: "3px" }}>*</span>
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        value={form.name}
+                        placeholder="Max Mustermann"
+                        autoComplete="name"
+                        onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                        style={inputStyle(!!errors.name)}
+                        onFocus={e => { e.currentTarget.style.borderColor = "var(--color-accent)"; e.currentTarget.style.background = "rgba(18,100,241,0.06)"; }}
+                        onBlur={e => { e.currentTarget.style.borderColor = errors.name ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"; e.currentTarget.style.background = errors.name ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)"; }}
+                      />
+                      {errors.name && <span style={{ fontSize: "11px", color: "#F87171" }}>{errors.name}</span>}
+                    </div>
+
+                    {/* Message optional */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <label htmlFor="message" style={labelStyle}>
+                        Kurze Nachricht <span style={{ color: "rgba(255,255,255,0.2)", marginLeft: "3px", textTransform: "none", fontWeight: 400 }}>optional</span>
                       </label>
                       <textarea
                         id="message"
-                        rows={4}
+                        rows={3}
                         value={form.message}
-                        placeholder="Was beschäftigt Sie? Was haben Sie sich vorgestellt?"
+                        placeholder="Womit kann ich helfen?"
                         onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                         style={{
-                          background: errors.message ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)",
-                          border: `1px solid ${errors.message ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
-                          borderRadius: "4px",
-                          padding: "12px 16px",
-                          fontSize: "14px",
-                          color: "#FFFFFF",
-                          outline: "none",
-                          resize: "vertical",
+                          ...inputStyle(false),
+                          resize: "none",
                           fontFamily: "inherit",
                           lineHeight: 1.6,
-                          transition: "border-color 0.2s",
                         }}
-                        onFocus={e => { e.currentTarget.style.borderColor = "#3B82F6"; e.currentTarget.style.background = "rgba(59,130,246,0.06)"; }}
-                        onBlur={e => { e.currentTarget.style.borderColor = errors.message ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"; e.currentTarget.style.background = errors.message ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)"; }}
+                        onFocus={e => { e.currentTarget.style.borderColor = "var(--color-accent)"; e.currentTarget.style.background = "rgba(18,100,241,0.06)"; }}
+                        onBlur={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
                       />
-                      {errors.message && <span style={{ fontSize: "11px", color: "#F87171" }}>{errors.message}</span>}
                     </div>
 
-                    {/* Error banner */}
                     {status === "error" && (
                       <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "4px", padding: "12px 16px", fontSize: "13px", color: "#F87171" }}>
-                        Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie direkt an {page.footer.email}.
+                        Etwas ist schiefgelaufen. Rufen Sie uns direkt an: {page.footer.phone}
                       </div>
                     )}
 
-                    {/* Submit */}
                     <motion.button
                       type="submit"
                       disabled={status === "loading"}
-                      whileHover={{ scale: status === "loading" ? 1 : 1.02, background: "#1E40AF" }}
+                      whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       style={{
-                        background: "#1D4ED8",
-                        color: "#FFFFFF",
+                        background: "#FFFFFF",
+                        color: "#07101F",
                         border: "none",
                         borderRadius: "999px",
-                        padding: "15px 32px",
-                        fontSize: "13px",
+                        padding: "16px 32px",
+                        fontSize: "14px",
                         fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
+                        letterSpacing: "0.02em",
                         cursor: status === "loading" ? "not-allowed" : "pointer",
                         opacity: status === "loading" ? 0.7 : 1,
                         display: "flex",
@@ -289,6 +287,7 @@ export default function CTASection() {
                         justifyContent: "center",
                         gap: "10px",
                         width: "100%",
+                        transition: "box-shadow 0.2s",
                       }}
                     >
                       {status === "loading" ? (
@@ -296,7 +295,7 @@ export default function CTASection() {
                           <motion.span
                             animate={{ rotate: 360 }}
                             transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                            style={{ width: "14px", height: "14px", border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", display: "inline-block" }}
+                            style={{ width: "14px", height: "14px", border: "2px solid rgba(7,16,31,0.2)", borderTopColor: "#07101F", borderRadius: "50%", display: "inline-block" }}
                           />
                           Wird gesendet…
                         </>

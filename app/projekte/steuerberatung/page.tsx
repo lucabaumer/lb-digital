@@ -80,11 +80,11 @@ function MagneticButton({ children, href, primary }: { children: ReactNode; href
         transition: "box-shadow 0.3s, background 0.2s",
         ...(primary
           ? {
-              background: C.cyan,
+              background: C.white,
               color: C.bg,
               boxShadow: hovered
-                ? `0 0 60px rgba(0,238,255,0.7), 0 0 120px rgba(0,238,255,0.3)`
-                : `0 0 30px rgba(0,238,255,0.4)`,
+                ? `0 0 40px rgba(255,255,255,0.35), 0 0 80px rgba(255,255,255,0.12)`
+                : `0 0 18px rgba(255,255,255,0.18)`,
             }
           : {
               background: "transparent",

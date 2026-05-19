@@ -175,6 +175,33 @@ nextjs-portal { display: none !important; }
 
 .btn-primary:active { transform: scale(0.98); }
 
+/* Weißer CTA für dunkle/navy Hintergründe — Kontrastfarbe, nirgendwo sonst */
+.btn-primary-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  color: #07101F;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1), transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-primary-white:hover {
+  background: #EEF3FF;
+  box-shadow: 0 6px 28px rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.btn-primary-white:active { transform: scale(0.98); }
+
 .btn-ghost-light {
   display: inline-flex;
   align-items: center;

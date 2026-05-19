@@ -179,8 +179,35 @@ export default function SEOFreiburgContent() {
             </motion.p>
 
             <motion.div className="flex flex-wrap gap-3 mb-12" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.52, ease: EASE }}>
-              <ArrowBtn href="#kontakt" variant="primary">Kostenlose SEO-Analyse</ArrowBtn>
+              <ArrowBtn href="#kontakt" variant="primary-white">Kostenlose SEO-Analyse</ArrowBtn>
               <ArrowBtn href="#leistungen" variant="ghost-light">Leistungen ansehen</ArrowBtn>
+            </motion.div>
+
+            <motion.div
+              className="mb-12 -mt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.65 }}
+            >
+              <a
+                href="tel:+491785881195"
+                style={{
+                  fontSize: "13px",
+                  color: "rgba(255,255,255,0.35)",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.15 3.38 2 2 0 0 1 3.12 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/>
+                </svg>
+                Oder direkt anrufen: +49 178 5881195
+              </a>
             </motion.div>
 
             <motion.div className="flex flex-wrap gap-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.7 }} aria-hidden="true">
@@ -320,7 +347,7 @@ export default function SEOFreiburgContent() {
                     </li>
                   ))}
                 </ul>
-                <button onClick={openModal} className="w-full py-3 rounded-lg font-semibold text-sm transition-all duration-200" style={{ background: plan.highlight ? ACCENT : "rgba(255,255,255,0.07)", color: "#fff", border: plan.highlight ? "none" : "1px solid rgba(255,255,255,0.1)" }}>
+                <button onClick={openModal} className="w-full py-3 rounded-lg font-semibold text-sm transition-all duration-200" style={{ background: plan.highlight ? "#FFFFFF" : "rgba(255,255,255,0.07)", color: plan.highlight ? "#07101F" : "#fff", border: plan.highlight ? "none" : "1px solid rgba(255,255,255,0.1)" }}>
                   {plan.cta}
                 </button>
               </motion.div>
@@ -378,7 +405,7 @@ export default function SEOFreiburgContent() {
             <p className="mb-10 mx-auto" style={{ color: "rgba(255,255,255,0.5)", fontSize: "clamp(15px, 1.6vw, 18px)", maxWidth: "480px" }}>
               Kostenlose SEO-Analyse — wir schauen uns Ihre aktuelle Situation an und zeigen Ihnen, welche Chancen Sie noch nicht nutzen.
             </p>
-            <ArrowBtn href="#kontakt" variant="primary">Kostenlose SEO-Analyse starten</ArrowBtn>
+            <ArrowBtn href="#kontakt" variant="primary-white">Kostenlose SEO-Analyse starten</ArrowBtn>
           </Reveal>
         </div>
       </section>
