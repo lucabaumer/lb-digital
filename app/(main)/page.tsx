@@ -23,7 +23,6 @@ const faqSchema = {
 
 import TrustBar from "@/components/sections/TrustBar";
 import ServicesSection from "@/components/sections/ServicesSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import WorkSection from "@/components/sections/WorkSection";
 import WhySection from "@/components/sections/WhySection";
 import FAQSection from "@/components/sections/FAQSection";
@@ -40,7 +39,6 @@ export default function Home() {
       <HeroSection />
       <TrustBar />
       <SectionReveal><ServicesSection /></SectionReveal>
-      <TestimonialsSection />
       <SectionReveal><WorkSection /></SectionReveal>
       <SectionReveal><WhySection /></SectionReveal>
       <SectionReveal><FAQSection /></SectionReveal>
