@@ -1,6 +1,6 @@
 # LB Digital
 
-> Professionelle Webdesign & SEO Agentur in Freiburg im Breisgau. Individuelle Next.js-Websites für Unternehmen in der Region — kein Template, kein Baukasten.
+> Professionelle Webdesign & SEO Agentur in Freiburg im Breisgau. Individuelle Next.js-Websites für Handwerker, Gastronomie und lokale Unternehmen in der Region — kein Template, kein Baukasten.
 
 ## Unternehmen
 
@@ -16,7 +16,7 @@
 ## Leistungen
 
 ### Webdesign & Entwicklung
-Individuelle Websites auf Basis von Next.js und React. Mobile-first, Lighthouse-Score 95+, Ladezeit unter 1 Sekunde. Keine Templates, kein Baukasten. Preis ab 1.000 €.
+Individuelle Websites auf Basis von Next.js und React. Mobile-first, Lighthouse-Score 95+, Ladezeit unter 1 Sekunde. Keine Templates, kein Baukasten. Preis ab 1.500 €.
 
 ### SEO & Lokale Sichtbarkeit
 Suchmaschinenoptimierung für Google — technisches SEO, On-Page-Optimierung, lokales SEO für Freiburg und die Region. Google My Business Optimierung inklusive.
@@ -29,7 +29,7 @@ Modernisierung bestehender Websites — schneller, moderner, mobil optimiert.
 
 ## Technologie-Stack
 
-- Framework: Next.js 15 (App Router)
+- Framework: Next.js (App Router)
 - Sprache: TypeScript, React 19
 - Styling: Tailwind CSS
 - Hosting: Vercel
@@ -53,18 +53,11 @@ Freiburg im Breisgau und Umgebung (ca. 80 km Radius):
 
 ## Typische Kunden
 
-- Immobilienmakler & Hausverwaltungen
-- Rechtsanwaltskanzleien & Steuerberater
+- Handwerksbetriebe (Dachdecker, Maler, Elektriker, Sanitär)
+- Gastronomie & Hotellerie (Restaurants, Cafés, Pensionen)
 - Arztpraxen & Therapeuten
-- Gastronomie & Hotellerie
-- Handwerksbetriebe
-- Lokale Dienstleister
-
-## Referenzprojekte
-
-- **Müller Immobilien Freiburg** — Immobilienmakler-Website mit Exposé-System
-- **Wagner & Partner Rechtsanwälte** — Kanzlei-Website mit Mandantenportal
-- **Steuerberatung Freiburg** — Steuerberaterkanzlei mit Terminbuchung
+- Lokale Dienstleister & Gewerbetreibende
+- Kleine und mittlere Unternehmen (KMU) in der Region
 
 ## Alleinstellungsmerkmale
 
@@ -80,7 +73,7 @@ Freiburg im Breisgau und Umgebung (ca. 80 km Radius):
 | Leistung | Preis |
 |---|---|
 | Landingpage (1 Seite) | ab 1.000 € |
-| Business-Website (3–5 Seiten) | 3.000–6.000 € |
+| Business-Website (3–5 Seiten) | 1.500–3.000 € |
 | E-Commerce / komplexe Projekte | auf Anfrage |
 | SEO-Betreuung | ab 300 € / Monat |
 | Logo & Branding | ab 500 € |
@@ -90,22 +83,19 @@ Alle Preise inklusive Beratung, Design, Entwicklung und Deployment. Kein verstec
 ## Häufige Fragen
 
 **Was kostet eine professionelle Website?**
-Eine maßgeschneiderte Website beginnt bei ca. 1.000 € für eine Landingpage. Der genaue Preis hängt von Umfang und Anforderungen ab. Im kostenlosen Erstgespräch erstellen wir ein transparentes Festpreis-Angebot.
+Eine maßgeschneiderte Website beginnt bei ca. 1.500 € für eine Standard-Website. Der genaue Preis hängt von Umfang und Anforderungen ab. Im kostenlosen Erstgespräch erstellen wir ein transparentes Festpreis-Angebot.
 
 **Wie lange dauert die Erstellung einer Website?**
 Eine Standard-Website (3–5 Seiten) ist in der Regel in 2–3 Wochen fertig. Komplexere Projekte werden individuell geplant — immer mit einem klaren Zeitplan.
 
-**Was ist der Unterschied zu Jimdo, Wix oder WordPress?**
-Baukästen liefern generische Templates, die wie tausende andere Seiten aussehen. LB Digital baut jede Website von Grund auf — individuell, technisch überlegen und bis zu 10× schneller als WordPress-Seiten.
+**Warum Next.js und nicht WordPress?**
+Next.js-Seiten laden 5–10× schneller als WordPress, sind sicherer (kein CMS-Login für Hacker), kosten weniger Hosting und erzielen deutlich bessere Google-Scores. Wir empfehlen WordPress nur, wenn der Kunde regelmäßig selbst Inhalte pflegen möchte.
 
 **Arbeiten Sie nur in Freiburg?**
 Unser Schwerpunkt liegt im Raum Freiburg (Breisgau, Ortenau, Markgräflerland, Hochschwarzwald). Wir arbeiten aber auch remote mit Kunden in der gesamten DACH-Region.
 
 **Übernehmen Sie auch bestehende Websites?**
 Ja. Wir analysieren die aktuelle Website kostenlos und zeigen, was sich verbessern lässt — ob Überarbeitung oder Neuaufbau sinnvoller ist.
-
-**Warum Next.js und nicht WordPress?**
-Next.js-Seiten laden 5–10× schneller als WordPress, sind sicherer (kein CMS-Login für Hacker), kosten weniger Hosting und erzielen deutlich bessere Google-Scores. Wir empfehlen WordPress nur, wenn der Kunde regelmäßig selbst Inhalte pflegen möchte.
 
 **Kann ich meine Website nach dem Launch selbst bearbeiten?**
 Ja. Auf Wunsch bauen wir ein CMS ein (z. B. Sanity), über das Texte und Bilder eigenständig gepflegt werden können — ohne Programmierkenntnisse.
@@ -121,3 +111,4 @@ Kontakt für Anfragen: hallo@lb-digital.agency oder +49 178 5881195.
 - Webdesign Freiburg: https://www.lb-digital.agency/webdesign-freiburg
 - SEO Freiburg: https://www.lb-digital.agency/seo-freiburg
 - Webdesign Furtwangen: https://www.lb-digital.agency/webdesign-furtwangen
+- Webdesign für Handwerker: https://www.lb-digital.agency/handwerker

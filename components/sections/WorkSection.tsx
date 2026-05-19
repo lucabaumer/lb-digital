@@ -8,25 +8,25 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const projects = [
   {
-    slug:      "immo-template",
-    href:      "https://immo-template.vercel.app",
-    client:    "Immo Template",
-    industry:  "Immobilien Website · Next.js + Sanity CMS",
-    tags:      ["Next.js", "Sanity CMS", "Webdesign", "SEO"],
-    accent:    "#D4AF6A",
-    accentDim: "rgba(212,175,106,0.13)",
-    preview:   { bg: "#0D0B08", accent: "#D4AF6A", style: "immo" as const },
-    label:     "Live Projekt",
+    slug:      "gastronomie",
+    href:      "#kontakt",
+    client:    "Gasthaus Schwarzwaldblick",
+    industry:  "Gastronomie · Titisee-Neustadt",
+    tags:      ["Webdesign", "Online-Reservierung", "Local SEO"],
+    accent:    "#E8652A",
+    accentDim: "rgba(232,101,42,0.13)",
+    preview:   { bg: "#0D0704", accent: "#E8652A", style: "gastro" as const },
+    label:     "Referenz",
   },
   {
-    slug:      "kanzlei",
+    slug:      "handwerk",
     href:      "#kontakt",
-    client:    "Wagner & Partner",
-    industry:  "Rechtsanwaltskanzlei · Freiburg",
-    tags:      ["Branding", "Webdesign", "Lead Gen"],
-    accent:    "#C41E1E",
-    accentDim: "rgba(196,30,30,0.12)",
-    preview:   { bg: "#0A0907", accent: "#C41E1E", style: "legal" as const },
+    client:    "Baumeister Söhne GmbH",
+    industry:  "Handwerksbetrieb · Freiburg",
+    tags:      ["Webdesign", "SEO", "Google Maps"],
+    accent:    "#F97316",
+    accentDim: "rgba(249,115,22,0.12)",
+    preview:   { bg: "#090704", accent: "#F97316", style: "craft" as const },
     label:     "Referenz",
   },
   {
@@ -41,60 +41,51 @@ const projects = [
     label:     "Referenz",
   },
   {
-    slug:      "handwerk",
+    slug:      "physio",
     href:      "#kontakt",
-    client:    "Baumeister Söhne GmbH",
-    industry:  "Handwerksbetrieb · Freiburg",
-    tags:      ["Webdesign", "SEO", "Google Maps"],
-    accent:    "#F97316",
-    accentDim: "rgba(249,115,22,0.12)",
-    preview:   { bg: "#090704", accent: "#F97316", style: "craft" as const },
+    client:    "PhysioActive Freiburg",
+    industry:  "Physiotherapie · Freiburg",
+    tags:      ["Webdesign", "Terminbuchung", "Google Maps"],
+    accent:    "#0EA5E9",
+    accentDim: "rgba(14,165,233,0.12)",
+    preview:   { bg: "#030810", accent: "#0EA5E9", style: "physio" as const },
     label:     "Referenz",
   },
 ];
 
 // ─── Previews ─────────────────────────────────────────────────────
 
-function ImmoPreview({ accent }: { accent: string }) {
+function GastronomiePreview({ accent }: { accent: string }) {
   return (
     <div style={{ position: "absolute", inset: 0, top: "28px" }}>
-      {/* Hero image placeholder */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "110px", background: `linear-gradient(135deg, #1a150a 0%, #2c2010 100%)`, overflow: "hidden" }}>
-        {/* Subtle grid */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${accent}08 1px, transparent 1px), linear-gradient(90deg, ${accent}08 1px, transparent 1px)`, backgroundSize: "24px 24px" }} />
-        {/* Property silhouette */}
-        <div style={{ position: "absolute", bottom: 0, left: "20px", width: "80px", height: "60px", background: `${accent}15`, border: `1px solid ${accent}25` }} />
-        <div style={{ position: "absolute", bottom: 0, left: "50px", width: "50px", height: "80px", background: `${accent}10`, border: `1px solid ${accent}20` }} />
-        <div style={{ position: "absolute", bottom: 0, right: "20px", width: "70px", height: "50px", background: `${accent}12`, border: `1px solid ${accent}20` }} />
-        {/* Overlay gradient */}
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, #0D0B08 0%, transparent 60%)` }} />
-        {/* Badge */}
-        <div style={{ position: "absolute", top: "10px", right: "12px", background: accent, padding: "3px 8px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, letterSpacing: "0.1em", color: "#0D0B08" }}>VERFÜGBAR</span>
+      {/* Hero band */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100px", background: `linear-gradient(135deg, #1a0c04 0%, #2c1408 100%)`, overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(45deg, ${accent}06 0px, ${accent}06 1px, transparent 1px, transparent 12px)` }} />
+        <div style={{ position: "absolute", top: "10px", left: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ width: "20px", height: "2px", background: accent }} />
+          <span style={{ fontSize: "6px", color: accent, letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 700 }}>Seit 1994 · Titisee</span>
+        </div>
+        <div style={{ position: "absolute", bottom: "10px", left: "14px" }}>
+          <div style={{ fontSize: "20px", fontWeight: 900, color: "#FFFFFF", lineHeight: 1, letterSpacing: "-0.03em" }}>Gut bürgerlich.</div>
+          <div style={{ fontSize: "20px", fontWeight: 900, color: accent, lineHeight: 1, letterSpacing: "-0.03em" }}>Besonders gut.</div>
+        </div>
+        <div style={{ position: "absolute", top: "10px", right: "12px", background: accent, padding: "4px 8px" }}>
+          <span style={{ fontSize: "6px", fontWeight: 700, letterSpacing: "0.08em", color: "#0D0704" }}>RESERVIEREN</span>
         </div>
       </div>
-
-      {/* Content */}
-      <div style={{ position: "absolute", top: "118px", left: 0, right: 0, padding: "0 18px" }}>
-        <div style={{ marginBottom: "4px", display: "flex", alignItems: "center", gap: "6px" }}>
-          <div style={{ width: "14px", height: "1px", background: accent }} />
-          <span style={{ fontSize: "6px", color: accent, letterSpacing: "0.18em", textTransform: "uppercase" }}>Freiburg · Altstadt</span>
-        </div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: "16px", fontWeight: 400, color: "#F5EDD8", lineHeight: 1.1, marginBottom: "8px" }}>Exklusive<br /><em style={{ color: accent }}>Stadtvilla</em></div>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
-          {["4 Zi.", "180 m²", "€ 1,2 M"].map((s, i) => (
-            <div key={i} style={{ padding: "3px 8px", background: `${accent}12`, border: `1px solid ${accent}22`, fontSize: "7px", color: "rgba(245,237,216,0.7)", fontWeight: 600 }}>{s}</div>
-          ))}
-        </div>
+      {/* Menu strip */}
+      <div style={{ position: "absolute", top: "108px", left: 0, right: 0, padding: "10px 14px", display: "flex", gap: "8px" }}>
+        {["Speisekarte", "Mittagstisch", "Reservierung"].map((t, i) => (
+          <div key={i} style={{ padding: "4px 8px", background: i === 0 ? accent : `${accent}18`, border: `1px solid ${accent}${i === 0 ? "FF" : "30"}`, fontSize: "6px", color: i === 0 ? "#0D0704" : `rgba(255,255,255,0.6)`, fontWeight: 700, borderRadius: "2px" }}>{t}</div>
+        ))}
       </div>
-
-      {/* Property cards row */}
-      <div style={{ position: "absolute", bottom: "4px", left: "10px", right: "10px", display: "flex", gap: "6px" }}>
-        {[0, 1].map(i => (
-          <div key={i} style={{ flex: 1, background: "#181208", border: `1px solid ${accent}15`, padding: "7px 8px" }}>
-            <div style={{ width: "100%", height: "22px", background: `${accent}08`, marginBottom: "5px" }} />
-            <div style={{ width: "70%", height: "4px", background: accent, opacity: 0.45, borderRadius: "1px", marginBottom: "3px" }} />
-            <div style={{ width: "50%", height: "3px", background: "rgba(255,255,255,0.1)", borderRadius: "1px" }} />
+      {/* Dish cards */}
+      <div style={{ position: "absolute", bottom: "6px", left: "10px", right: "10px", display: "flex", gap: "6px" }}>
+        {[0, 1, 2].map(i => (
+          <div key={i} style={{ flex: 1, background: `${accent}10`, border: `1px solid ${accent}20`, padding: "6px 7px", borderRadius: "3px" }}>
+            <div style={{ width: "100%", height: "18px", background: `${accent}15`, marginBottom: "5px", borderRadius: "2px" }} />
+            <div style={{ width: "80%", height: "3px", background: "rgba(255,255,255,0.2)", borderRadius: "1px", marginBottom: "3px" }} />
+            <div style={{ width: "50%", height: "3px", background: accent, opacity: 0.5, borderRadius: "1px" }} />
           </div>
         ))}
       </div>
@@ -102,26 +93,39 @@ function ImmoPreview({ accent }: { accent: string }) {
   );
 }
 
-function LegalPreview({ accent }: { accent: string }) {
+function PhysioPreview({ accent }: { accent: string }) {
   return (
-    <div style={{ position: "absolute", inset: 0, top: "28px", padding: "20px 18px" }}>
-      <div style={{ position: "absolute", left: "18px", top: "40px", bottom: "28px", width: "2px", background: accent, boxShadow: `0 0 10px ${accent}88` }} />
-      <div style={{ paddingLeft: "14px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-          <div style={{ width: "16px", height: "1px", background: accent }} />
-          <div style={{ fontSize: "6px", color: accent, letterSpacing: "0.2em", textTransform: "uppercase" }}>Rechtsanwälte · 1989</div>
+    <div style={{ position: "absolute", inset: 0, top: "28px", padding: "18px 16px" }}>
+      <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${accent}06 1px, transparent 1px), linear-gradient(90deg, ${accent}06 1px, transparent 1px)`, backgroundSize: "18px 18px" }} />
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "12px" }}>
+          <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: accent, boxShadow: `0 0 8px ${accent}88` }} />
+          <span style={{ fontSize: "6px", color: accent, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>Physiotherapie · Freiburg</span>
         </div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#FAFAF8", lineHeight: 1.05 }}>Ihr Problem.</div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", fontWeight: 300, fontStyle: "italic", color: accent, lineHeight: 1.05 }}>Unsere Stärke.</div>
-        <div style={{ marginTop: "12px", width: "80px", height: "5px", background: "rgba(255,255,255,0.1)", borderRadius: "1px", marginBottom: "4px" }} />
-        <div style={{ width: "60px", height: "5px", background: "rgba(255,255,255,0.07)", borderRadius: "1px" }} />
-        <div style={{ marginTop: "14px", display: "inline-block", background: accent, padding: "5px 12px" }}>
-          <div style={{ width: "70px", height: "5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
+        <div style={{ fontSize: "22px", fontWeight: 900, color: "#FFFFFF", lineHeight: 1.0, letterSpacing: "-0.03em" }}>Bewegung</div>
+        <div style={{ fontSize: "22px", fontWeight: 900, color: accent, lineHeight: 1.0, letterSpacing: "-0.03em", textShadow: `0 0 16px ${accent}66` }}>heilt.</div>
+        <div style={{ marginTop: "12px", display: "flex", gap: "6px" }}>
+          <div style={{ background: accent, padding: "5px 12px", borderRadius: "2px" }}>
+            <div style={{ width: "56px", height: "5px", background: "rgba(3,8,16,0.45)", borderRadius: "1px" }} />
+          </div>
+          <div style={{ border: `1px solid ${accent}44`, padding: "5px 10px", borderRadius: "2px" }}>
+            <div style={{ width: "38px", height: "5px", background: "rgba(255,255,255,0.15)", borderRadius: "1px" }} />
+          </div>
+        </div>
+        <div style={{ marginTop: "12px", display: "flex", flexDirection: "column", gap: "5px" }}>
+          {["Manuelle Therapie", "Sportphysio", "Hausbesuche"].map((s, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+              <div style={{ width: "3px", height: "3px", borderRadius: "50%", background: accent, flexShrink: 0 }} />
+              <span style={{ fontSize: "7px", color: "rgba(255,255,255,0.45)", fontWeight: 600 }}>{s}</span>
+            </div>
+          ))}
         </div>
       </div>
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "18px", background: accent, display: "flex", alignItems: "center", paddingLeft: "10px", gap: "10px", overflow: "hidden" }}>
-        {["Immobilienrecht", "Erbrecht", "Familienrecht", "Gesellschaftsrecht"].map((t, i) => (
-          <span key={i} style={{ fontSize: "6px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.85)", whiteSpace: "nowrap" }}>{t} ·</span>
+      <div style={{ position: "absolute", bottom: "0", left: 0, right: 0, background: "#050C18", borderTop: `1px solid ${accent}18`, display: "flex" }}>
+        {["95+", "48h", "4.9★"].map((s, i) => (
+          <div key={i} style={{ flex: 1, padding: "5px 0", textAlign: "center", borderRight: i < 2 ? `1px solid ${accent}12` : "none" }}>
+            <div style={{ fontSize: "8px", fontWeight: 700, color: accent }}>{s}</div>
+          </div>
         ))}
       </div>
     </div>
@@ -249,10 +253,10 @@ function BrowserMockup({ p, hovered }: { p: typeof projects[0]; hovered: boolean
           </div>
         </div>
 
-        {pv.style === "immo"   && <ImmoPreview   accent={pv.accent} />}
-        {pv.style === "legal"  && <LegalPreview  accent={pv.accent} />}
-        {pv.style === "fintech" && <FintechPreview accent={pv.accent} />}
-        {pv.style === "craft"  && <CraftPreview  accent={pv.accent} />}
+        {pv.style === "gastro"  && <GastronomiePreview accent={pv.accent} />}
+        {pv.style === "craft"   && <CraftPreview       accent={pv.accent} />}
+        {pv.style === "fintech" && <FintechPreview      accent={pv.accent} />}
+        {pv.style === "physio"  && <PhysioPreview       accent={pv.accent} />}
 
         <motion.div
           animate={{ opacity: hovered ? 1 : 0 }}

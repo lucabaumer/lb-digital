@@ -12,10 +12,6 @@ export const faqItems = [
     a: "Ja. Wir bauen auf Wunsch ein CMS (z. B. Sanity) ein, über das Sie Texte, Bilder und Inhalte eigenständig pflegen können — ohne Programmierkenntnisse. Alternativ übernehmen wir die Pflege für Sie.",
   },
   {
-    q: "Was ist der Unterschied zu einem Baukasten wie Jimdo oder Wix?",
-    a: "Baukästen liefern generische Templates, die wie tausende andere Seiten aussehen. LB Digital baut Ihre Seite von Grund auf — individuell, bis zu 10× schneller als WordPress und technisch überlegen. Lighthouse-Score 95+ auf allen Metriken.",
-  },
-  {
     q: "Übernehmen Sie auch bestehende Websites?",
     a: "Ja. Wir analysieren Ihre aktuelle Website kostenlos und zeigen, was sich verbessern lässt — ob gezielte Überarbeitung oder kompletter Neuaufbau sinnvoller ist. Die Analyse ist kostenlos und unverbindlich.",
   },
@@ -44,20 +40,20 @@ export const faqItems = [
     a: "Das Erstgespräch dauert ca. 30 Minuten (telefonisch oder persönlich in Freiburg) und ist völlig kostenlos und unverbindlich. Wir besprechen Ihre Ziele, zeigen mögliche Lösungen und erstellen danach ein konkretes Angebot.",
   },
   {
-    q: "Welche Branchen betreuen Sie besonders?",
-    a: "Unser Schwerpunkt liegt auf Rechtsanwaltskanzleien, Handwerksbetrieben und Architekturbüros im Raum Freiburg. Diese Branchen profitieren am stärksten von lokaler Google-Sichtbarkeit und einer professionellen Online-Präsenz. Wir arbeiten auch mit Physiotherapeuten, Steuerberatern und anderen lokalen Dienstleistern.",
+    q: "Welche Branchen betreuen Sie?",
+    a: "Unser Schwerpunkt liegt auf Handwerksbetrieben, Gastronomie und lokalen Dienstleistern im Raum Freiburg. Diese Branchen profitieren am stärksten von lokaler Google-Sichtbarkeit und einer professionellen Online-Präsenz.",
   },
   {
     q: "Wie hoch ist der Lighthouse-Score Ihrer Websites?",
-    a: "Unsere Websites erzielen regelmäßig Lighthouse-Scores von 95+ in den Kategorien Performance, SEO, Accessibility und Best Practices. Das ist messbar besser als die meisten WordPress-Seiten und ein direkter Google-Rankingfaktor.",
+    a: "Unsere Websites erzielen regelmäßig Lighthouse-Scores von 95+ in den Kategorien Performance, SEO, Accessibility und Best Practices. Das ist messbar besser als die meisten Standard-Websites und ein direkter Google-Rankingfaktor.",
   },
   {
     q: "Bieten Sie auch Hosting und Domain-Verwaltung an?",
     a: "Ja. Wir übernehmen Deployment, Domain-Einrichtung und SSL-Zertifikat. Für Hosting nutzen wir Vercel — eine der schnellsten und zuverlässigsten Plattformen für Next.js-Websites.",
   },
   {
-    q: "Was kostet eine Website für eine Kanzlei oder ein Handwerksunternehmen?",
-    a: "Eine professionelle Website für Rechtsanwälte oder Handwerksbetriebe beginnt bei ca. 1.500–2.500 €, je nach Umfang. Inklusive lokalem SEO, Kontaktformular und Lighthouse 95+. Im Erstgespräch erhalten Sie ein konkretes Festpreis-Angebot.",
+    q: "Was kostet eine Website für einen Handwerker oder ein lokales Unternehmen?",
+    a: "Eine professionelle Website für Handwerksbetriebe oder lokale Unternehmen beginnt bei ca. 1.500–2.500 €, je nach Umfang. Inklusive lokalem SEO, Kontaktformular und Lighthouse 95+. Im Erstgespräch erhalten Sie ein konkretes Festpreis-Angebot.",
   },
 ];
 
@@ -70,7 +66,7 @@ export default function SchemaOrg() {
     "@id": `${base}/#business`,
     name: "LB Digital",
     description:
-      "Individuelle Websites und lokales SEO für Rechtsanwälte, Handwerker und Architekten in Freiburg. Kein Template, kein Baukasten — maßgeschneidert, damit Ihre Kunden Sie bei Google finden.",
+      "Individuelle Websites und lokales SEO für Handwerker, Gastronomie und lokale Unternehmen in Freiburg. Kein Template, kein Baukasten — maßgeschneidert, damit Ihre Kunden Sie bei Google finden.",
     url: base,
     telephone: "+49 178 5881195",
     email: "hallo@lb-digital.agency",
@@ -89,13 +85,6 @@ export default function SchemaOrg() {
       "@type": "GeoCoordinates",
       latitude: 47.999,
       longitude: 7.842,
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5",
-      reviewCount: "12",
-      bestRating: "5",
-      worstRating: "1",
     },
     areaServed: [
       { "@type": "City", name: "Freiburg im Breisgau" },
@@ -117,11 +106,11 @@ export default function SchemaOrg() {
       "Tailwind CSS",
       "Corporate Identity",
       "Logo Design",
-      "Website für Rechtsanwälte Freiburg",
       "Website für Handwerker Freiburg",
-      "Website für Architekten Freiburg",
-      "Kanzlei Website",
+      "Website für Gastronomie Freiburg",
+      "Website für lokale Unternehmen Freiburg",
       "Handwerker Website",
+      "Gastronomie Website",
     ],
     serviceType: ["Webdesign", "Webentwicklung", "SEO", "Next.js Entwicklung"],
     hasOfferCatalog: {
@@ -166,7 +155,6 @@ export default function SchemaOrg() {
     slogan: "Kein Template. Kein Baukasten. Nur Ihre Website.",
     foundingDate: "2023",
     numberOfEmployees: { "@type": "QuantitativeValue", value: 1 },
-    award: "Lighthouse Score 95+ auf allen Websites",
   };
 
   const website = {

@@ -14,7 +14,7 @@ const services = [
     title: "Webdesign &\nEntwicklung",
     hook: "Ihre nächsten Kunden googeln Sie — bevor sie anrufen.",
     description:
-      "Ob Kanzlei, Handwerksbetrieb oder Architekturbüro: Wer online nicht professionell wirkt, verliert den Auftrag noch vor dem ersten Gespräch. Wir bauen Websites, die Vertrauen schaffen — schnell, sauber, in Next.js.",
+      "Ob Handwerksbetrieb, Gastronomiebetrieb oder lokales Unternehmen: Wer online nicht professionell wirkt, verliert den Auftrag noch vor dem ersten Gespräch. Wir bauen Websites, die Vertrauen schaffen — schnell, sauber, in Next.js.",
     benefits: [
       "Kein Template. Kein Baukasten. Nur Ihre Marke.",
       "Lädt in unter 1 Sekunde — Lighthouse 95+",
@@ -50,7 +50,7 @@ const services = [
     title: "SEO &\nSichtbarkeit",
     hook: "Wer nicht auf Seite 1 bei Google steht, existiert für neue Kunden nicht.",
     description:
-      "Rechtsanwalt, Handwerker oder Architekt in Freiburg — lokale Google-Sichtbarkeit entscheidet, ob der Anruf bei Ihnen oder der Konkurrenz landet. Wir sorgen dafür, dass Sie gefunden werden.",
+      "Handwerker, Gastronom oder lokaler Dienstleister in Freiburg — lokale Google-Sichtbarkeit entscheidet, ob der Anruf bei Ihnen oder der Konkurrenz landet. Wir sorgen dafür, dass Sie gefunden werden.",
     benefits: [
       "Lokal sichtbar: Google Maps, My Business, lokale Keywords",
       "Technisches SEO direkt beim Bau integriert",
