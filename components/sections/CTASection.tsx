@@ -13,13 +13,12 @@ export default function CTASection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const [status, setStatus] = useState<Status>("idle");
-  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [form, setForm] = useState({ phone: "" });
   const [errors, setErrors] = useState<Partial<typeof form>>({});
 
   const validate = () => {
     const e: Partial<typeof form> = {};
     if (!form.phone.trim()) e.phone = "Bitte Telefonnummer eingeben";
-    if (!form.name.trim())  e.name  = "Bitte Namen eingeben";
     return e;
   };
 
@@ -38,7 +37,7 @@ export default function CTASection() {
       });
       if (res.ok) {
         setStatus("success");
-        setForm({ name: "", phone: "", message: "" });
+        setForm({ phone: "" });
       } else {
         setStatus("error");
       }
@@ -212,53 +211,13 @@ export default function CTASection() {
                         placeholder="+49 ..."
                         autoComplete="tel"
                         onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                        style={{ ...inputStyle(!!errors.phone), fontSize: "16px", padding: "16px" }}
+                        style={{ ...inputStyle(!!errors.phone), fontSize: "18px", padding: "20px 18px" }}
                         onFocus={e => { e.currentTarget.style.borderColor = "var(--color-accent)"; e.currentTarget.style.background = "rgba(18,100,241,0.06)"; }}
                         onBlur={e => { e.currentTarget.style.borderColor = errors.phone ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"; e.currentTarget.style.background = errors.phone ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)"; }}
                       />
                       {errors.phone && <span style={{ fontSize: "11px", color: "#F87171" }}>{errors.phone}</span>}
                     </div>
 
-                    {/* Name */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      <label htmlFor="name" style={labelStyle}>
-                        Name <span style={{ color: "var(--color-accent)", marginLeft: "3px" }}>*</span>
-                      </label>
-                      <input
-                        id="name"
-                        type="text"
-                        value={form.name}
-                        placeholder="Max Mustermann"
-                        autoComplete="name"
-                        onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                        style={inputStyle(!!errors.name)}
-                        onFocus={e => { e.currentTarget.style.borderColor = "var(--color-accent)"; e.currentTarget.style.background = "rgba(18,100,241,0.06)"; }}
-                        onBlur={e => { e.currentTarget.style.borderColor = errors.name ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"; e.currentTarget.style.background = errors.name ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.04)"; }}
-                      />
-                      {errors.name && <span style={{ fontSize: "11px", color: "#F87171" }}>{errors.name}</span>}
-                    </div>
-
-                    {/* Message optional */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      <label htmlFor="message" style={labelStyle}>
-                        Kurze Nachricht <span style={{ color: "rgba(255,255,255,0.2)", marginLeft: "3px", textTransform: "none", fontWeight: 400 }}>optional</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        rows={3}
-                        value={form.message}
-                        placeholder="Womit kann ich helfen?"
-                        onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                        style={{
-                          ...inputStyle(false),
-                          resize: "none",
-                          fontFamily: "inherit",
-                          lineHeight: 1.6,
-                        }}
-                        onFocus={e => { e.currentTarget.style.borderColor = "var(--color-accent)"; e.currentTarget.style.background = "rgba(18,100,241,0.06)"; }}
-                        onBlur={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
-                      />
-                    </div>
 
                     {status === "error" && (
                       <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "4px", padding: "12px 16px", fontSize: "13px", color: "#F87171" }}>
@@ -269,10 +228,10 @@ export default function CTASection() {
                     <motion.button
                       type="submit"
                       disabled={status === "loading"}
-                      whileHover={{ scale: status === "loading" ? 1 : 1.02, boxShadow: "0 10px 48px rgba(255,255,255,0.3)" }}
+                      whileHover={{ scale: status === "loading" ? 1 : 1.02, boxShadow: "0 10px 48px rgba(245,158,11,0.55)" }}
                       whileTap={{ scale: 0.98 }}
                       style={{
-                        background: "#FFFFFF",
+                        background: "#F59E0B",
                         color: "#07101F",
                         border: "none",
                         borderRadius: "999px",
@@ -287,7 +246,7 @@ export default function CTASection() {
                         justifyContent: "center",
                         gap: "10px",
                         width: "100%",
-                        boxShadow: "0 4px 24px rgba(255,255,255,0.18)",
+                        boxShadow: "0 4px 24px rgba(245,158,11,0.4)",
                         transition: "box-shadow 0.2s",
                       }}
                     >

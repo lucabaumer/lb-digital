@@ -132,10 +132,10 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.62, ease: EASE }}
         >
-          {/* Primary: direct call — highest conversion for local businesses */}
+          {/* Primary: direct call — amber exclusive CTA, highest conversion for local businesses */}
           <a
             href={`tel:+49${footer.phone.replace(/^0/, "")}`}
-            className="btn-primary-white"
+            className="btn-cta"
             style={{ fontSize: "15px", padding: "16px 32px", gap: "10px" }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

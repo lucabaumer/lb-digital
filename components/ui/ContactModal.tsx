@@ -258,10 +258,10 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                     <motion.button
                       type="submit"
                       disabled={status === "loading"}
-                      whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
+                      whileHover={{ scale: status === "loading" ? 1 : 1.02, boxShadow: "0 10px 48px rgba(245,158,11,0.55)" }}
                       whileTap={{ scale: 0.98 }}
                       style={{
-                        background: "#FFFFFF",
+                        background: "#F59E0B",
                         color: "#07101F",
                         border: "none",
                         borderRadius: "999px",
@@ -277,7 +277,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                         justifyContent: "center",
                         gap: "10px",
                         width: "100%",
-                        boxShadow: "0 4px 20px rgba(255,255,255,0.12)",
+                        boxShadow: "0 4px 24px rgba(245,158,11,0.38)",
                         marginTop: "4px",
                       }}
                     >

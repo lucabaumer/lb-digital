@@ -25,7 +25,7 @@ export default function MobileStickyBar() {
         borderTop: "1px solid rgba(255,255,255,0.08)",
       }}
     >
-      {/* Phone button */}
+      {/* Phone button — amber exclusive CTA */}
       <a
         href={PHONE_HREF}
         aria-label={`Jetzt anrufen: ${PHONE_DISPLAY}`}
@@ -35,13 +35,13 @@ export default function MobileStickyBar() {
           alignItems: "center",
           justifyContent: "center",
           gap: "8px",
-          background: "#FFFFFF",
+          background: "#F59E0B",
           color: "#07101F",
           textDecoration: "none",
           fontSize: "14px",
           fontWeight: 700,
           letterSpacing: "-0.01em",
-          borderRight: "1px solid rgba(7,16,31,0.12)",
+          borderRight: "1px solid rgba(7,16,31,0.15)",
         }}
       >
         <svg
@@ -61,7 +61,7 @@ export default function MobileStickyBar() {
         Anrufen
       </a>
 
-      {/* Contact modal button */}
+      {/* Contact modal button — secondary action */}
       <button
         onClick={openModal}
         aria-label="Kontaktformular öffnen"
@@ -71,11 +71,11 @@ export default function MobileStickyBar() {
           alignItems: "center",
           justifyContent: "center",
           gap: "8px",
-          background: "#1264F1",
-          color: "#FFFFFF",
+          background: "rgba(255,255,255,0.06)",
+          color: "rgba(255,255,255,0.8)",
           border: "none",
           fontSize: "14px",
-          fontWeight: 700,
+          fontWeight: 600,
           letterSpacing: "-0.01em",
           cursor: "pointer",
         }}

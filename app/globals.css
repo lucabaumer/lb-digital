@@ -184,7 +184,40 @@ nextjs-portal { display: none !important; }
 
 .btn-primary:active { transform: scale(0.98); }
 
-/* Weißer CTA für dunkle/navy Hintergründe — Kontrastfarbe, nirgendwo sonst */
+/* ═══════════════════════════════════════
+   EXCLUSIVE CTA — Amber #F59E0B
+   Erscheint NIRGENDWO sonst auf der Seite.
+   Trainiert das Auge des Nutzers: amber = handeln.
+═══════════════════════════════════════ */
+
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F59E0B;
+  color: #07101F;
+  padding: 15px 30px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1), transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(245, 158, 11, 0.38), 0 1px 6px rgba(245, 158, 11, 0.2);
+}
+
+.btn-cta:hover {
+  background: #D97706;
+  box-shadow: 0 8px 48px rgba(245, 158, 11, 0.55), 0 2px 10px rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-cta:active { transform: scale(0.98); box-shadow: 0 2px 12px rgba(245,158,11,0.25); }
+
+/* Weißer CTA — wird nur noch intern / sekundär genutzt */
 .btn-primary-white {
   display: inline-flex;
   align-items: center;
