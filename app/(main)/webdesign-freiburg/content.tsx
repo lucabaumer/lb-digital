@@ -303,7 +303,7 @@ export default function WebdesignFreiburgContent() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.52, ease: EASE }}
             >
-              <ArrowBtn href="#kontakt" variant="primary-white">Kostenloses Erstgespräch</ArrowBtn>
+              <ArrowBtn href="#kontakt" variant="cta">Kostenloses Erstgespräch</ArrowBtn>
               <ArrowBtn href="#leistungen" variant="ghost-light">Leistungen ansehen</ArrowBtn>
             </motion.div>
 
@@ -631,9 +631,10 @@ export default function WebdesignFreiburgContent() {
                   onClick={openModal}
                   className="w-full py-3 rounded-lg font-semibold text-sm transition-all duration-200 text-center"
                   style={{
-                    background: plan.highlight ? "#FFFFFF" : "rgba(255,255,255,0.07)",
+                    background: plan.highlight ? "#F59E0B" : "rgba(255,255,255,0.07)",
                     color: plan.highlight ? "#07101F" : "#fff",
                     border: plan.highlight ? "none" : "1px solid rgba(255,255,255,0.1)",
+                    boxShadow: plan.highlight ? "0 4px 24px rgba(245,158,11,0.35)" : "none",
                   }}
                 >
                   {plan.cta}
@@ -696,7 +697,7 @@ export default function WebdesignFreiburgContent() {
             <p className="mb-10 mx-auto" style={{ color: "rgba(255,255,255,0.5)", fontSize: "clamp(15px, 1.6vw, 18px)", maxWidth: "480px" }}>
               Kostenloses Erstgespräch — unverbindlich, ohne Verkaufsdruck. Wir schauen uns Ihre aktuelle Situation an und zeigen Ihnen ehrlich, was möglich ist.
             </p>
-            <ArrowBtn href="#kontakt" variant="primary-white">Jetzt Gespräch vereinbaren</ArrowBtn>
+            <ArrowBtn href="#kontakt" variant="cta">Jetzt Gespräch vereinbaren</ArrowBtn>
           </Reveal>
         </div>
       </section>
