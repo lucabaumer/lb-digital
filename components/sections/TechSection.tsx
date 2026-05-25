@@ -40,7 +40,7 @@ export default function TechSection() {
               transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="font-bold leading-tight mb-5 text-white"
               style={{
-                fontFamily: "var(--font-bricolage)",
+                fontFamily: "'Bricolage Grotesque Variable', system-ui, sans-serif",
                 fontSize: "clamp(28px, 4vw, 44px)",
               }}
             >

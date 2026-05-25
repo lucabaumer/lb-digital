@@ -1,4 +1,13 @@
+/* ── Local fonts — no Google dependency ── */
+@import '@fontsource-variable/bricolage-grotesque/wght.css';
+@import '@fontsource-variable/plus-jakarta-sans/wght.css';
+
 @import "tailwindcss";
+
+:root {
+  --font-bricolage: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-jakarta:   'Plus Jakarta Sans Variable',   system-ui, sans-serif;
+}
 
 @theme {
   /* ── Colors ───────────────────────────── */
@@ -16,8 +25,8 @@
   --color-accent-dim:   rgba(18, 100, 241, 0.08);
 
   /* ── Fonts ───────────────────────────── */
-  --font-display: var(--font-bricolage);
-  --font-body:    var(--font-jakarta);
+  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-body:    'Plus Jakarta Sans Variable',   system-ui, sans-serif;
 }
 
 /* ═══════════════════════════════════════
@@ -64,7 +73,7 @@ button:hover .nav-link-hover::after  { transform: translateY(-100%); }
 body {
   background: #FFFFFF;
   color: #0D0D0D;
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -111,7 +120,7 @@ nextjs-portal { display: none !important; }
 ═══════════════════════════════════════ */
 
 .font-display {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
 }
 
 /* Blue gradient text — used sparingly */

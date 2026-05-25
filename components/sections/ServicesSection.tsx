@@ -116,7 +116,7 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
         aria-hidden="true"
         style={{
           fontSize: "120px",
-          fontFamily: "var(--font-bricolage)",
+          fontFamily: "'Bricolage Grotesque Variable', system-ui, sans-serif",
           fontWeight: 800,
           lineHeight: 1,
           color: "rgba(255,255,255,0.04)",

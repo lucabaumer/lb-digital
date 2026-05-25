@@ -38,12 +38,13 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      {/* Conversion flow: Hero → Trust → Services → Why Us → Work → Proof → Process → FAQ → CTA */}
       <HeroSection />
       <TrustBar />
       <SectionReveal><ServicesSection /></SectionReveal>
+      <SectionReveal><WhySection /></SectionReveal>
       <SectionReveal><WorkSection /></SectionReveal>
       <SectionReveal><TestimonialsSection /></SectionReveal>
-      <SectionReveal><WhySection /></SectionReveal>
       <SectionReveal><ProcessSection /></SectionReveal>
       <SectionReveal><FAQSection /></SectionReveal>
       <CTASection />
