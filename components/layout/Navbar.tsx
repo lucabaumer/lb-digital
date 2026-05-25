@@ -102,7 +102,7 @@ export default function Navbar() {
               <div className="hidden lg:block">
                 <ArrowBtn
                   href="#kontakt"
-                  variant="primary"
+                  variant="primary-white"
                   style={{ padding: "10px 20px", fontSize: "13px", whiteSpace: "nowrap" }}
                 >
                   {page.nav.cta}
@@ -206,11 +206,11 @@ export default function Navbar() {
                     width: "100%",
                     fontSize: "13px",
                     fontWeight: 600,
-                    color: "#fff",
                     border: "none",
                     padding: "10px 14px",
                     borderRadius: "8px",
-                    background: "#4F46E5",
+                    background: "#FFFFFF",
+                    color: "#07101F",
                     textAlign: "center",
                     cursor: "pointer",
                   }}

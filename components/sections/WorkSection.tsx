@@ -16,7 +16,7 @@ const projects = [
     accent:    "#E8652A",
     accentDim: "rgba(232,101,42,0.13)",
     preview:   { bg: "#0D0704", accent: "#E8652A", style: "gastro" as const },
-    label:     "Referenz",
+    label:     "Demo-Projekt",
   },
   {
     slug:      "handwerk",
@@ -27,7 +27,7 @@ const projects = [
     accent:    "#F97316",
     accentDim: "rgba(249,115,22,0.12)",
     preview:   { bg: "#090704", accent: "#F97316", style: "craft" as const },
-    label:     "Referenz",
+    label:     "Demo-Projekt",
   },
   {
     slug:      "steuerberatung",
@@ -38,7 +38,7 @@ const projects = [
     accent:    "#00EEFF",
     accentDim: "rgba(0,238,255,0.10)",
     preview:   { bg: "#040407", accent: "#00EEFF", style: "fintech" as const },
-    label:     "Referenz",
+    label:     "Demo-Projekt",
   },
   {
     slug:      "physio",
@@ -49,7 +49,7 @@ const projects = [
     accent:    "#0EA5E9",
     accentDim: "rgba(14,165,233,0.12)",
     preview:   { bg: "#030810", accent: "#0EA5E9", style: "physio" as const },
-    label:     "Referenz",
+    label:     "Demo-Projekt",
   },
 ];
 

@@ -5,6 +5,9 @@ import { motion, useInView, useScroll, useTransform, AnimatePresence } from "fra
 import Link from "next/link";
 import { ArrowBtn } from "@/components/ui/ArrowBtn";
 import { useContactModal } from "@/components/ui/ContactModalProvider";
+import TrustBar from "@/components/sections/TrustBar";
+import WorkSection from "@/components/sections/WorkSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const BG = "#07101F";
@@ -90,9 +93,9 @@ const prozess = [
 ];
 
 const faqData = [
-  { q: "Was kostet eine professionelle Website in Freiburg?", a: "Eine professionelle Website bei LB Digital beginnt bei 1.000 € für eine einfache Landingpage. Für eine vollständige Business-Website mit mehreren Unterseiten, Kontaktformular und SEO-Grundoptimierung liegt der Preis in der Regel zwischen 3.000 und 6.000 €. Der genaue Preis hängt von Umfang, Funktionen und Designaufwand ab. Sie erhalten immer ein detailliertes Angebot vorab — keine versteckten Kosten, keine Überraschungen nach dem Launch." },
   { q: "Wie lange dauert die Erstellung einer Website?", a: "Eine einfache Landingpage ist in 2–3 Wochen fertig. Eine vollständige Business-Website mit mehreren Unterseiten dauert in der Regel 4–8 Wochen. Der größte Zeitfaktor ist dabei oft die Bereitstellung von Inhalten und Feedback durch den Kunden — nicht die technische Entwicklung. Nach dem Erstgespräch erhalten Sie eine realistische Zeitplanung für Ihr Projekt." },
   { q: "Was ist der Unterschied zwischen einem Baukasten und einer individuellen Website?", a: "Baukästen wie Wix, Jimdo oder Squarespace bieten vorgefertigte Templates, die Sie selbst befüllen. Das ist günstig und schnell — aber erkauft durch Kompromisse: langsamere Ladezeiten, eingeschränkte Gestaltungsmöglichkeiten, monatliche Abokosten und schlechtere SEO-Performance. Eine individuelle Website mit Next.js ist schneller, besser auf Google optimiert und zu 100 % auf Ihre Marke zugeschnitten — ohne monatliche Lizenzgebühren." },
+  { q: "Was kostet eine professionelle Website in Freiburg?", a: "Eine professionelle Website bei LB Digital beginnt bei 1.000 € für eine einfache Landingpage. Für eine vollständige Business-Website mit mehreren Unterseiten, Kontaktformular und SEO-Grundoptimierung liegt der Preis in der Regel zwischen 3.000 und 6.000 €. Der genaue Preis hängt von Umfang, Funktionen und Designaufwand ab. Sie erhalten immer ein detailliertes Angebot vorab — keine versteckten Kosten, keine Überraschungen nach dem Launch." },
   { q: "Warum Next.js statt WordPress für mein Unternehmen in Freiburg?", a: "WordPress ist das meistgenutzte CMS der Welt — und gleichzeitig das meistgehackte. Ständige Plugin-Updates, Sicherheitslücken und Kompatibilitätsprobleme sind bei WordPress alltäglich. Next.js hingegen generiert statische HTML-Dateien, die blitzschnell ausgeliefert werden und keine angreifbare Datenbankstruktur haben. Das Ergebnis: bessere Ladezeiten, höhere Sicherheit und von Beginn an bessere Rankingchancen bei Google." },
   { q: "Ist meine Website auch auf dem Smartphone optimiert?", a: "Ja — wir arbeiten nach dem Mobile First-Prinzip. Das bedeutet, wir gestalten die mobile Version zuerst und erweitern das Design dann für Tablet und Desktop. Über 70 % aller Website-Besucher kommen heute vom Smartphone. Google bewertet Websites primär nach ihrer mobilen Version (Mobile First Indexing). Eine nicht-mobile-optimierte Website ist 2026 schlicht keine Option mehr." },
   { q: "Kümmern Sie sich auch um Hosting und Domain?", a: "Ja. Wir übernehmen das Deployment auf Vercel — einem der schnellsten globalen Edge-Networks. Die Domain können Sie selbst registrieren (z.B. über IONOS oder Hetzner) oder wir erledigen das für Sie. Wir richten SSL-Zertifikat, DNS-Konfiguration und alle technischen Details ein, sodass Ihre Website vom ersten Tag an sicher und erreichbar ist." },
@@ -351,24 +354,7 @@ export default function WebdesignFreiburgContent() {
         <div aria-hidden="true" className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
       </section>
 
-      {/* ── Stats Banner ─────────────────────────────────────────────────── */}
-      <section aria-label="Kennzahlen" style={{ background: ACCENT }}>
-        <div className="container-xl py-10">
-          <StaggerReveal className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "95+", label: "Lighthouse Score" },
-              { value: "<1s", label: "Ladezeit" },
-              { value: "100%", label: "Individuell" },
-              { value: "0€", label: "Erstgespräch" },
-            ].map((stat) => (
-              <motion.div key={stat.label} variants={fadeUp} className="text-center">
-                <p className="font-display font-extrabold text-white leading-none mb-1" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>{stat.value}</p>
-                <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>{stat.label}</p>
-              </motion.div>
-            ))}
-          </StaggerReveal>
-        </div>
-      </section>
+      <TrustBar />
 
       {/* ── Leistungen ───────────────────────────────────────────────────── */}
       <section id="leistungen" aria-labelledby="leistungen-heading" style={{ background: BG2 }}>
@@ -398,8 +384,11 @@ export default function WebdesignFreiburgContent() {
         </div>
       </section>
 
+      <WorkSection />
+      <TestimonialsSection />
+
       {/* ── Lokaler Freiburg Content ──────────────────────────────────────── */}
-      <section aria-labelledby="freiburg-heading" style={{ background: BG }}>
+      <section id="warum" aria-labelledby="freiburg-heading" style={{ background: BG }}>
         <div className="container-xl py-24 md:py-32">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <Reveal>
@@ -656,7 +645,7 @@ export default function WebdesignFreiburgContent() {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="faq-heading" style={{ background: BG2 }}>
+      <section id="faq" aria-labelledby="faq-heading" style={{ background: BG2 }}>
         <div className="container-xl py-24 md:py-32">
           <Reveal className="mb-16">
             <p className="eyebrow mb-3">FAQ</p>
@@ -697,7 +686,7 @@ export default function WebdesignFreiburgContent() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
+      <section id="kontakt" aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
         <div className="container-xl py-24 md:py-32 text-center">
           <Reveal>
             <p className="eyebrow mb-4">Bereit?</p>

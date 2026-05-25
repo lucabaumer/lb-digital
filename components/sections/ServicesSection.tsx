@@ -243,7 +243,7 @@ export default function ServicesSection() {
   const headlineY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
-    <section id="leistungen" ref={sectionRef} className="section-py relative" style={{ background: "#fff" }}>
+    <section id="leistungen" ref={sectionRef} className="section-py relative" style={{ background: "#0A1628" }}>
       {/* Scroll-driven top border line */}
       <motion.div
         style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
@@ -267,7 +267,7 @@ export default function ServicesSection() {
           </motion.p>
           <motion.h2
             className="font-display font-bold leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(32px, 6.5vw, 80px)", color: "#0D0D0D" }}
+            style={{ fontSize: "clamp(32px, 6.5vw, 80px)", color: "#F0EDE8" }}
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08, ease }}
@@ -277,7 +277,7 @@ export default function ServicesSection() {
           </motion.h2>
           <motion.p
             className="mt-5 text-base leading-relaxed max-w-xl"
-            style={{ color: "#6B7280" }}
+            style={{ color: "rgba(255,255,255,0.5)" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.18 }}
@@ -318,7 +318,7 @@ export default function ServicesSection() {
                     width: activeIndex === i ? "20px" : "6px",
                     height: "6px",
                     borderRadius: "99px",
-                    background: activeIndex === i ? "#1264F1" : "#D1D5DB",
+                    background: activeIndex === i ? "#1264F1" : "rgba(255,255,255,0.2)",
                     border: "none",
                     padding: 0,
                     transition: "all 0.25s ease",
@@ -338,8 +338,8 @@ export default function ServicesSection() {
                   width: "38px",
                   height: "38px",
                   borderRadius: "50%",
-                  border: "1px solid #E5E7EB",
-                  background: activeIndex === 0 ? "#F9FAFB" : "#fff",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: activeIndex === 0 ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.08)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -349,7 +349,7 @@ export default function ServicesSection() {
                 }}
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M10 12L6 8L10 4" stroke="#0D0D0D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M10 12L6 8L10 4" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               <button
@@ -360,8 +360,8 @@ export default function ServicesSection() {
                   width: "38px",
                   height: "38px",
                   borderRadius: "50%",
-                  border: "1px solid #E5E7EB",
-                  background: activeIndex === services.length - 1 ? "#F9FAFB" : "#1264F1",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: activeIndex === services.length - 1 ? "rgba(255,255,255,0.05)" : "#1264F1",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

@@ -5,6 +5,9 @@ import { motion, useInView, useScroll, useTransform, AnimatePresence } from "fra
 import Link from "next/link";
 import { ArrowBtn } from "@/components/ui/ArrowBtn";
 import { useContactModal } from "@/components/ui/ContactModalProvider";
+import TrustBar from "@/components/sections/TrustBar";
+import WorkSection from "@/components/sections/WorkSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const BG = "#07101F";
@@ -60,9 +63,9 @@ const prozess = [
 ];
 
 const faqData = [
-  { q: "Was kostet SEO-Optimierung in Freiburg?", a: "SEO-Betreuung bei LB Digital beginnt bei 300 € pro Monat für lokale SEO-Grundbetreuung (technisches SEO, GMB-Pflege, monatliches Reporting). Umfangreichere Pakete mit Content-Erstellung, Linkaufbau und Keyword-Strategie liegen zwischen 500 und 1.500 € monatlich. Für ein einmaliges SEO-Audit und technischen Fix ohne laufende Betreuung bieten wir Projektpreise ab 800 €. In einem kostenlosen Erstgespräch analysieren wir Ihre aktuelle Situation und erstellen ein passendes Angebot." },
   { q: "Wie lange dauert es bis ich bei Google oben stehe?", a: "SEO ist kein Sprint, sondern ein Marathon. Erste sichtbare Verbesserungen bei Long-Tail-Keywords (weniger umkämpfte Suchbegriffe) sind oft nach 4–8 Wochen erkennbar. Für kompetitive Keywords in Freiburg wie 'Zahnarzt Freiburg' oder 'Steuerberater Freiburg' sollten Sie mit 3–6 Monaten rechnen, bis deutliche Ranking-Verbesserungen eintreten. Lokales SEO über Google My Business kann deutlich schneller Wirkung zeigen — innerhalb weniger Wochen." },
   { q: "Was ist lokales SEO und warum brauche ich es?", a: "Lokales SEO umfasst alle Maßnahmen, die dazu beitragen, dass Ihr Unternehmen bei geografisch relevanten Suchanfragen gefunden wird — also wenn jemand 'Friseur Freiburg' oder 'Elektriker in der Nähe' sucht. Für Unternehmen mit lokalem Kundenstamm ist lokales SEO oft wichtiger als klassisches SEO. Es umfasst Google Business Profile, NAP-Konsistenz, lokale Keywords auf der Website, Citations und Bewertungsmanagement." },
+  { q: "Was kostet SEO-Optimierung in Freiburg?", a: "SEO-Betreuung bei LB Digital beginnt bei 300 € pro Monat für lokale SEO-Grundbetreuung (technisches SEO, GMB-Pflege, monatliches Reporting). Umfangreichere Pakete mit Content-Erstellung, Linkaufbau und Keyword-Strategie liegen zwischen 500 und 1.500 € monatlich. Für ein einmaliges SEO-Audit und technischen Fix ohne laufende Betreuung bieten wir Projektpreise ab 800 €. In einem kostenlosen Erstgespräch analysieren wir Ihre aktuelle Situation und erstellen ein passendes Angebot." },
   { q: "Was ist der Unterschied zwischen SEO und Google Ads?", a: "Google Ads (bezahlte Anzeigen) bringen sofortige Sichtbarkeit — aber nur solange Sie zahlen. Hören Sie auf zu zahlen, verschwindet auch die Sichtbarkeit. SEO (organische Optimierung) braucht länger, aber die Ergebnisse sind nachhaltig. Eine gut optimierte Seite rankt weiterhin, auch wenn Sie die aktive SEO-Arbeit reduzieren. Langfristig ist SEO kostengünstiger pro gewonnenem Kunden — der Cost-per-Click bei Google Ads für lokale Dienstleistungen in Freiburg liegt oft bei 2–8 € pro Klick." },
   { q: "Was ist Google My Business und warum ist es so wichtig?", a: "Google My Business (heute: Google Business Profile) ist das kostenlose Unternehmensprofil, das in der lokalen Google-Suche und auf Google Maps erscheint. Für lokale Suchanfragen ist es oft wichtiger als die eigene Website. Wenn jemand 'Bäckerei Freiburg' sucht, erscheint zuerst das Local Pack mit drei Google Business Einträgen — wer hier nicht auftaucht, wird in vielen Fällen gar nicht wahrgenommen. Ein vollständig optimiertes Profil mit Fotos, Bewertungen und regelmäßigen Posts ist der schnellste Hebel für lokale Sichtbarkeit." },
   { q: "Wie wichtig sind Google-Bewertungen für mein Ranking?", a: "Sehr wichtig — besonders für lokales SEO. Google verwendet die Anzahl, Aktualität und durchschnittliche Bewertung als Rankingfaktor im Local Pack. Unternehmen mit 50+ Bewertungen und 4,5 Sternen ranken systematisch besser als solche mit 5 Bewertungen und 4,0 Sternen. Wir entwickeln für unsere Kunden Strategien, um aktiv mehr Bewertungen zu generieren — ohne gegen Googles Richtlinien zu verstoßen." },
@@ -220,19 +223,7 @@ export default function SEOFreiburgContent() {
         <div aria-hidden="true" className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
       </section>
 
-      {/* ── Stats Banner ─────────────────────────────────────────────────── */}
-      <section aria-label="SEO Kennzahlen" style={{ background: ACCENT }}>
-        <div className="container-xl py-10">
-          <StaggerReveal className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-            {[{ value: "93%", label: "aller Online-Erfahrungen beginnen mit einer Suchmaschine" }, { value: "75%", label: "der Nutzer klicken nie auf Seite 2 bei Google" }, { value: "46%", label: "aller Google-Suchen haben lokalen Bezug" }].map((stat) => (
-              <motion.div key={stat.label} variants={fadeUp}>
-                <p className="font-display font-extrabold text-white leading-none mb-2" style={{ fontSize: "clamp(32px, 5vw, 52px)" }}>{stat.value}</p>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.8)" }}>{stat.label}</p>
-              </motion.div>
-            ))}
-          </StaggerReveal>
-        </div>
-      </section>
+      <TrustBar />
 
       {/* ── Leistungen ───────────────────────────────────────────────────── */}
       <section id="leistungen" aria-labelledby="leistungen-heading" style={{ background: BG2 }}>
@@ -255,8 +246,11 @@ export default function SEOFreiburgContent() {
         </div>
       </section>
 
+      <WorkSection />
+      <TestimonialsSection />
+
       {/* ── Warum LB Digital ─────────────────────────────────────────────── */}
-      <section aria-labelledby="warum-heading" style={{ background: BG }}>
+      <section id="warum" aria-labelledby="warum-heading" style={{ background: BG }}>
         <div className="container-xl py-24 md:py-32">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <Reveal>
@@ -357,7 +351,7 @@ export default function SEOFreiburgContent() {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="faq-heading" style={{ background: BG2 }}>
+      <section id="faq" aria-labelledby="faq-heading" style={{ background: BG2 }}>
         <div className="container-xl py-24 md:py-32">
           <Reveal className="mb-16">
             <p className="eyebrow mb-3">FAQ</p>
@@ -395,7 +389,7 @@ export default function SEOFreiburgContent() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
+      <section id="kontakt" aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
         <div className="container-xl py-24 md:py-32 text-center">
           <Reveal>
             <p className="eyebrow mb-4">Bereit?</p>

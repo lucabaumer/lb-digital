@@ -6,7 +6,7 @@
   "nav": {
     "links": [
       { "label": "Leistungen", "href": "#leistungen" },
-      { "label": "Über uns", "href": "#ueber-uns" },
+      { "label": "Über uns", "href": "#warum" },
       { "label": "FAQ", "href": "#faq" },
       { "label": "Kontakt", "href": "#kontakt" }
     ],
@@ -48,7 +48,7 @@
   "about": {
     "eyebrow": "Warum LB Digital",
     "headline": "Weniger Agentur. Mehr Partner.",
-    "body": "Kein anonymes Großstudio, kein Offshore-Team. Sie arbeiten direkt mit uns — einer kleinen, spezialisierten Einheit aus Freiburg, die weiß, was Kanzleien, Handwerksbetriebe und Architekten wirklich brauchen.",
+    "body": "Kein anonymes Großstudio, kein Offshore-Team. Sie arbeiten direkt mit uns — einer kleinen, spezialisierten Einheit aus Freiburg, die weiß, was Handwerksbetriebe, Gastronomiebetriebe und lokale Unternehmen wirklich brauchen.",
     "usps": [
       {
         "number": "01",
@@ -107,16 +107,16 @@
     "headline": "Häufig gestellte Fragen",
     "items": [
       {
-        "q": "Was kostet eine professionelle Website?",
-        "a": "Eine maßgeschneiderte Website beginnt bei ca. 1.500 € — je nach Umfang und Anforderungen. Im Erstgespräch bekommen Sie ein transparentes Festpreisangebot ohne versteckte Kosten."
-      },
-      {
         "q": "Warum bringt meine aktuelle Website keine Anfragen?",
         "a": "Meistens liegt es an drei Dingen: kein klarer Call-to-Action, zu viel Text ohne Struktur, und eine schlechte mobile Darstellung. Wir analysieren Ihre Seite kostenlos und zeigen genau, was fehlt."
       },
       {
         "q": "Wie lange dauert die Erstellung?",
         "a": "Eine Standard-Website ist in 2–3 Wochen live. Kein monatelanger Prozess — mit klarem Zeitplan, der eingehalten wird."
+      },
+      {
+        "q": "Was kostet eine professionelle Website?",
+        "a": "Eine maßgeschneiderte Website beginnt bei ca. 1.500 € — je nach Umfang und Anforderungen. Im Erstgespräch bekommen Sie ein transparentes Festpreisangebot ohne versteckte Kosten."
       },
       {
         "q": "Kann ich die Website später selbst bearbeiten?",

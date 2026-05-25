@@ -5,6 +5,9 @@ import { motion, useInView, useScroll, useTransform, AnimatePresence } from "fra
 import Link from "next/link";
 import { ArrowBtn } from "@/components/ui/ArrowBtn";
 import { useContactModal } from "@/components/ui/ContactModalProvider";
+import TrustBar from "@/components/sections/TrustBar";
+import WorkSection from "@/components/sections/WorkSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const BG = "#07101F";
@@ -66,9 +69,9 @@ const prozess = [
 ];
 
 const faqData = [
-  { q: "Was kostet eine professionelle Website in Furtwangen?", a: "Eine professionelle Website bei LB Digital beginnt bei 1.000 € für eine einfache Landingpage. Für eine vollständige Business-Website mit mehreren Unterseiten, Kontaktformular und SEO-Grundoptimierung liegt der Preis zwischen 3.000 und 6.000 €. Der genaue Preis hängt von Umfang, Funktionen und Designaufwand ab. Sie erhalten immer ein detailliertes Angebot vorab — keine versteckten Kosten, keine Überraschungen nach dem Launch." },
   { q: "Wie lange dauert die Erstellung einer Website?", a: "Eine einfache Landingpage ist in 2–3 Wochen fertig. Eine vollständige Business-Website mit mehreren Unterseiten dauert in der Regel 4–8 Wochen. Der größte Zeitfaktor ist die Bereitstellung von Inhalten und Feedback durch den Kunden. Nach dem Erstgespräch erhalten Sie eine realistische Zeitplanung für Ihr Projekt." },
   { q: "Kommen Sie für ein persönliches Gespräch nach Furtwangen?", a: "Unser Büro ist in Freiburg im Breisgau, rund 50 km von Furtwangen entfernt. Für Erstgespräche und Präsentationen nutzen wir Video-Calls — das spart beiden Seiten Zeit und ermöglicht trotzdem eine persönliche Zusammenarbeit. Bei Bedarf sind persönliche Treffen nach Absprache möglich." },
+  { q: "Was kostet eine professionelle Website in Furtwangen?", a: "Eine professionelle Website bei LB Digital beginnt bei 1.000 € für eine einfache Landingpage. Für eine vollständige Business-Website mit mehreren Unterseiten, Kontaktformular und SEO-Grundoptimierung liegt der Preis zwischen 3.000 und 6.000 €. Der genaue Preis hängt von Umfang, Funktionen und Designaufwand ab. Sie erhalten immer ein detailliertes Angebot vorab — keine versteckten Kosten, keine Überraschungen nach dem Launch." },
   { q: "Warum braucht mein Unternehmen in Furtwangen eine professionelle Website?", a: "Furtwangen ist ein starker Wirtschaftsstandort — mit der Hochschule Furtwangen University, etablierten Mittelstandsbetrieben und einem wachsenden Tourismussektor. Kunden suchen Dienstleister und Produkte zuerst online. Wer bei Google nicht gefunden wird, verliert Anfragen an Konkurrenten in der Region. Eine professionelle, schnelle Website ist heute der Grundstein jeder erfolgreichen lokalen Geschäftspräsenz." },
   { q: "Was ist der Unterschied zwischen einem Baukasten und einer individuellen Website?", a: "Baukästen wie Wix, Jimdo oder Squarespace bieten vorgefertigte Templates. Das ist günstig und schnell — aber erkauft durch Kompromisse: langsamere Ladezeiten, eingeschränkte Gestaltungsmöglichkeiten, monatliche Abokosten und schlechtere SEO-Performance. Eine individuelle Website mit Next.js ist schneller, besser auf Google optimiert und zu 100 % auf Ihre Marke zugeschnitten — ohne monatliche Lizenzgebühren." },
   { q: "Warum Next.js statt WordPress?", a: "WordPress ist das meistgenutzte CMS der Welt — und gleichzeitig das meistgehackte. Ständige Plugin-Updates, Sicherheitslücken und Kompatibilitätsprobleme sind alltäglich. Next.js generiert statische HTML-Dateien, die blitzschnell ausgeliefert werden und keine angreifbare Datenbankstruktur haben. Das Ergebnis: bessere Ladezeiten, höhere Sicherheit und von Beginn an bessere Rankingchancen bei Google." },
@@ -229,19 +232,7 @@ export default function WebdesignFurtwangenContent() {
         <div aria-hidden="true" className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
       </section>
 
-      {/* ── Stats Banner ─────────────────────────────────────────────────── */}
-      <section aria-label="Kennzahlen" style={{ background: ACCENT }}>
-        <div className="container-xl py-10">
-          <StaggerReveal className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[{ value: "95+", label: "Lighthouse Score" }, { value: "<1s", label: "Ladezeit" }, { value: "100%", label: "Individuell" }, { value: "0€", label: "Erstgespräch" }].map((stat) => (
-              <motion.div key={stat.label} variants={fadeUp} className="text-center">
-                <p className="font-display font-extrabold text-white leading-none mb-1" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>{stat.value}</p>
-                <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>{stat.label}</p>
-              </motion.div>
-            ))}
-          </StaggerReveal>
-        </div>
-      </section>
+      <TrustBar />
 
       {/* ── Leistungen ───────────────────────────────────────────────────── */}
       <section id="leistungen" aria-labelledby="leistungen-heading" style={{ background: BG2 }}>
@@ -264,8 +255,11 @@ export default function WebdesignFurtwangenContent() {
         </div>
       </section>
 
+      <WorkSection />
+      <TestimonialsSection />
+
       {/* ── Lokaler Furtwangen Content ────────────────────────────────────── */}
-      <section aria-labelledby="furtwangen-heading" style={{ background: BG }}>
+      <section id="warum" aria-labelledby="furtwangen-heading" style={{ background: BG }}>
         <div className="container-xl py-24 md:py-32">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <Reveal>
@@ -427,7 +421,7 @@ export default function WebdesignFurtwangenContent() {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="faq-heading" style={{ background: BG2 }}>
+      <section id="faq" aria-labelledby="faq-heading" style={{ background: BG2 }}>
         <div className="container-xl py-24 md:py-32">
           <Reveal className="mb-16">
             <p className="eyebrow mb-3">FAQ</p>
@@ -465,7 +459,7 @@ export default function WebdesignFurtwangenContent() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
+      <section id="kontakt" aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
         <div className="container-xl py-24 md:py-32 text-center">
           <Reveal>
             <p className="eyebrow mb-4">Bereit?</p>

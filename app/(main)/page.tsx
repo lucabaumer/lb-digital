@@ -24,7 +24,9 @@ const faqSchema = {
 import TrustBar from "@/components/sections/TrustBar";
 import ServicesSection from "@/components/sections/ServicesSection";
 import WorkSection from "@/components/sections/WorkSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import WhySection from "@/components/sections/WhySection";
+import ProcessSection from "@/components/sections/ProcessSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
 import SectionReveal from "@/components/ui/SectionReveal";
@@ -40,7 +42,9 @@ export default function Home() {
       <TrustBar />
       <SectionReveal><ServicesSection /></SectionReveal>
       <SectionReveal><WorkSection /></SectionReveal>
+      <SectionReveal><TestimonialsSection /></SectionReveal>
       <SectionReveal><WhySection /></SectionReveal>
+      <SectionReveal><ProcessSection /></SectionReveal>
       <SectionReveal><FAQSection /></SectionReveal>
       <CTASection />
     </>

@@ -10,7 +10,7 @@ export default function FAQSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="faq" ref={ref} className="section-py" style={{ background: "#fff" }}>
+    <section id="faq" ref={ref} className="section-py" style={{ background: "#07101F" }}>
       <div className="container-xl">
 
         <div className="grid lg:grid-cols-[1fr_2fr] gap-16 items-start">
@@ -25,7 +25,7 @@ export default function FAQSection() {
             <p className="eyebrow mb-4">{page.faq.eyebrow}</p>
             <h2
               className="font-display font-bold leading-tight"
-              style={{ fontSize: "clamp(26px, 3.5vw, 42px)", color: "#0D0D0D" }}
+              style={{ fontSize: "clamp(26px, 3.5vw, 42px)", color: "#FFFFFF" }}
             >
               {page.faq.headline}
             </h2>
@@ -42,27 +42,27 @@ export default function FAQSection() {
               >
                 <button
                   className="w-full flex items-center justify-between gap-4 py-5 text-left"
-                  style={{ borderBottom: "1px solid #E5E7EB" }}
+                  style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
                   onClick={() => setOpen(open === i ? null : i)}
                   aria-expanded={open === i}
                 >
                   <span
                     className="font-medium text-base leading-snug"
-                    style={{ color: "#0D0D0D" }}
+                    style={{ color: "#FFFFFF" }}
                   >
                     {item.q}
                   </span>
                   <span
                     className="flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-200"
                     style={{
-                      borderColor: open === i ? "#1D4ED8" : "#D1D5DB",
+                      borderColor: open === i ? "#1D4ED8" : "rgba(255,255,255,0.2)",
                       background: open === i ? "#1D4ED8" : "transparent",
                       transform: open === i ? "rotate(45deg)" : "none",
                     }}
                     aria-hidden="true"
                   >
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M6 2v8M2 6h8" stroke={open === i ? "#fff" : "#6B7280"} strokeWidth="1.5" strokeLinecap="round" />
+                      <path d="M6 2v8M2 6h8" stroke={open === i ? "#fff" : "rgba(255,255,255,0.5)"} strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
                   </span>
                 </button>
@@ -78,7 +78,7 @@ export default function FAQSection() {
                     >
                       <p
                         className="text-sm leading-relaxed pb-5 pt-3"
-                        style={{ color: "#6B7280" }}
+                        style={{ color: "rgba(255,255,255,0.55)" }}
                       >
                         {item.a}
                       </p>

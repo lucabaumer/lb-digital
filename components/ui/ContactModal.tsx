@@ -14,7 +14,7 @@ interface Props {
 
 export default function ContactModal({ isOpen, onClose }: Props) {
   const [status, setStatus] = useState<Status>("idle");
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({ phone: "", name: "", message: "" });
   const [errors, setErrors] = useState<Partial<typeof form>>({});
 
   // Close on Escape
@@ -41,11 +41,8 @@ export default function ContactModal({ isOpen, onClose }: Props) {
 
   const validate = () => {
     const e: Partial<typeof form> = {};
+    if (!form.phone.trim())   e.phone   = "Bitte Telefonnummer eingeben";
     if (!form.name.trim())    e.name    = "Bitte Namen eingeben";
-    if (!form.email.trim())   e.email   = "Bitte E-Mail eingeben";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-                              e.email   = "Ungültige E-Mail-Adresse";
-    if (!form.message.trim()) e.message = "Bitte kurz beschreiben, worum es geht";
     return e;
   };
 
@@ -62,7 +59,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
         body: JSON.stringify(form),
       });
       setStatus(res.ok ? "success" : "error");
-      if (res.ok) setForm({ name: "", email: "", phone: "", message: "" });
+      if (res.ok) setForm({ phone: "", name: "", message: "" });
     } catch {
       setStatus("error");
     }
@@ -142,13 +139,13 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                 WebkitBackdropFilter: "blur(24px)",
                 border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: "20px",
-                boxShadow: "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(79,70,229,0.12)",
+                boxShadow: "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(18,100,241,0.12)",
                 padding: "36px 32px 32px",
                 scrollbarWidth: "none",
               }}
             >
               {/* Top accent line */}
-              <div aria-hidden style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "1px", background: "linear-gradient(to right, transparent, rgba(59,130,246,0.5), transparent)", borderRadius: "1px" }} />
+              <div aria-hidden style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "1px", background: "linear-gradient(to right, transparent, rgba(18,100,241,0.5), transparent)", borderRadius: "1px" }} />
 
               {/* Header */}
               <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "28px" }}>
@@ -218,16 +215,13 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                     exit={{ opacity: 0 }}
                     style={{ display: "flex", flexDirection: "column", gap: "16px" }}
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {inp("name",  "Name",   "text",  "Max Mustermann")}
-                      {inp("email", "E-Mail", "email", "max@firma.de")}
-                    </div>
-                    {inp("phone", "Telefon (optional)", "tel", "+49 ...", false)}
+                    {inp("phone", "Telefon", "tel", "+49 178 ...")}
+                    {inp("name",  "Name",   "text",  "Max Mustermann")}
 
                     {/* Message */}
                     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                       <label htmlFor="modal-message" style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
-                        Nachricht <span style={{ color: "#3B82F6" }}>*</span>
+                        Nachricht <span style={{ color: "rgba(255,255,255,0.25)", fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional)</span>
                       </label>
                       <textarea
                         id="modal-message"
@@ -267,8 +261,8 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                       whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       style={{
-                        background: "linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%)",
-                        color: "#fff",
+                        background: "#FFFFFF",
+                        color: "#07101F",
                         border: "none",
                         borderRadius: "999px",
                         padding: "14px 32px",
@@ -283,7 +277,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                         justifyContent: "center",
                         gap: "10px",
                         width: "100%",
-                        boxShadow: "0 4px 20px rgba(79,70,229,0.4)",
+                        boxShadow: "0 4px 20px rgba(255,255,255,0.12)",
                         marginTop: "4px",
                       }}
                     >

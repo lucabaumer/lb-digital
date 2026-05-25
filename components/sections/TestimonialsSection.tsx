@@ -2,51 +2,36 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useContactModal } from "@/components/ui/ContactModalProvider";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+const ACCENT = "#1264F1";
 
-const testimonials = [
+// Replace with your Google Business Profile URL once available
+const GOOGLE_PROFILE_URL = "https://maps.google.com/?cid=YOUR_CID";
+
+const metrics = [
   {
-    quote: "Seit dem Launch rufen deutlich mehr Leute an. Die Seite sieht nicht nur gut aus — sie bringt tatsächlich Anfragen.",
-    name: "Michael K.",
-    company: "Dachdeckerei Krause",
-    city: "Freiburg",
-    category: "Handwerk",
-    rating: 5,
+    value: "95+",
+    label: "Lighthouse Score",
+    sub: "Performance · Accessibility · SEO · Best Practices",
   },
   {
-    quote: "In zwei Wochen online, genau wie versprochen. Und das Ergebnis ist besser als ich erwartet hatte. Endlich kommt auch mobil alles richtig rüber.",
-    name: "Sandra F.",
-    company: "Café am Münster",
-    city: "Freiburg",
-    category: "Gastronomie",
-    rating: 5,
+    value: "<1s",
+    label: "Ladezeit",
+    sub: "Statisches Rendering, Vercel Edge Network",
   },
   {
-    quote: "Kein Vergleich zu meiner alten Website. Der Entwickler hat direkt mitgedacht — nicht einfach umgesetzt, sondern wirklich beraten.",
-    name: "Thomas B.",
-    company: "Bauservice Berger",
-    city: "Titisee-Neustadt",
-    category: "Handwerk",
-    rating: 5,
+    value: "2–3W",
+    label: "Lieferzeit",
+    sub: "Von der Anfrage bis zur fertigen Website",
   },
 ];
-
-function Stars({ count }: { count: number }) {
-  return (
-    <div style={{ display: "flex", gap: "3px" }} aria-label={`${count} von 5 Sternen`}>
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="var(--color-accent)" aria-hidden="true">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
-      ))}
-    </div>
-  );
-}
 
 export default function TestimonialsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { openModal } = useContactModal();
 
   return (
     <section
@@ -65,42 +50,47 @@ export default function TestimonialsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.45, ease: EASE }}
           >
-            Kundenstimmen
+            Qualität & Bewertungen
           </motion.p>
           <motion.h2
             id="testimonials-heading"
             className="font-display font-bold leading-[1.05] tracking-tight text-white"
-            style={{ fontSize: "clamp(28px, 4.5vw, 56px)" }}
+            style={{ fontSize: "clamp(28px, 4.5vw, 56px)", maxWidth: "640px" }}
             initial={{ opacity: 0, y: 18 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.07, ease: EASE }}
           >
-            Was Kunden sagen.{" "}
-            <span style={{ color: "rgba(255,255,255,0.22)" }}>Keine leeren Worte.</span>
+            Messbare Qualität.{" "}
+            <span style={{ color: "rgba(255,255,255,0.22)" }}>Keine Versprechen.</span>
           </motion.h2>
+          <motion.p
+            className="mt-5"
+            style={{ color: "rgba(255,255,255,0.5)", fontSize: "clamp(14px, 1.5vw, 16px)", maxWidth: "520px", lineHeight: 1.7 }}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
+          >
+            Wir sind frisch am Markt. Statt Fake-Bewertungen zeigen wir, was wir technisch liefern — messbar, transparent, nachprüfbar.
+          </motion.p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {testimonials.map((t, i) => (
+        {/* Metrics + Google card */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+          {metrics.map((m, i) => (
             <motion.div
-              key={i}
+              key={m.label}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.1, ease: EASE }}
+              transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease: EASE }}
               style={{
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: "10px",
                 padding: "32px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
                 position: "relative",
                 overflow: "hidden",
               }}
             >
-              {/* Top accent line */}
               <div
                 aria-hidden
                 style={{
@@ -109,56 +99,127 @@ export default function TestimonialsSection() {
                   left: "20%",
                   right: "20%",
                   height: "1px",
-                  background: "linear-gradient(to right, transparent, rgba(18,100,241,0.4), transparent)",
+                  background: `linear-gradient(to right, transparent, rgba(18,100,241,0.4), transparent)`,
                 }}
               />
-
-              <Stars count={t.rating} />
-
               <p
-                style={{
-                  fontSize: "15px",
-                  lineHeight: 1.75,
-                  color: "rgba(255,255,255,0.72)",
-                  fontStyle: "italic",
-                  margin: 0,
-                  flex: 1,
-                }}
+                className="font-display font-extrabold text-white leading-none mb-2"
+                style={{ fontSize: "clamp(40px, 5vw, 56px)", color: ACCENT }}
               >
-                &ldquo;{t.quote}&rdquo;
+                {m.value}
               </p>
-
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: "18px" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div>
-                    <p style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF", margin: 0, lineHeight: 1.3 }}>
-                      {t.name}
-                    </p>
-                    <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", margin: 0, marginTop: "2px" }}>
-                      {t.company} · {t.city}
-                    </p>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      padding: "4px 10px",
-                      background: "rgba(18,100,241,0.12)",
-                      border: "1px solid rgba(18,100,241,0.25)",
-                      borderRadius: "4px",
-                      color: "var(--color-accent)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {t.category}
-                  </span>
-                </div>
-              </div>
+              <p className="font-bold text-white mb-1" style={{ fontSize: "15px" }}>
+                {m.label}
+              </p>
+              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", lineHeight: 1.5 }}>
+                {m.sub}
+              </p>
             </motion.div>
           ))}
         </div>
+
+        {/* Google Reviews card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.35, ease: EASE }}
+          style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: "10px",
+            padding: "32px 36px",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "24px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            {/* Google "G" icon */}
+            <div
+              style={{
+                width: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                background: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+            </div>
+            <div>
+              <p className="font-bold text-white" style={{ fontSize: "15px", marginBottom: "4px" }}>
+                Google Bewertungen — LB Digital
+              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <div style={{ display: "flex", gap: "2px" }} aria-label="Noch keine Bewertungen">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" aria-hidden="true">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)" }}>
+                  Erste Bewertungen folgen nach dem Launch
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+            <a
+              href={GOOGLE_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "13px",
+                fontWeight: 600,
+                color: "rgba(255,255,255,0.55)",
+                textDecoration: "none",
+                padding: "9px 18px",
+                borderRadius: "8px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                transition: "color 0.2s, border-color 0.2s",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.color = "#fff";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.color = "rgba(255,255,255,0.55)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+              }}
+            >
+              Auf Google ansehen
+            </a>
+            <button
+              onClick={openModal}
+              style={{
+                fontSize: "13px",
+                fontWeight: 700,
+                color: "#07101F",
+                background: "#FFFFFF",
+                border: "none",
+                padding: "9px 18px",
+                borderRadius: "8px",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Referenzkunde werden
+            </button>
+          </div>
+        </motion.div>
 
       </div>
     </section>

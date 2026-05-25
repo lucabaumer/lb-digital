@@ -206,7 +206,7 @@ export default function HeroSection() {
               <ArrowBtn href="#kontakt" variant="primary-white">
                 {hero.cta_primary}
               </ArrowBtn>
-              <ArrowBtn href="#leistungen" variant="ghost-light">
+              <ArrowBtn href="#projekte" variant="ghost-light">
                 {hero.cta_secondary}
               </ArrowBtn>
             </motion.div>
