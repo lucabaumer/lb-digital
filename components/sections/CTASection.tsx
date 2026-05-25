@@ -269,7 +269,7 @@ export default function CTASection() {
                     <motion.button
                       type="submit"
                       disabled={status === "loading"}
-                      whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
+                      whileHover={{ scale: status === "loading" ? 1 : 1.02, boxShadow: "0 10px 48px rgba(255,255,255,0.3)" }}
                       whileTap={{ scale: 0.98 }}
                       style={{
                         background: "#FFFFFF",
@@ -287,6 +287,7 @@ export default function CTASection() {
                         justifyContent: "center",
                         gap: "10px",
                         width: "100%",
+                        boxShadow: "0 4px 24px rgba(255,255,255,0.18)",
                         transition: "box-shadow 0.2s",
                       }}
                     >

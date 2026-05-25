@@ -182,7 +182,7 @@ nextjs-portal { display: none !important; }
   gap: 8px;
   background: #FFFFFF;
   color: #07101F;
-  padding: 14px 28px;
+  padding: 15px 30px;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -192,15 +192,16 @@ nextjs-portal { display: none !important; }
   transition: background 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1), transform 0.2s cubic-bezier(0.22,1,0.36,1);
   white-space: nowrap;
   text-decoration: none;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.18), 0 1px 6px rgba(255, 255, 255, 0.1);
 }
 
 .btn-primary-white:hover {
   background: #EEF3FF;
-  box-shadow: 0 6px 28px rgba(255, 255, 255, 0.22);
-  transform: translateY(-1px);
+  box-shadow: 0 8px 48px rgba(255, 255, 255, 0.32), 0 2px 12px rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
 }
 
-.btn-primary-white:active { transform: scale(0.98); }
+.btn-primary-white:active { transform: scale(0.98); box-shadow: 0 2px 12px rgba(255,255,255,0.12); }
 
 .btn-ghost-light {
   display: inline-flex;

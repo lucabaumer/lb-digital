@@ -97,16 +97,12 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Radial glow mobile — bright centered lightbulb effect */}
+      {/* Radial glow mobile — off-center, matches desktop direction */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none lg:hidden"
         style={{
-          background: [
-            "radial-gradient(ellipse 90% 55% at 50% 50%, rgba(18,100,241,0.36) 0%, transparent 60%)",
-            "radial-gradient(ellipse 55% 35% at 50% 48%, rgba(60,110,255,0.28) 0%, transparent 55%)",
-            "radial-gradient(ellipse 30% 20% at 50% 46%, rgba(147,197,253,0.15) 0%, transparent 50%)",
-          ].join(", "),
+          background: "radial-gradient(ellipse 90% 60% at 5% 50%, rgba(18,100,241,0.22) 0%, transparent 65%)",
         }}
       />
 

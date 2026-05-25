@@ -74,55 +74,53 @@ export default function TestimonialsSection() {
           </motion.p>
         </div>
 
-        {/* Metrics + Google card */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+        {/* ── Editorial stat strip — no cards, just large numbers ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
+          className="flex flex-col lg:flex-row mb-6"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+        >
           {metrics.map((m, i) => (
             <motion.div
               key={m.label}
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease: EASE }}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "10px",
-                padding: "32px",
-                position: "relative",
-                overflow: "hidden",
-              }}
+              transition={{ duration: 0.55, delay: 0.18 + i * 0.1, ease: EASE }}
+              className={[
+                "flex-1 py-11",
+                i < metrics.length - 1 ? "border-b lg:border-b-0" : "",
+                i > 0 ? "lg:border-l lg:pl-12" : "",
+                i < metrics.length - 1 ? "lg:pr-12" : "",
+              ].join(" ")}
+              style={{ borderColor: "rgba(255,255,255,0.07)" }}
             >
-              <div
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: "20%",
-                  right: "20%",
-                  height: "1px",
-                  background: `linear-gradient(to right, transparent, rgba(18,100,241,0.4), transparent)`,
-                }}
-              />
               <p
-                className="font-display font-extrabold text-white leading-none mb-2"
-                style={{ fontSize: "clamp(40px, 5vw, 56px)", color: ACCENT }}
+                className="font-display font-extrabold leading-none mb-3"
+                style={{
+                  fontSize: "clamp(52px, 6.5vw, 80px)",
+                  color: ACCENT,
+                  letterSpacing: "-0.03em",
+                }}
               >
                 {m.value}
               </p>
-              <p className="font-bold text-white mb-1" style={{ fontSize: "15px" }}>
+              <p className="font-bold text-white mb-1.5" style={{ fontSize: "15px" }}>
                 {m.label}
               </p>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", lineHeight: 1.5 }}>
+              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.32)", lineHeight: 1.5 }}>
                 {m.sub}
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Google Reviews card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.35, ease: EASE }}
+          transition={{ duration: 0.6, delay: 0.38, ease: EASE }}
           style={{
             background: "rgba(255,255,255,0.03)",
             border: "1px solid rgba(255,255,255,0.07)",
@@ -136,7 +134,7 @@ export default function TestimonialsSection() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            {/* Google "G" icon */}
+            {/* Google G */}
             <div
               style={{
                 width: "44px",
