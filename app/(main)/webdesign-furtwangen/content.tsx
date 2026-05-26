@@ -345,8 +345,12 @@ export default function WebdesignFurtwangenContent() {
                 {[["Ladezeit", "< 1 Sekunde", "3–8 Sekunden"], ["Lighthouse Score", "95–100", "40–70"], ["Sicherheit", "Keine Angriffsfläche", "Meistgehacktes CMS"], ["Monatliche Kosten", "Keine Abo-Gebühren", "Plugins + Hosting"], ["SEO-Performance", "Technisch optimal", "Plugin-abhängig"], ["Design-Freiheit", "100 % individuell", "Template-gebunden"]].map(([label, lb, wp], i) => (
                   <tr key={label} style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent" }}>
                     <td className="py-3 px-4 font-medium" style={{ color: "rgba(255,255,255,0.7)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>{label}</td>
-                    <td className="py-3 px-4 text-center font-semibold" style={{ color: "#34D399", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>✓ {lb}</td>
-                    <td className="py-3 px-4 text-center" style={{ color: "rgba(255,255,255,0.35)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>✗ {wp}</td>
+                    <td className="py-3 px-4 text-center font-semibold" style={{ color: "#34D399", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ display: "inline-block", verticalAlign: "middle", marginRight: "4px" }}><path d="M1.5 6.5l3 3L10.5 2.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>{lb}
+                    </td>
+                    <td className="py-3 px-4 text-center" style={{ color: "rgba(255,255,255,0.35)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ display: "inline-block", verticalAlign: "middle", marginRight: "4px" }}><path d="M2 2l8 8M10 2L2 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>{wp}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -366,19 +370,40 @@ export default function WebdesignFurtwangenContent() {
       {/* ── Ergebnisse ───────────────────────────────────────────────────── */}
       <section aria-labelledby="ergebnisse-heading" style={{ background: BG2 }}>
         <div className="container-xl py-24 md:py-32">
-          <Reveal className="mb-16 text-center">
+          <Reveal className="mb-16">
             <p className="eyebrow mb-3">Messbare Qualität</p>
-            <h2 id="ergebnisse-heading" className="font-display font-extrabold text-white leading-tight mx-auto" style={{ fontSize: "clamp(28px, 4vw, 52px)", maxWidth: "540px" }}>
+            <h2 id="ergebnisse-heading" className="font-display font-extrabold text-white leading-tight" style={{ fontSize: "clamp(28px, 4vw, 52px)", maxWidth: "540px" }}>
               Was unsere Websites technisch leisten
             </h2>
           </Reveal>
-          <StaggerReveal className="grid md:grid-cols-3 gap-6">
-            {[{ value: "95+", label: "Lighthouse Score", desc: "In allen vier Kategorien: Performance, Accessibility, Best Practices und SEO. Messbar, transparent, nachweislich besser als Template-Websites.", icon: "⚡" }, { value: "<1s", label: "Ladezeit", desc: "Unsere Websites laden in unter einer Sekunde. Das ist kein Marketing-Versprechen, sondern das direkte Ergebnis sauberer Next.js-Architektur.", icon: "🚀" }, { value: "100%", label: "Individuell", desc: "Kein Template, das angepasst wurde. Jede Zeile Code ist auf Ihr Unternehmen zugeschnitten — vom Design bis zur technischen Architektur.", icon: "✦" }].map((item) => (
-              <motion.div key={item.label} variants={fadeUp} className="p-8 rounded-lg text-center" style={{ background: "rgba(18,100,241,0.06)", border: "1px solid rgba(18,100,241,0.15)" }}>
-                <p className="text-3xl mb-4" aria-hidden="true">{item.icon}</p>
-                <p className="font-display font-extrabold mb-1" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: ACCENT }}>{item.value}</p>
-                <p className="font-bold text-white mb-3" style={{ fontSize: "clamp(14px, 1.5vw, 16px)" }}>{item.label}</p>
-                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px" }}>{item.desc}</p>
+          <StaggerReveal
+            className="flex flex-col lg:flex-row"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+          >
+            {[
+              { value: "95+",   label: "Lighthouse Score", sub: "Performance · Accessibility · SEO · Best Practices" },
+              { value: "<1s",   label: "Ladezeit",          sub: "Statisches Rendering, Vercel Edge Network" },
+              { value: "100%",  label: "Individuell",       sub: "Kein Template — jede Zeile Code auf Maß" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.label}
+                variants={fadeUp}
+                className={[
+                  "flex-1 py-11",
+                  i < 2 ? "border-b lg:border-b-0" : "",
+                  i > 0 ? "lg:border-l lg:pl-12" : "",
+                  i < 2 ? "lg:pr-12" : "",
+                ].join(" ")}
+                style={{ borderColor: "rgba(255,255,255,0.07)" }}
+              >
+                <p
+                  className="font-display font-extrabold leading-none mb-3"
+                  style={{ fontSize: "clamp(52px, 6.5vw, 80px)", color: ACCENT, letterSpacing: "-0.03em" }}
+                >
+                  {item.value}
+                </p>
+                <p className="font-bold text-white mb-1.5" style={{ fontSize: "15px" }}>{item.label}</p>
+                <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}>{item.sub}</p>
               </motion.div>
             ))}
           </StaggerReveal>
@@ -407,7 +432,8 @@ export default function WebdesignFurtwangenContent() {
                 <ul className="space-y-2 mb-8 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
-                      <span style={{ color: "#34D399", flexShrink: 0 }}>✓</span> {f}
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0, color: "#34D399" }}><path d="M2 7.5l4 4 6-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      {f}
                     </li>
                   ))}
                 </ul>

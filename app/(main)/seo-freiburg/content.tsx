@@ -337,7 +337,8 @@ export default function SEOFreiburgContent() {
                 <ul className="space-y-2 mb-8 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
-                      <span style={{ color: "#34D399", flexShrink: 0 }}>✓</span> {f}
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0, color: "#34D399" }}><path d="M2 7.5l4 4 6-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      {f}
                     </li>
                   ))}
                 </ul>
