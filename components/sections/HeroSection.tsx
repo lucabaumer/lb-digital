@@ -27,7 +27,7 @@ export default function HeroSection() {
       id="hero"
       aria-labelledby="hero-heading"
       className="relative flex items-end overflow-hidden"
-      style={{ background: "#07101F", minHeight: "100dvh" }}
+      style={{ background: "#07101F", height: "100dvh", minHeight: "560px" }}
     >
 
       {/* ── Video background ── */}
@@ -68,7 +68,7 @@ export default function HeroSection() {
       {/* ── Content ── */}
       <motion.div
         className="container-xl relative z-10 w-full"
-        style={{ y: contentY, opacity, paddingBottom: "clamp(64px, 8vw, 120px)", paddingTop: "120px" }}
+        style={{ y: contentY, opacity, paddingBottom: "clamp(40px, 5vw, 72px)", paddingTop: "clamp(72px, 9vw, 112px)" }}
       >
 
         {/* Eyebrow */}
@@ -84,8 +84,8 @@ export default function HeroSection() {
         {/* Headline — the whole thing is one typographic statement */}
         <h1
           id="hero-heading"
-          className="font-display font-extrabold text-white leading-[0.92] tracking-tight mb-8 lg:mb-10"
-          style={{ fontSize: "clamp(56px, 10.5vw, 148px)" }}
+          className="font-display font-extrabold text-white leading-[0.92] tracking-tight mb-6 lg:mb-8"
+          style={{ fontSize: "clamp(44px, 7vw, 100px)" }}
         >
           <motion.span
             className="block"
@@ -108,7 +108,7 @@ export default function HeroSection() {
 
         {/* Subheadline + divider */}
         <motion.div
-          className="mb-10 lg:mb-12 max-w-xl"
+          className="mb-8 lg:mb-10 max-w-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.55, delay: 0.48, ease: EASE }}
