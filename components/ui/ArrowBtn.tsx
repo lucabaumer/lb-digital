@@ -11,7 +11,7 @@ interface ArrowBtnProps {
   onClick?: () => void;
   children: ReactNode;
   className?: string;
-  variant?: "primary" | "primary-white" | "cta" | "ghost-light" | "ghost-dark";
+  variant?: "primary" | "primary-white" | "ghost-light" | "ghost-dark";
   type?: "button" | "submit";
   disabled?: boolean;
   style?: React.CSSProperties;

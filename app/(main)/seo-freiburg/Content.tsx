@@ -1,387 +1,406 @@
-"use client";
+﻿"use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useState, useRef } from "react";
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { ArrowBtn } from "@/components/ui/ArrowBtn";
+import { useContactModal } from "@/components/ui/ContactModalProvider";
+import TrustBar from "@/components/sections/TrustBar";
+import WorkSection from "@/components/sections/WorkSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.22, 1, 0.36, 1] as const;
+const BG = "#07101F";
+const BG2 = "#0A1628";
+const ACCENT = "#1264F1";
 
-const stats = [
-  { zahl: "93 %", text: "aller Online-Erfahrungen beginnen mit einer Suchmaschine" },
-  { zahl: "75 %", text: "der Nutzer klicken nie auf Seite 2 — wer dort ist, existiert nicht" },
-  { zahl: "46 %", text: "aller Google-Suchen haben lokalen Bezug" },
-];
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+};
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09 } },
+};
+
+function Reveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div ref={ref} initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.65, ease: EASE, delay }} className={className}>
+      {children}
+    </motion.div>
+  );
+}
+
+function StaggerReveal({ children, className = "", style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div ref={ref} variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className={className} style={style}>
+      {children}
+    </motion.div>
+  );
+}
+
+// ── Data ──────────────────────────────────────────────────────────────────────
 
 const leistungen = [
-  {
-    nr: "01",
-    title: "Google My Business",
-    text: "Ihr GMB-Profil ist das mächtigste kostenlose Tool für lokale Sichtbarkeit. Wir richten es vollständig ein und optimieren Kategorien, Fotos und Beschreibung.",
-  },
-  {
-    nr: "02",
-    title: "Lokales SEO",
-    text: "Wir optimieren Ihre Website gezielt für Suchanfragen aus Freiburg und Umgebung — damit Kunden Sie finden, bevor sie zur Konkurrenz gehen.",
-  },
-  {
-    nr: "03",
-    title: "Technisches SEO",
-    text: "Ladezeiten, Core Web Vitals, strukturierte Daten, Sitemap — die technische Basis, ohne die kein Ranking möglich ist. Direkt beim Bau integriert.",
-  },
-  {
-    nr: "04",
-    title: "On-Page Optimierung",
-    text: "Title Tags, Meta Descriptions, H1-Struktur, interne Verlinkung — jede Seite wird gezielt für ihren Ziel-Suchbegriff optimiert.",
-  },
-  {
-    nr: "05",
-    title: "Content-Strategie",
-    text: "Wir zeigen Ihnen, welche Inhalte Google erwartet und welche Keywords echtes Potenzial haben — konkret, messbar, ohne leere Versprechen.",
-  },
-  {
-    nr: "06",
-    title: "Monatliches Reporting",
-    text: "Jeden Monat ein Bericht mit Rankings, Traffic und Anfragen. Sie sehen genau was passiert — kein Agentur-Blabla, nur echte Zahlen.",
-  },
+  { nr: "01", title: "Lokales SEO", text: "Wir optimieren Ihre Website gezielt für Suchanfragen aus Freiburg und der Region — damit Kunden Sie finden, bevor sie zur Konkurrenz gehen. Lokales SEO umfasst Google My Business, lokale Keywords, NAP-Konsistenz und regionale Backlinks. Für Unternehmen, deren Kunden in der Nähe sind, ist lokales SEO der wichtigste Hebel." },
+  { nr: "02", title: "Google My Business", text: "Ihr Google Business Profile ist für lokale Suchen oft wichtiger als Ihre eigene Website. Wir optimieren Ihr Profil vollständig: Kategorien, Beschreibung, Öffnungszeiten, Fotos, Bewertungsmanagement und Posts. Ein vollständig gepflegtes GBP kann Ihre lokale Sichtbarkeit innerhalb weniger Wochen deutlich verbessern." },
+  { nr: "03", title: "Technisches SEO", text: "Ladezeiten, Core Web Vitals, strukturierte Daten (JSON-LD Schema), XML-Sitemap, robots.txt, kanonische URLs und interne Verlinkung — die technische Basis, ohne die kein Ranking möglich ist. Viele Websites scheitern nicht an schlechten Inhalten, sondern an technischen Fehlern, die Google das Crawlen erschweren." },
+  { nr: "04", title: "On-Page Optimierung", text: "Title Tags, Meta Descriptions, Heading-Hierarchien (H1–H3), Keyword-Dichte, Bild-Alt-Texte und interne Verlinkung — jede Seite wird für ihren Ziel-Suchbegriff optimiert. On-Page SEO ist der Bereich, bei dem kleine Änderungen große Wirkung haben können." },
+  { nr: "05", title: "Content-Strategie", text: "Wir analysieren, welche Keywords Ihre Zielkunden in Freiburg verwenden, welche Inhalte auf Ihrer Website fehlen und welche Themen Ranking-Potenzial haben. Das Ergebnis ist ein konkreter Content-Plan — keine abstrakte Strategie, sondern umsetzbare Maßnahmen mit messbarem Effekt." },
+  { nr: "06", title: "Transparentes Reporting", text: "Monatliche Reports mit Rankings, organischem Traffic und Conversion-Daten. Sie sehen genau, welche Keywords gewonnen wurden, wie sich der Traffic entwickelt und was Ihr SEO-Budget konkret bringt. Keine Black Box, keine Agentur-Floskeln — nur messbare Ergebnisse." },
 ];
 
-export default function SEOContent() {
-  const statsRef = useRef(null);
-  const leistungenRef = useRef(null);
-  const whyRef = useRef(null);
-  const ctaRef = useRef(null);
+const prozess = [
+  { nr: "01", title: "SEO-Analyse", text: "Wir analysieren Ihre aktuelle Website kostenlos: technische Fehler, fehlende Inhalte, verpasste Keywords und Wettbewerber-Gaps. Am Ende wissen wir, wo Sie stehen und was konkret getan werden muss. Kein pauschales Paket, sondern individuelle Diagnose." },
+  { nr: "02", title: "Technischer Fix", text: "Alle technischen Fehler werden zuerst behoben: Ladezeiten, fehlendes Schema, kaputte Links, fehlende Meta-Tags, falsche Canonical-URLs. Ohne saubere technische Basis bringen inhaltliche Maßnahmen nur begrenzte Wirkung." },
+  { nr: "03", title: "On-Page Optimierung", text: "Jede wichtige Seite wird für ihr Primär-Keyword optimiert: Title Tag, Meta Description, H1, strukturierte Daten, interne Verlinkung. Gleichzeitig bauen wir fehlende Inhaltsseiten auf — FAQ-Seiten, Service-Seiten, Stadtseiten." },
+  { nr: "04", title: "Lokale Sichtbarkeit", text: "Google Business Profile optimieren, Citations aufbauen (gelbeseiten.de, Das Örtliche, Yelp), NAP-Konsistenz sicherstellen und aktiv Bewertungen einholen. Lokales SEO ist oft der schnellste Weg zu messbaren Ergebnissen." },
+  { nr: "05", title: "Monitoring & Reporting", text: "Wir verfolgen Rankings, Traffic und Conversions mit Google Search Console und Analytics. Monatliche Reports zeigen, was gewonnen wurde und was als nächstes kommt. SEO ist ein Prozess — kein einmaliger Eingriff." },
+];
 
-  const statsInView = useInView(statsRef, { once: true, margin: "-60px" });
-  const leistungenInView = useInView(leistungenRef, { once: true, margin: "-60px" });
-  const whyInView = useInView(whyRef, { once: true, margin: "-60px" });
-  const ctaInView = useInView(ctaRef, { once: true, margin: "-60px" });
+const faqData = [
+  { q: "Wie lange dauert es bis ich bei Google oben stehe?", a: "SEO ist kein Sprint, sondern ein Marathon. Erste sichtbare Verbesserungen bei Long-Tail-Keywords (weniger umkämpfte Suchbegriffe) sind oft nach 4–8 Wochen erkennbar. Für kompetitive Keywords in Freiburg wie 'Zahnarzt Freiburg' oder 'Steuerberater Freiburg' sollten Sie mit 3–6 Monaten rechnen, bis deutliche Ranking-Verbesserungen eintreten. Lokales SEO über Google My Business kann deutlich schneller Wirkung zeigen — innerhalb weniger Wochen." },
+  { q: "Was ist lokales SEO und warum brauche ich es?", a: "Lokales SEO umfasst alle Maßnahmen, die dazu beitragen, dass Ihr Unternehmen bei geografisch relevanten Suchanfragen gefunden wird — also wenn jemand 'Friseur Freiburg' oder 'Elektriker in der Nähe' sucht. Für Unternehmen mit lokalem Kundenstamm ist lokales SEO oft wichtiger als klassisches SEO. Es umfasst Google Business Profile, NAP-Konsistenz, lokale Keywords auf der Website, Citations und Bewertungsmanagement." },
+  { q: "Was kostet SEO-Optimierung in Freiburg?", a: "SEO-Betreuung bei LB Digital beginnt bei 300 € pro Monat für lokale SEO-Grundbetreuung (technisches SEO, GMB-Pflege, monatliches Reporting). Umfangreichere Pakete mit Content-Erstellung, Linkaufbau und Keyword-Strategie liegen zwischen 500 und 1.500 € monatlich. Für ein einmaliges SEO-Audit und technischen Fix ohne laufende Betreuung bieten wir Projektpreise ab 800 €. In einem kostenlosen Erstgespräch analysieren wir Ihre aktuelle Situation und erstellen ein passendes Angebot." },
+  { q: "Was ist der Unterschied zwischen SEO und Google Ads?", a: "Google Ads (bezahlte Anzeigen) bringen sofortige Sichtbarkeit — aber nur solange Sie zahlen. Hören Sie auf zu zahlen, verschwindet auch die Sichtbarkeit. SEO (organische Optimierung) braucht länger, aber die Ergebnisse sind nachhaltig. Eine gut optimierte Seite rankt weiterhin, auch wenn Sie die aktive SEO-Arbeit reduzieren. Langfristig ist SEO kostengünstiger pro gewonnenem Kunden — der Cost-per-Click bei Google Ads für lokale Dienstleistungen in Freiburg liegt oft bei 2–8 € pro Klick." },
+  { q: "Was ist Google My Business und warum ist es so wichtig?", a: "Google My Business (heute: Google Business Profile) ist das kostenlose Unternehmensprofil, das in der lokalen Google-Suche und auf Google Maps erscheint. Für lokale Suchanfragen ist es oft wichtiger als die eigene Website. Wenn jemand 'Bäckerei Freiburg' sucht, erscheint zuerst das Local Pack mit drei Google Business Einträgen — wer hier nicht auftaucht, wird in vielen Fällen gar nicht wahrgenommen. Ein vollständig optimiertes Profil mit Fotos, Bewertungen und regelmäßigen Posts ist der schnellste Hebel für lokale Sichtbarkeit." },
+  { q: "Wie wichtig sind Google-Bewertungen für mein Ranking?", a: "Sehr wichtig — besonders für lokales SEO. Google verwendet die Anzahl, Aktualität und durchschnittliche Bewertung als Rankingfaktor im Local Pack. Unternehmen mit 50+ Bewertungen und 4,5 Sternen ranken systematisch besser als solche mit 5 Bewertungen und 4,0 Sternen. Wir entwickeln für unsere Kunden Strategien, um aktiv mehr Bewertungen zu generieren — ohne gegen Googles Richtlinien zu verstoßen." },
+  { q: "Was sind Core Web Vitals und warum zählen sie für Google?", a: "Core Web Vitals sind drei Messgrößen, die Google seit 2021 als offiziellen Rankingfaktor verwendet: LCP (Largest Contentful Paint) misst die Ladezeit des größten sichtbaren Elements, INP (Interaction to Next Paint) misst die Reaktionsgeschwindigkeit auf Nutzeraktionen, und CLS (Cumulative Layout Shift) misst visuelle Stabilität. Websites, die diese Werte nicht erfüllen, werden von Google systematisch schlechter eingestuft." },
+  { q: "Was ist der Unterschied zwischen lokaler SEO und überregionaler SEO?", a: "Lokales SEO zielt auf geografisch begrenzte Suchanfragen ab — 'Steuerberater Freiburg', 'Klempner in der Nähe'. Überregionale SEO zielt auf Begriffe ohne Ortsangabe. Für die meisten lokalen Unternehmen in Freiburg ist lokales SEO das wichtigere und oft auch günstigere Ziel, weil der Wettbewerb regional begrenzt ist." },
+  { q: "Wie messen Sie den Erfolg von SEO?", a: "Wir messen SEO-Erfolg anhand von drei Kernmetriken: Keyword-Rankings (welche Position nehmen Sie für welche Suchbegriffe ein?), organischer Traffic (wie viele Besucher kommen über Google?), und Conversions (wie viele dieser Besucher werden zu Anfragen oder Kunden?). Alle Daten werden mit Google Search Console und Google Analytics 4 erfasst und monatlich reportiert." },
+  { q: "Was ist SEO-Duplicate Content und wie vermeiden wir ihn?", a: "Duplicate Content bedeutet, dass identischer oder sehr ähnlicher Text auf mehreren URLs Ihrer Website existiert. Google weiß nicht, welche Seite indexiert werden soll, und stuft beide ab. Typische Ursachen: www vs. non-www Varianten, URL-Parameter, ähnliche Service-Seiten mit nahezu gleichem Text. Wir beheben das durch korrekte Canonical-Tags, 301-Weiterleitungen und inhaltliche Differenzierung der Seiten." },
+  { q: "Kann ich SEO selbst machen oder brauche ich eine Agentur?", a: "Grundlegendes SEO können Sie selbst lernen und umsetzen — Google Search Console einrichten, Meta-Tags optimieren, regelmäßig Inhalte publizieren. Für technisches SEO und Linkaufbau ist Fachkenntnis sinnvoll. Eine Agentur macht Sinn, wenn Sie schnell voranschreiten wollen, keine Zeit für SEO haben oder sich in einem kompetitiven Markt befinden." },
+  { q: "Was passiert wenn ich SEO aufhöre zu betreiben?", a: "Gut aufgebaute Seiten verlieren ihre Rankings nicht sofort — organisches SEO hat eine gewisse Trägheit. Aber: Konkurrenten, die aktiv weiter optimieren, holen auf. Neue Inhalte Ihrer Wettbewerber können Ihre Positionen verdrängen. Technische Probleme, die unbehandelt bleiben, können Rankings langsam erodieren. Grundsätzlich gilt: SEO ist ein kontinuierlicher Prozess." },
+  { q: "Was ist der Unterschied zwischen On-Page und Off-Page SEO?", a: "On-Page SEO umfasst alles, was auf Ihrer Website selbst optimiert werden kann: Title Tags, Meta Descriptions, Inhalte, technische Struktur, interne Verlinkung, Ladezeiten. Off-Page SEO umfasst Signale von außen: Backlinks, Mentions in Online-Medien, Google Business Profile, Citations. Beide Bereiche sind wichtig — aber für lokale Unternehmen in Freiburg hat On-Page SEO und lokales Off-Page SEO Vorrang." },
+  { q: "Wie wichtig ist Content für SEO?", a: "Content ist der Kern von SEO. Google kann nur ranken, was es verstehen kann. Seiten mit dünnem Inhalt (unter 500 Wörter) ranken für kompetitive Keywords selten. Unsere Service-Seiten haben 3.500–4.500 Wörter, detaillierte FAQ-Sektionen und vollständige Schema-Daten — deutlich mehr als die meisten lokalen Konkurrenten. Mehr relevanter Content bedeutet mehr Keywords, für die Google Sie zeigt." },
+  { q: "Was ist ein Google Knowledge Panel?", a: "Ein Knowledge Panel ist das Info-Feld rechts in den Google-Suchergebnissen. Für Unternehmen in Freiburg entsteht es in der Regel automatisch, wenn Sie ein vollständiges Google Business Profile haben und gut strukturierte Daten (Schema.org Organization-Markup) auf Ihrer Website implementiert sind. Es signalisiert Google, dass Ihr Unternehmen real und vertrauenswürdig ist." },
+];
+
+// ── Schema ────────────────────────────────────────────────────────────────────
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "SEO Freiburg",
+  description: "Lokale Suchmaschinenoptimierung für Unternehmen in Freiburg im Breisgau. Mehr Google-Sichtbarkeit, mehr Anfragen aus der Region.",
+  provider: { "@type": "LocalBusiness", name: "LB Digital", url: "https://www.lb-digital.agency", address: { "@type": "PostalAddress", addressLocality: "Freiburg im Breisgau", addressCountry: "DE" } },
+  areaServed: { "@type": "City", name: "Freiburg im Breisgau" },
+  offers: { "@type": "Offer", priceCurrency: "EUR", priceSpecification: { "@type": "PriceSpecification", minPrice: "300", priceCurrency: "EUR" } },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqData.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Startseite", item: "https://www.lb-digital.agency" },
+    { "@type": "ListItem", position: 2, name: "SEO Freiburg", item: "https://www.lb-digital.agency/seo-freiburg" },
+  ],
+};
+
+// ── FAQ Accordion ─────────────────────────────────────────────────────────────
+
+function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <motion.div variants={fadeUp} style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      <button onClick={() => setOpen(!open)} className="w-full text-left py-5 flex items-start justify-between gap-4" aria-expanded={open}>
+        <span className="flex gap-4 items-start">
+          <span style={{ color: ACCENT, fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "13px", minWidth: "28px", paddingTop: "2px", opacity: 0.7 }}>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span className="font-semibold text-white leading-snug" style={{ fontSize: "clamp(15px, 1.6vw, 17px)" }}>{q}</span>
+        </span>
+        <motion.span animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.25, ease: EASE }} className="flex-shrink-0 mt-1" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.32, ease: EASE }} style={{ overflow: "hidden" }}>
+            <p className="pb-5 pl-11 leading-relaxed" style={{ color: "rgba(255,255,255,0.58)", fontSize: "clamp(14px, 1.4vw, 15px)" }}>{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+
+export default function SEOFreiburgContent() {
+  const { openModal } = useContactModal();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const glowY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
 
   return (
     <>
-      {/* ── Hero ── */}
-      <section
-        style={{
-          background: "#0A1628",
-          minHeight: "92svh",
-          display: "flex",
-          alignItems: "center",
-          position: "relative",
-          overflow: "hidden",
-          paddingTop: "clamp(110px, 14vw, 160px)",
-          paddingBottom: "clamp(80px, 10vw, 120px)",
-        }}
-      >
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(ellipse 60% 55% at 25% 50%, rgba(16,185,129,0.1) 0%, rgba(29,78,216,0.12) 40%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-        <div className="container-xl relative z-10 w-full">
-          <motion.p
-            className="eyebrow mb-5"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease }}
-          >
-            SEO Freiburg
-          </motion.p>
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section ref={heroRef} aria-labelledby="seo-heading" className="relative flex items-center overflow-hidden" style={{ background: BG, minHeight: "100dvh" }}>
+        <motion.div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{ y: glowY }}>
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 65% 55% at 10% 60%, rgba(18,100,241,0.16) 0%, transparent 65%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 50% 45% at 90% 25%, rgba(52,211,153,0.06) 0%, transparent 60%)" }} />
+        </motion.div>
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none opacity-[0.025]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
 
-          <motion.h1
-            className="font-display font-extrabold leading-[1.05] tracking-tight text-white mb-6"
-            style={{ fontSize: "clamp(36px, 5.5vw, 76px)", maxWidth: "860px" }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1, ease }}
-          >
-            Wenn Ihre Kunden googeln —{" "}
-            <span style={{ color: "#3B82F6" }}>werden sie Sie finden?</span>
-          </motion.h1>
+        <motion.div className="container-xl relative z-10 w-full" style={{ opacity: contentOpacity, y: contentY }}>
+          <div className="pt-32 pb-20 md:pt-40 md:pb-28 max-w-3xl">
+            <motion.nav aria-label="Breadcrumb" className="flex items-center gap-2 mb-6" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 }}>
+              <Link href="/" className="text-xs hover:opacity-100 transition-opacity" style={{ color: "rgba(255,255,255,0.35)" }}>Startseite</Link>
+              <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "10px" }}>›</span>
+              <span className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>SEO Freiburg</span>
+            </motion.nav>
 
-          <motion.p
-            className="mb-3 leading-relaxed font-medium"
-            style={{
-              color: "rgba(255,255,255,0.7)",
-              fontSize: "clamp(15px, 1.8vw, 19px)",
-              maxWidth: "580px",
-            }}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.18, ease }}
-          >
-            LB Digital macht Freiburger Betriebe bei Google sichtbar. Technisch sauber, inhaltlich stark, lokal ausgerichtet — damit Anfragen kommen, nicht zufällig, sondern systematisch.
-          </motion.p>
+            <motion.p className="eyebrow mb-5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.1 }}>
+              SEO · Freiburg im Breisgau
+            </motion.p>
 
-          <motion.p
-            className="mb-10 text-sm"
-            style={{ color: "rgba(255,255,255,0.35)" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.25 }}
-          >
-            Lokales SEO · Google My Business · Technisches SEO · Monatliche Reports
-          </motion.p>
+            <motion.h1 id="seo-heading" className="font-display font-extrabold leading-[1.04] tracking-tight text-white mb-6" style={{ fontSize: "clamp(38px, 6vw, 80px)" }} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.18, ease: EASE }}>
+              Mehr Kunden aus{" "}
+              <span style={{ color: ACCENT }}>Freiburg</span>
+              {" "}durch bessere Google-Rankings.
+            </motion.h1>
 
-          <motion.div
-            className="flex flex-wrap gap-3 mb-12"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.32, ease }}
-          >
-            <ArrowBtn href="#kontakt" variant="primary">
-              Kostenlose SEO-Analyse
-            </ArrowBtn>
-            <ArrowBtn href="/webdesign-freiburg" variant="ghost-light">
-              Webdesign ansehen
-            </ArrowBtn>
-          </motion.div>
+            <motion.p className="mb-10 leading-relaxed" style={{ color: "rgba(255,255,255,0.65)", fontSize: "clamp(16px, 1.8vw, 20px)", maxWidth: "580px" }} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.38, ease: EASE }}>
+              LB Digital optimiert Ihre Website für Google — technisch sauber, inhaltlich stark, lokal ausgerichtet. Kein pauschales SEO-Paket. Nur Maßnahmen, die messbar mehr Anfragen bringen.
+            </motion.p>
 
-          <motion.div
-            className="flex flex-wrap items-center gap-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.42 }}
-            aria-hidden
-          >
-            {["Lokales SEO", "Google Maps", "Core Web Vitals", "Schema.org", "Transparente Reports"].map((pill) => (
-              <span
-                key={pill}
-                className="text-xs font-medium px-3 py-1.5 rounded-full"
-                style={{
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  color: "rgba(255,255,255,0.55)",
-                }}
-              >
-                {pill}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Stats ── */}
-      <section
-        ref={statsRef}
-        style={{
-          background: "#1D4ED8",
-          padding: "clamp(60px, 8vw, 100px) 0",
-        }}
-      >
-        <div className="container-xl">
-          <div className="grid sm:grid-cols-3 gap-8 text-center">
-            {stats.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={statsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: i * 0.12, ease }}
-              >
-                <p
-                  className="font-display font-bold mb-2"
-                  style={{ fontSize: "clamp(40px, 5vw, 60px)", color: "#fff", lineHeight: 1 }}
-                >
-                  {s.zahl}
-                </p>
-                <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)", lineHeight: 1.6 }}>
-                  {s.text}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Leistungen ── */}
-      <section
-        ref={leistungenRef}
-        className="section-py"
-        style={{ background: "#111318" }}
-      >
-        <div className="container-xl">
-          <motion.div
-            className="mb-14 max-w-2xl"
-            initial={{ opacity: 0, y: 24 }}
-            animate={leistungenInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease }}
-          >
-            <p className="eyebrow mb-4">Was wir tun</p>
-            <h2
-              className="font-display font-bold text-white leading-tight"
-              style={{ fontSize: "clamp(28px, 4vw, 52px)" }}
-            >
-              SEO das wirklich{" "}
-              <span className="text-gradient">Ergebnisse liefert.</span>
-            </h2>
-            <p className="mt-5 text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Kein schwarzes Loch für Ihr Budget. Jede Maßnahme ist nachvollziehbar — und messbar.
-            </p>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {leistungen.map((l, i) => (
-              <motion.div
-                key={l.nr}
-                className="card-dark p-7 flex flex-col gap-4 relative overflow-hidden"
-                initial={{ opacity: 0, y: 32 }}
-                animate={leistungenInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: i * 0.08, ease }}
-                whileHover={{
-                  borderColor: "rgba(59,130,246,0.3)",
-                  y: -4,
-                  transition: { duration: 0.2 },
-                }}
-              >
-                <span
-                  aria-hidden
-                  className="absolute bottom-3 right-4 font-display font-bold select-none pointer-events-none"
-                  style={{ fontSize: "80px", color: "rgba(255,255,255,0.025)", lineHeight: 1 }}
-                >
-                  {l.nr}
-                </span>
-
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{
-                    background: "rgba(59,130,246,0.12)",
-                    border: "1px solid rgba(59,130,246,0.25)",
-                  }}
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#3B82F6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden
-                  >
-                    <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                  </svg>
-                </div>
-
-                <h3
-                  className="font-display font-bold text-white"
-                  style={{ fontSize: "16px", lineHeight: 1.35 }}
-                >
-                  {l.title}
-                </h3>
-                <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: 1.75 }}>
-                  {l.text}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Warum LB Digital ── */}
-      <section
-        ref={whyRef}
-        className="section-py"
-        style={{ background: "#0A1628", borderTop: "1px solid rgba(255,255,255,0.06)" }}
-      >
-        <div className="container-xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              animate={whyInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.65, ease }}
-            >
-              <p className="eyebrow mb-5">Warum LB Digital</p>
-              <h2
-                className="font-display font-bold text-white leading-tight mb-6"
-                style={{ fontSize: "clamp(26px, 3.5vw, 46px)" }}
-              >
-                SEO aus Freiburg —{" "}
-                <span style={{ color: "#3B82F6" }}>nicht von irgendwo.</span>
-              </h2>
-              <p className="mb-5 leading-relaxed" style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
-                Wir kennen den Freiburger Markt. Wir wissen wie Ihre Kunden suchen, welche Konkurrenten stark sind und wo die Chancen liegen — lokal und regional.
-              </p>
-              <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
-                Keine anonyme Agentur mit 50 Kunden. Sie sprechen direkt mit dem SEO-Experten — schnell, klar, ohne Umwege.
-              </p>
+            <motion.div className="flex flex-wrap gap-3 mb-12" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.52, ease: EASE }}>
+              <ArrowBtn href="#kontakt" variant="primary-white">Kostenlose SEO-Analyse</ArrowBtn>
+              <ArrowBtn href="#leistungen" variant="ghost-light">Leistungen ansehen</ArrowBtn>
             </motion.div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { title: "Lokales Know-how", text: "Freiburg & 30 km Umkreis" },
-                { title: "Direkter Ansprechpartner", text: "Kein Mittelsmann" },
-                { title: "Messbare Ergebnisse", text: "Rankings & Anfragen" },
-                { title: "Alles aus einer Hand", text: "Web + SEO + Reporting" },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  className="card-dark p-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={whyInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease }}
-                  whileHover={{
-                    borderColor: "rgba(59,130,246,0.25)",
-                    y: -3,
-                    transition: { duration: 0.2 },
-                  }}
-                >
-                  <p
-                    className="font-display font-bold text-white mb-1"
-                    style={{ fontSize: "15px" }}
-                  >
-                    {item.title}
-                  </p>
-                  <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
-                    {item.text}
-                  </p>
+            <motion.div
+              className="mb-12 -mt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.65 }}
+            >
+              <a
+                href="tel:+491785881195"
+                style={{
+                  fontSize: "13px",
+                  color: "rgba(255,255,255,0.35)",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.15 3.38 2 2 0 0 1 3.12 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/>
+                </svg>
+                Oder direkt anrufen: +49 178 5881195
+              </a>
+            </motion.div>
+
+            <motion.div className="flex flex-wrap gap-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.7 }} aria-hidden="true">
+              {["Lokales SEO", "Google My Business", "Technisches SEO", "Core Web Vitals", "Monatliches Reporting"].map((pill) => (
+                <span key={pill} className="text-xs font-medium px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}>{pill}</span>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+        <div aria-hidden="true" className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+      </section>
+
+      <TrustBar />
+
+      {/* ── Leistungen ───────────────────────────────────────────────────── */}
+      <section id="leistungen" aria-labelledby="leistungen-heading" style={{ background: BG2 }}>
+        <div className="container-xl py-24 md:py-32">
+          <Reveal className="mb-16">
+            <p className="eyebrow mb-3">Leistungen</p>
+            <h2 id="leistungen-heading" className="font-display font-extrabold text-white leading-tight" style={{ fontSize: "clamp(28px, 4vw, 52px)", maxWidth: "600px" }}>
+              Was gutes SEO in Freiburg umfasst
+            </h2>
+          </Reveal>
+          <StaggerReveal className="grid md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
+            {leistungen.map((item) => (
+              <motion.div key={item.nr} variants={fadeUp} className="p-8 transition-colors duration-300" style={{ background: BG2 }} whileHover={{ background: "#0F1E35" }}>
+                <span className="font-display font-bold text-sm mb-4 block" style={{ color: ACCENT }}>{item.nr}</span>
+                <h3 className="font-display font-bold text-white mb-3 leading-snug" style={{ fontSize: "clamp(17px, 1.8vw, 20px)" }}>{item.title}</h3>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>{item.text}</p>
+              </motion.div>
+            ))}
+          </StaggerReveal>
+        </div>
+      </section>
+
+      <WorkSection />
+      <TestimonialsSection />
+
+      {/* ── Warum LB Digital ─────────────────────────────────────────────── */}
+      <section id="warum" aria-labelledby="warum-heading" style={{ background: BG }}>
+        <div className="container-xl py-24 md:py-32">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <Reveal>
+              <p className="eyebrow mb-3">Warum LB Digital</p>
+              <h2 id="warum-heading" className="font-display font-extrabold text-white leading-tight mb-6" style={{ fontSize: "clamp(26px, 3.5vw, 48px)" }}>
+                SEO, das wirklich auf Freiburg ausgerichtet ist
+              </h2>
+              <div className="space-y-4" style={{ color: "rgba(255,255,255,0.62)", fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: "1.75" }}>
+                <p>
+                  Lokales SEO für Freiburg bedeutet nicht, einfach das Wort "Freiburg" auf Ihrer Website einzufügen. Es bedeutet, die lokale Suchintention zu verstehen — welche Begriffe Freiburger Kunden verwenden, welche Konkurrenten in der lokalen Suche dominieren und welche technischen Voraussetzungen Google für lokale Rankings stellt.
+                </p>
+                <p>
+                  Als Agentur aus Freiburg kennen wir den lokalen Markt. Wir wissen, dass für einen Zahnarzt "Zahnarzt Freiburg-Betzenhausen" einen anderen Suchkontext hat als "Zahnarzt Freiburg Innenstadt". Diese Nuancen machen den Unterschied zwischen generischem SEO und lokalem SEO, das wirklich Anfragen bringt.
+                </p>
+                <p>
+                  Unsere Websites haben vollständiges Schema-Markup (JSON-LD), das kein einziger unserer geprüften Top-5-Konkurrenten in Freiburg implementiert hat. Das ist ein direkter, messbarer Wettbewerbsvorteil — heute und in Zukunft.
+                </p>
+              </div>
+            </Reveal>
+            <StaggerReveal className="grid grid-cols-2 gap-4">
+              {[{ value: "0/5", label: "Konkurrenten mit Schema" }, { value: "3–6M", label: "bis erste Rankings" }, { value: "46%", label: "lokale Suchanfragen" }, { value: "4.000+", label: "Wörter pro Seite" }].map((item) => (
+                <motion.div key={item.label} variants={fadeUp} className="p-6 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                  <p className="font-display font-extrabold mb-1" style={{ fontSize: "clamp(24px, 3vw, 36px)", color: ACCENT }}>{item.value}</p>
+                  <p className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>{item.label}</p>
                 </motion.div>
               ))}
-            </div>
+            </StaggerReveal>
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section
-        ref={ctaRef}
-        className="section-py"
-        style={{ background: "#111318", borderTop: "1px solid rgba(255,255,255,0.06)" }}
-      >
-        <div className="container-xl">
-          <div className="max-w-2xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease }}
-            >
-              <p className="eyebrow mb-5 justify-center">Jetzt starten</p>
-              <h2
-                className="font-display font-bold text-white mb-5"
-                style={{ fontSize: "clamp(28px, 4vw, 54px)", lineHeight: 1.08 }}
-              >
-                Kostenlose SEO-Analyse —{" "}
-                <span style={{ color: "#3B82F6" }}>unverbindlich anfragen.</span>
-              </h2>
-              <p
-                className="mb-10"
-                style={{ fontSize: "16px", color: "rgba(255,255,255,0.45)", lineHeight: 1.8 }}
-              >
-                Wir analysieren Ihre aktuelle Sichtbarkeit und zeigen konkret, wo Potenzial liegt — kostenlos, transparent, ohne Agentur-Pitch.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <ArrowBtn href="#kontakt" variant="primary">
-                  Analyse anfragen
-                </ArrowBtn>
-                <ArrowBtn href="/webdesign-freiburg" variant="ghost-light">
-                  Webdesign ansehen
-                </ArrowBtn>
-              </div>
-            </motion.div>
+      {/* ── Prozess ──────────────────────────────────────────────────────── */}
+      <section aria-labelledby="prozess-heading" style={{ background: BG2 }}>
+        <div className="container-xl py-24 md:py-32">
+          <Reveal className="mb-16">
+            <p className="eyebrow mb-3">SEO-Prozess</p>
+            <h2 id="prozess-heading" className="font-display font-extrabold text-white leading-tight" style={{ fontSize: "clamp(28px, 4vw, 52px)" }}>
+              Wie wir Ihre Sichtbarkeit aufbauen
+            </h2>
+          </Reveal>
+          <div>
+            {prozess.map((step, i) => (
+              <Reveal key={step.nr} delay={i * 0.08}>
+                <div className="flex gap-8 pb-12 relative pl-8" style={{ borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full" style={{ background: ACCENT, border: "3px solid #0A1628" }} aria-hidden="true" />
+                  <div>
+                    <p className="font-display font-bold text-sm mb-2" style={{ color: ACCENT }}>{step.nr}</p>
+                    <h3 className="font-display font-bold text-white mb-2" style={{ fontSize: "clamp(17px, 1.8vw, 21px)" }}>{step.title}</h3>
+                    <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)", fontSize: "clamp(14px, 1.4vw, 15px)", maxWidth: "560px" }}>{step.text}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Preispakete ──────────────────────────────────────────────────── */}
+      <section aria-labelledby="preise-heading" style={{ background: BG }}>
+        <div className="container-xl py-24 md:py-32">
+          <Reveal className="mb-16">
+            <p className="eyebrow mb-3">Transparente Preise</p>
+            <h2 id="preise-heading" className="font-display font-extrabold text-white leading-tight" style={{ fontSize: "clamp(28px, 4vw, 52px)" }}>
+              SEO-Pakete für Unternehmen in Freiburg
+            </h2>
+            <p className="mt-4" style={{ color: "rgba(255,255,255,0.55)", maxWidth: "520px", fontSize: "clamp(14px, 1.5vw, 16px)" }}>
+              Keine versteckten Kosten, kein Stundensatz-Roulette. Sie wissen von Anfang an, was Sie investieren und was Sie dafür bekommen.
+            </p>
+          </Reveal>
+          <StaggerReveal className="grid md:grid-cols-3 gap-6">
+            {[
+              { name: "SEO-Audit", price: "ab 800 €", period: "einmalig", desc: "Vollständige Analyse Ihrer Website: technische Fehler, Keyword-Gaps, Wettbewerber-Vergleich. Mit konkretem Maßnahmenplan.", features: ["Technische SEO-Analyse", "Keyword-Recherche", "Wettbewerber-Analyse", "Maßnahmenplan", "Google Search Console Setup"], cta: "Audit anfragen", highlight: false },
+              { name: "Lokales SEO", price: "ab 300 €", period: "/ Monat", desc: "Grundbetreuung für lokale Sichtbarkeit: technisches SEO, Google Business Profile Pflege, monatliches Reporting.", features: ["Technisches SEO", "Google Business Profile", "Monatliches Reporting", "Keyword-Tracking", "Core Web Vitals Monitoring"], cta: "Paket anfragen", highlight: true },
+              { name: "Full-Service SEO", price: "ab 600 €", period: "/ Monat", desc: "Komplette SEO-Betreuung: Content-Erstellung, Linkaufbau, Conversion-Optimierung und strategische Planung.", features: ["Alles aus Lokalem SEO", "Content-Erstellung", "Linkaufbau", "Conversion-Tracking", "Quartals-Strategie"], cta: "Full-Service anfragen", highlight: false },
+            ].map((plan) => (
+              <motion.div key={plan.name} variants={fadeUp} className="p-8 rounded-lg flex flex-col" style={{ background: plan.highlight ? "rgba(18,100,241,0.1)" : "rgba(255,255,255,0.03)", border: plan.highlight ? `1px solid ${ACCENT}` : "1px solid rgba(255,255,255,0.07)" }}>
+                {plan.highlight && <span className="text-xs font-bold px-3 py-1 rounded-full mb-4 self-start" style={{ background: ACCENT, color: "#fff" }}>Beliebt</span>}
+                <h3 className="font-display font-bold text-white mb-1" style={{ fontSize: "clamp(17px, 1.8vw, 20px)" }}>{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-3">
+                  <p className="font-display font-extrabold" style={{ color: ACCENT, fontSize: "clamp(22px, 2.5vw, 30px)" }}>{plan.price}</p>
+                  <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>{plan.period}</p>
+                </div>
+                <p className="mb-6 leading-relaxed" style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px" }}>{plan.desc}</p>
+                <ul className="space-y-2 mb-8 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      <span style={{ color: "#34D399", flexShrink: 0 }}>✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={openModal} className="w-full py-3 rounded-lg font-semibold text-sm transition-all duration-200" style={{ background: plan.highlight ? "#FFFFFF" : "rgba(255,255,255,0.07)", color: plan.highlight ? "#07101F" : "#fff", border: plan.highlight ? "none" : "1px solid rgba(255,255,255,0.1)" }}>
+                  {plan.cta}
+                </button>
+              </motion.div>
+            ))}
+          </StaggerReveal>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────────── */}
+      <section id="faq" aria-labelledby="faq-heading" style={{ background: BG2 }}>
+        <div className="container-xl py-24 md:py-32">
+          <Reveal className="mb-16">
+            <p className="eyebrow mb-3">FAQ</p>
+            <h2 id="faq-heading" className="font-display font-extrabold text-white leading-tight" style={{ fontSize: "clamp(28px, 4vw, 52px)" }}>
+              Häufige Fragen zu SEO in Freiburg
+            </h2>
+          </Reveal>
+          <StaggerReveal>
+            {faqData.map((item, i) => <FAQItem key={i} q={item.q} a={item.a} index={i} />)}
+          </StaggerReveal>
+        </div>
+      </section>
+
+      {/* ── Interne Links ────────────────────────────────────────────────── */}
+      <section aria-label="Weitere Leistungen" style={{ background: BG }}>
+        <div className="container-xl py-16">
+          <Reveal>
+            <p className="text-sm font-medium mb-6" style={{ color: "rgba(255,255,255,0.35)" }}>Weitere Leistungen von LB Digital</p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/webdesign-freiburg" className="group flex items-center gap-2 text-sm font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                <span className="group-hover:translate-x-1 transition-transform" style={{ color: ACCENT }}>→</span>
+                Webdesign Freiburg – Individuelle Websites
+              </Link>
+              <Link href="/webdesign-furtwangen" className="group flex items-center gap-2 text-sm font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                <span className="group-hover:translate-x-1 transition-transform" style={{ color: ACCENT }}>→</span>
+                Webdesign Furtwangen
+              </Link>
+              <Link href="/handwerker" className="group flex items-center gap-2 text-sm font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                <span className="group-hover:translate-x-1 transition-transform" style={{ color: ACCENT }}>→</span>
+                Websites für Handwerker
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── CTA ──────────────────────────────────────────────────────────── */}
+      <section id="kontakt" aria-labelledby="cta-heading" style={{ background: "#0D0D0D" }}>
+        <div className="container-xl py-24 md:py-32 text-center">
+          <Reveal>
+            <p className="eyebrow mb-4">Bereit?</p>
+            <h2 id="cta-heading" className="font-display font-extrabold text-white leading-tight mb-6 mx-auto" style={{ fontSize: "clamp(30px, 5vw, 64px)", maxWidth: "640px" }}>
+              Ihr Unternehmen in Freiburg soll gefunden werden.
+            </h2>
+            <p className="mb-10 mx-auto" style={{ color: "rgba(255,255,255,0.5)", fontSize: "clamp(15px, 1.6vw, 18px)", maxWidth: "480px" }}>
+              Kostenlose SEO-Analyse — wir schauen uns Ihre aktuelle Situation an und zeigen Ihnen, welche Chancen Sie noch nicht nutzen.
+            </p>
+            <ArrowBtn href="#kontakt" variant="primary-white">Kostenlose SEO-Analyse starten</ArrowBtn>
+          </Reveal>
         </div>
       </section>
     </>

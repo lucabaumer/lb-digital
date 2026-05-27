@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, Bricolage_Grotesque } from "next/font/google";
 import Script from "next/script";
 import { MotionConfig } from "framer-motion";
 import LenisProvider from "@/components/providers/LenisProvider";
@@ -7,6 +8,20 @@ import CookieBanner from "@/components/ui/CookieBanner";
 import "./globals.css";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lb-digital.agency"),
@@ -65,7 +80,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="de">
+    <html lang="de" className={`${jakarta.variable} ${bricolage.variable}`}>
       <body className="min-h-screen flex flex-col">
         <SchemaOrg />
         {GA_ID && (
