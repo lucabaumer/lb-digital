@@ -279,7 +279,9 @@ function ProgressDot({ accent, progress, index, total }: {
   index: number;
   total: number;
 }) {
-  const opacity = useTransform(progress, [index / total - 0.05, index / total + 0.2], [0.2, 1]);
+  const start = Math.max(0, index / total - 0.05);
+  const end = Math.min(1, Math.max(start + 0.01, index / total + 0.2));
+  const opacity = useTransform(progress, [start, end], [0.2, 1]);
   return (
     <motion.div style={{ width: "6px", height: "6px", borderRadius: "50%", background: accent, opacity }} />
   );
