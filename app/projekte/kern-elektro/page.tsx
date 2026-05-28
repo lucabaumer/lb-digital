@@ -422,7 +422,7 @@ function Services() {
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', padding: '3rem 0' }}>
           <AnimatePresence mode="wait">
             <motion.img key={active} src={SERVICES[active].photo} alt={SERVICES[active].title}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', willChange: 'transform' } as CSSProperties}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', willChange: 'transform' }}
               initial={{ opacity: 0, scale: 1.04 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.02 }}
@@ -522,7 +522,7 @@ function ProjectCard({ p, i }: { p: typeof PROJECTS[0]; i: number }) {
             animate={{ clipPath: inView ? 'inset(0% 0 0 0)' : 'inset(100% 0 0 0)' }}
             transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}>
             <motion.img src={p.photo} alt={p.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', willChange: 'transform' } as CSSProperties}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', willChange: 'transform' }}
               variants={{ hover: { scale: 1.04 } }} transition={{ duration: 0.7, ease: EASE }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)' }} />
           </motion.div>
@@ -868,7 +868,7 @@ function Contact() {
                   spotX.set(e.clientX - rect.left); spotY.set(e.clientY - rect.top);
                 }}>
                 <motion.div aria-hidden="true"
-                  style={{ position: 'absolute', inset: 0, background: spotlight, pointerEvents: 'none', zIndex: 0 } as CSSProperties} />
+                  style={{ position: 'absolute', inset: 0, background: spotlight, pointerEvents: 'none', zIndex: 0 }} />
                 <div style={{ position: 'relative', zIndex: 1, padding: '2.5rem' }}>
                   <AnimatePresence mode="wait">
                     {formState === 'success' ? (
