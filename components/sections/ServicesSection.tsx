@@ -2,6 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -11,18 +12,13 @@ const services = [
   {
     id: "fundament",
     number: "01",
-    icon: (
-      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-    ),
     title: "Fundament",
     hook: "Damit kein Kunde mehr zweifelt, ob Sie seriös sind.",
     description:
       "Viele Betriebe verlieren Aufträge — nicht weil sie schlechte Arbeit leisten, sondern weil ihre Website das Gegenteil vermittelt. Das ändern wir.",
     benefits: [
-      "Individuelle Website — maßgeschneidert für Sie",
-      "Mobile & Tablet optimiert, DSGVO-konform",
+      "Professionelle Website — maßgeschneidert für Ihr Unternehmen",
+      "Mobile & Tablet optimiert, schnell ladend, DSGVO-konform",
       "Monatlicher Bericht über Besucher & Anfragen",
     ],
     href: "#kontakt",
@@ -32,19 +28,14 @@ const services = [
   {
     id: "sichtbarkeit",
     number: "02",
-    icon: (
-      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-    ),
     title: "Sichtbarkeit",
     hook: "Damit neue Kunden Sie finden — bevor sie wissen, dass Sie existieren.",
     description:
       "Wer in Freiburg nach Ihrer Leistung sucht, soll auf Sie stoßen — nicht auf die Konkurrenz.",
     benefits: [
-      "Alles aus Fundament",
-      "Lokale Google-Optimierung & Google My Business",
-      "Mehrere Leistungsseiten für Ihre Angebote",
+      "Professionelle Website mit mehreren Leistungsseiten",
+      "Lokale Google-Optimierung & Google My Business Einrichtung",
+      "Monatlicher Bericht + direkte Ansprechpartner ohne Wartezeit",
     ],
     href: "#kontakt",
     linkLabel: "Paket anfragen",
@@ -53,19 +44,14 @@ const services = [
   {
     id: "vollstaendig",
     number: "03",
-    icon: (
-      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-      </svg>
-    ),
     title: "Vollständig",
     hook: "Damit Ihr gesamtes Angebot online sichtbar ist — für jede Leistung.",
     description:
       "Für Betriebe die nicht nur eine Seite wollen, sondern eine vollständige digitale Präsenz — mit Strategie.",
     benefits: [
-      "Alles aus Sichtbarkeit",
-      "Landingpages pro Leistung & Stadtteil",
-      "Detailliertes monatliches Reporting",
+      "Individuelle Landingpages pro Leistung & Stadtteil",
+      "Vollständige SEO-Strategie & technische Optimierung",
+      "Detailliertes monatliches Reporting mit konkreten Maßnahmen",
     ],
     href: "#kontakt",
     linkLabel: "Paket anfragen",
@@ -130,18 +116,18 @@ function SpotlightCard({ service, index, inView }: { service: typeof services[0]
       {/* Content */}
       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", height: "100%" }}>
 
-        {/* Icon + number */}
+        {/* Logo + number */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div
-            style={{
-              width: "44px", height: "44px", borderRadius: "10px",
-              background: `${ACCENT}18`, color: ACCENT,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              border: `1px solid ${ACCENT}25`,
-            }}
-          >
-            {service.icon}
-          </div>
+          <Image
+            src="/logo.png/Photoroom_20260401_150804.png"
+            alt=""
+            aria-hidden="true"
+            width={32}
+            height={32}
+            quality={85}
+            sizes="32px"
+            style={{ width: "32px", height: "32px", objectFit: "contain", flexShrink: 0, filter: "brightness(0) invert(1)" }}
+          />
           <span
             style={{
               fontSize: "11px", fontFamily: "var(--font-bricolage)", fontWeight: 800,
