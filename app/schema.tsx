@@ -66,7 +66,7 @@ export default function SchemaOrg() {
     "@id": `${base}/#business`,
     name: "LB Digital",
     description:
-      "Individuelle Websites und lokales SEO für Handwerker, Gastronomie und lokale Unternehmen in Freiburg. Kein Template, kein Baukasten — maßgeschneidert, damit Ihre Kunden Sie bei Google finden.",
+      "Individuelle Websites und lokales SEO für Handwerker, Gastronomie und lokale Unternehmen in Freiburg. Maßgeschneidert, damit Ihre Kunden Sie bei Google finden.",
     url: base,
     telephone: "+49 178 5881195",
     email: "hallo@lb-digital.agency",
@@ -152,7 +152,7 @@ export default function SchemaOrg() {
     image: `${base}/opengraph-image`,
     currenciesAccepted: "EUR",
     paymentAccepted: ["Banküberweisung", "PayPal"],
-    slogan: "Kein Template. Kein Baukasten. Nur Ihre Website.",
+    slogan: "Individuelle Websites, die Anfragen bringen.",
     foundingDate: "2023",
     numberOfEmployees: { "@type": "QuantitativeValue", value: 1 },
   };

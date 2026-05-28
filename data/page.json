@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "LB Digital – Webdesign Agentur Freiburg",
-    "description": "Professionelles Webdesign und SEO aus Freiburg. Individuelle Next.js-Websites, die bei Google gefunden werden und Kunden überzeugen. Kein Template, kein Baukasten."
+    "description": "Professionelles Webdesign und SEO aus Freiburg. Individuelle Next.js-Websites, die bei Google gefunden werden und Kunden überzeugen."
   },
   "nav": {
     "links": [
@@ -27,7 +27,7 @@
       "id": "webdesign",
       "eyebrow": "Leistung 01",
       "title": "Webdesign & Entwicklung",
-      "description": "Keine Templates. Keine Baukästen. Jede Website wird von Grund auf für Ihr Unternehmen entworfen — mit durchdachtem Layout, starker Typografie und einer Nutzererfahrung, die Vertrauen schafft.",
+      "description": "Jede Website wird von Grund auf für Ihr Unternehmen entworfen — mit durchdachtem Layout, starker Typografie und einer Nutzererfahrung, die Vertrauen schafft.",
       "tags": ["Next.js", "TypeScript", "Mobile-First", "Responsive"]
     },
     {
@@ -57,8 +57,8 @@
       },
       {
         "number": "02",
-        "title": "Kein Template",
-        "description": "Jede Website wird von Grund auf neu gebaut. Das kostet mehr Aufwand, macht aber den Unterschied zwischen einer Website und Ihrer Website."
+        "title": "Individuell entwickelt",
+        "description": "Jede Website wird von Grund auf für Ihr Unternehmen gebaut — mit Ihren Farben, Ihrer Botschaft und Ihrer Zielgruppe im Mittelpunkt."
       },
       {
         "number": "03",

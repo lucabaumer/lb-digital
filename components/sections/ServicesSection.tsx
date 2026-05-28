@@ -16,7 +16,7 @@ const services = [
     description:
       "Ob Handwerksbetrieb, Gastronomiebetrieb oder lokales Unternehmen: Wer online nicht professionell wirkt, verliert den Auftrag noch vor dem ersten Gespräch. Wir bauen Websites, die Vertrauen schaffen — schnell, sauber, in Next.js.",
     benefits: [
-      "Kein Template. Kein Baukasten. Nur Ihre Marke.",
+      "Maßgeschneidert für Ihre Marke und Zielgruppe",
       "Lädt in unter 1 Sekunde — Lighthouse 95+",
       "Mobile-first, barrierefrei, DSGVO-konform",
       "Direkte Kommunikation — kein Projektmanager",

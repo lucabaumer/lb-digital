@@ -55,7 +55,7 @@ const leistungen = [
   {
     nr: "01",
     title: "Individuelle Gestaltung",
-    text: "Kein Template, kein Baukasten. Jede Website wird von Grund auf für Ihr Unternehmen entwickelt — mit Ihren Farben, Ihrer Botschaft und Ihrer Zielgruppe im Mittelpunkt. Das Ergebnis ist eine digitale Visitenkarte, die sich von der Masse abhebt und Ihre Marke authentisch darstellt.",
+    text: "Jede Website wird von Grund auf für Ihr Unternehmen entwickelt — mit Ihren Farben, Ihrer Botschaft und Ihrer Zielgruppe im Mittelpunkt. Das Ergebnis ist eine digitale Visitenkarte, die sich von der Masse abhebt und Ihre Marke authentisch darstellt.",
   },
   {
     nr: "02",
@@ -294,7 +294,7 @@ export default function WebdesignFreiburgContent() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.38, ease: EASE }}
             >
-              LB Digital entwickelt individuelle Websites für Unternehmen in Freiburg im Breisgau. Modern, schnell und auf Ihre Zielgruppe ausgerichtet — kein Baukasten, kein Template, kein Mittelsmann.
+              LB Digital entwickelt individuelle Websites für Unternehmen in Freiburg im Breisgau. Modern, schnell und auf Ihre Zielgruppe ausgerichtet — direkt mit dem Entwickler.
             </motion.p>
 
             <motion.div
@@ -342,7 +342,7 @@ export default function WebdesignFreiburgContent() {
               transition={{ duration: 0.4, delay: 0.7 }}
               aria-hidden="true"
             >
-              {["Lighthouse 95+", "Next.js", "Ladezeit <1s", "Kein Template", "Direkt zum Entwickler"].map((pill) => (
+              {["Lighthouse 95+", "Next.js", "Ladezeit <1s", "Direkt zum Entwickler"].map((pill) => (
                 <span key={pill} className="text-xs font-medium px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}>
                   {pill}
                 </span>
@@ -533,7 +533,7 @@ export default function WebdesignFreiburgContent() {
               {
                 value: "95+",
                 label: "Lighthouse Score",
-                desc: "In allen vier Kategorien: Performance, Accessibility, Best Practices und SEO. Messbar, transparent, nachweislich besser als Template-Websites.",
+                desc: "In allen vier Kategorien: Performance, Accessibility, Best Practices und SEO. Messbar und transparent.",
                 icon: "⚡",
               },
               {
@@ -545,7 +545,7 @@ export default function WebdesignFreiburgContent() {
               {
                 value: "100%",
                 label: "Individuell",
-                desc: "Kein Template, das angepasst wurde. Jede Zeile Code ist auf Ihr Unternehmen zugeschnitten — vom Design über die Inhalte bis zur technischen Architektur.",
+                desc: "Jede Zeile Code ist auf Ihr Unternehmen zugeschnitten — vom Design über die Inhalte bis zur technischen Architektur.",
                 icon: "✦",
               },
             ].map((item) => (

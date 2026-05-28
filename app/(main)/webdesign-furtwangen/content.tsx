@@ -52,11 +52,11 @@ function StaggerReveal({ children, className = "", style }: { children: React.Re
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const leistungen = [
-  { nr: "01", title: "Individuelle Gestaltung", text: "Kein Template, kein Baukasten — jede Website wird von Grund auf für Ihr Unternehmen in Furtwangen entwickelt. Mit Ihren Farben, Ihrer Botschaft und Ihrer Zielgruppe im Mittelpunkt. Das Ergebnis ist eine digitale Visitenkarte, die sich von der Masse abhebt und Ihre Marke authentisch darstellt." },
+  { nr: "01", title: "Individuelle Gestaltung", text: "Jede Website wird von Grund auf für Ihr Unternehmen in Furtwangen entwickelt — mit Ihren Farben, Ihrer Botschaft und Ihrer Zielgruppe im Mittelpunkt. Das Ergebnis ist eine digitale Visitenkarte, die sich von der Masse abhebt und Ihre Marke authentisch darstellt." },
   { nr: "02", title: "Next.js & React", text: "Wir setzen auf Next.js mit React — die Technologie hinter Unternehmen wie Vercel und Notion. Das bedeutet blitzschnelle Ladezeiten unter einer Sekunde, statisches Rendering für maximale SEO-Performance und eine Architektur, die mit Ihrem Unternehmen mitwächst." },
   { nr: "03", title: "Mobile First", text: "Über 70 % Ihrer Besucher kommen vom Smartphone — besonders im ländlichen Schwarzwald-Raum, wo Menschen unterwegs suchen. Wir gestalten zuerst für mobile Geräte und erweitern dann für Tablet und Desktop. Nahtloses Erlebnis auf jedem Bildschirm." },
   { nr: "04", title: "SEO von Grund auf", text: "Technisch sauberer Code, strukturierte Daten (JSON-LD Schema), optimierte Ladezeiten und korrekte Heading-Hierarchien — damit Google Ihre Seite aus Furtwangen von Anfang an versteht und in den Suchergebnissen richtig platziert." },
-  { nr: "05", title: "Lighthouse 95+", text: "Googles Lighthouse-Tool bewertet Websites in Performance, Accessibility, Best Practices und SEO. Wir liefern in allen Kategorien 95 oder höher — messbar, transparent und nachweislich besser als Template-basierte Konkurrenten." },
+  { nr: "05", title: "Lighthouse 95+", text: "Googles Lighthouse-Tool bewertet Websites in Performance, Accessibility, Best Practices und SEO. Wir liefern in allen Kategorien 95 oder höher — messbar und transparent." },
   { nr: "06", title: "Persönliche Betreuung", text: "Kein Ticketsystem, kein anonymer Account-Manager. Sie arbeiten direkt mit dem Entwickler zusammen — von der ersten Idee bis zum Launch und darüber hinaus. Schnelle Kommunikation und persönliche Verantwortung für Ihr Projekt." },
 ];
 
@@ -95,7 +95,7 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   name: "Webdesign Furtwangen",
-  description: "Individuelle Next.js-Websites für Unternehmen in Furtwangen im Schwarzwald. Mobile-first, Lighthouse 95+, kein Template.",
+  description: "Individuelle Next.js-Websites für Unternehmen in Furtwangen im Schwarzwald. Mobile-first, Lighthouse 95+.",
   provider: { "@type": "LocalBusiness", name: "LB Digital", url: "https://www.lb-digital.agency", address: { "@type": "PostalAddress", addressLocality: "Freiburg im Breisgau", addressCountry: "DE" } },
   areaServed: { "@type": "City", name: "Furtwangen im Schwarzwald" },
   offers: { "@type": "Offer", priceCurrency: "EUR", priceSpecification: { "@type": "PriceSpecification", minPrice: "1000", priceCurrency: "EUR" } },
@@ -187,7 +187,7 @@ export default function WebdesignFurtwangenContent() {
             </motion.h1>
 
             <motion.p className="mb-10 leading-relaxed" style={{ color: "rgba(255,255,255,0.65)", fontSize: "clamp(16px, 1.8vw, 20px)", maxWidth: "580px" }} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.38, ease: EASE }}>
-              LB Digital entwickelt individuelle Websites für Unternehmen in Furtwangen und dem Hochschwarzwald. Von der HFU bis zum regionalen Mittelstand — kein Baukasten, kein Template, kein Mittelsmann.
+              LB Digital entwickelt individuelle Websites für Unternehmen in Furtwangen und dem Hochschwarzwald. Von der HFU bis zum regionalen Mittelstand — direkt mit dem Entwickler.
             </motion.p>
 
             <motion.div className="flex flex-wrap gap-3 mb-4" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.52, ease: EASE }}>
@@ -223,7 +223,7 @@ export default function WebdesignFurtwangenContent() {
             </motion.div>
 
             <motion.div className="flex flex-wrap gap-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.7 }} aria-hidden="true">
-              {["Lighthouse 95+", "Next.js", "Ladezeit <1s", "Kein Template", "Region Schwarzwald"].map((pill) => (
+              {["Lighthouse 95+", "Next.js", "Ladezeit <1s", "Region Schwarzwald"].map((pill) => (
                 <span key={pill} className="text-xs font-medium px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}>{pill}</span>
               ))}
             </motion.div>

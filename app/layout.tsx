@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | LB Digital",
   },
   description:
-    "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg. Kein Template, kein Baukasten — maßgeschneidert für Ihre Marke.",
+    "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg. Maßgeschneidert, schnell und auf Ihre Zielgruppe ausgerichtet.",
   keywords: [
     "Webdesign Freiburg",
     "Webagentur Freiburg",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "LB Digital – Webdesign & SEO Agentur Freiburg",
     description:
-      "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg. Kein Template, kein Baukasten.",
+      "Individuelle Websites und lokale SEO-Optimierung für Unternehmen in Freiburg.",
     url: "https://www.lb-digital.agency",
     siteName: "LB Digital",
     locale: "de_DE",

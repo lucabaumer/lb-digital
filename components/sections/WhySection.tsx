@@ -20,12 +20,6 @@ const usps = [
   },
   {
     num: "03",
-    title: "Kein Template. Nie.",
-    short: "Ihr Unikat",
-    detail: "Jede Website wird von Grund auf für Sie gebaut — nicht für tausend andere. Das macht den Unterschied zwischen sichtbar und unsichtbar.",
-  },
-  {
-    num: "04",
     title: "Ein Ansprechpartner für alles",
     short: "Design, Dev, SEO",
     detail: "Sie sprechen direkt mit dem Entwickler — kein Projektmanager als Puffer, keine Missverständnisse, keine versteckten Kosten.",
@@ -131,8 +125,8 @@ export default function WhySection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.07, ease: EASE }}
           >
-            Keine Templates.{" "}
-            <span style={{ color: "rgba(255,255,255,0.25)" }}>Keine leeren Versprechen.</span>
+            Weniger Agentur.{" "}
+            <span style={{ color: "rgba(255,255,255,0.25)" }}>Mehr Partner.</span>
           </motion.h2>
         </div>
 

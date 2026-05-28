@@ -14,13 +14,13 @@ const items = [
   { text: "★", accent: true },
   { text: "DSGVO-konform", accent: false },
   { text: "★", accent: true },
-  { text: "Kein Template", accent: false },
+  { text: "Individuelle Entwicklung", accent: false },
   { text: "★", accent: true },
 ];
 
 const stats = [
   { value: "< 2s", label: "Ladezeit", sub: "Lighthouse optimiert" },
-  { value: "100%", label: "Individuell", sub: "Kein Baukasten, kein Template" },
+  { value: "100%", label: "Individuell", sub: "Maßgeschneidert für Ihr Unternehmen" },
   { value: "2–3W", label: "Umsetzung", sub: "Von Briefing bis Launch" },
   { value: "24h", label: "Antwortzeit", sub: "Direkte Kommunikation" },
 ];

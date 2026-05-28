@@ -1,6 +1,6 @@
 # LB Digital
 
-> Professionelle Webdesign & SEO Agentur in Freiburg im Breisgau. Individuelle Next.js-Websites für Handwerker, Gastronomie und lokale Unternehmen in der Region — kein Template, kein Baukasten.
+> Professionelle Webdesign & SEO Agentur in Freiburg im Breisgau. Individuelle Next.js-Websites für Handwerker, Gastronomie und lokale Unternehmen in der Region.
 
 ## Unternehmen
 
@@ -16,7 +16,7 @@
 ## Leistungen
 
 ### Webdesign & Entwicklung
-Individuelle Websites auf Basis von Next.js und React. Mobile-first, Lighthouse-Score 95+, Ladezeit unter 1 Sekunde. Keine Templates, kein Baukasten. Preis ab 1.500 €.
+Individuelle Websites auf Basis von Next.js und React. Mobile-first, Lighthouse-Score 95+, Ladezeit unter 1 Sekunde. Preis ab 1.500 €.
 
 ### SEO & Lokale Sichtbarkeit
 Suchmaschinenoptimierung für Google — technisches SEO, On-Page-Optimierung, lokales SEO für Freiburg und die Region. Google My Business Optimierung inklusive.
@@ -61,7 +61,7 @@ Freiburg im Breisgau und Umgebung (ca. 80 km Radius):
 
 ## Alleinstellungsmerkmale
 
-1. Individuelle Entwicklung — kein Baukasten, kein WordPress-Template
+1. Individuelle Entwicklung — maßgeschneidert für Ihr Unternehmen
 2. Lighthouse 95+ auf Performance, SEO, Accessibility
 3. Direkte Zusammenarbeit mit dem Entwickler — kein Mittelsmann
 4. Feste Preise — kein Stundensatz, transparentes Angebot vorab
