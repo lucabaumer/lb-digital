@@ -1,6 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import MobileStickyBar from "@/components/layout/MobileStickyBar";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import { ContactModalProvider } from "@/components/ui/ContactModalProvider";
 
@@ -19,7 +18,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         {children}
       </main>
       <Footer />
-      <MobileStickyBar />
     </ContactModalProvider>
   );
 }
