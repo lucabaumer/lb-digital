@@ -8,14 +8,14 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const projects = [
   {
-    slug:      "steuerberatung",
-    href:      "/projekte/steuerberatung",
-    client:    "Hoffmann Steuerberatung",
-    industry:  "Steuerberatung · Freiburg",
-    accent:    "#00EEFF",
-    accentDim: "rgba(0,238,255,0.15)",
-    preview:   { bg: "#040407", accent: "#00EEFF", style: "fintech" as const },
-    label:     "Projekt ansehen",
+    slug:      "handwerk",
+    href:      "#kontakt",
+    client:    "Baumeister Söhne GmbH",
+    industry:  "Dachdeckerei & Fassadenbau · Freiburg",
+    accent:    "#F97316",
+    accentDim: "rgba(249,115,22,0.18)",
+    preview:   { bg: "#090704", accent: "#F97316", style: "craft" as const },
+    label:     "Demo-Design",
   },
   {
     slug:      "gastronomie",
@@ -291,8 +291,8 @@ export default function WorkSection() {
                   }}
                 >
                   {/* Preview content */}
-                  {p.preview.style === "gastro"  && <GastronomiePreview accent={p.preview.accent} />}
-                  {p.preview.style === "fintech" && <FintechPreview      accent={p.preview.accent} />}
+                  {p.preview.style === "gastro" && <GastronomiePreview accent={p.preview.accent} />}
+                  {p.preview.style === "craft"  && <CraftPreview        accent={p.preview.accent} />}
 
                   {/* Hover overlay */}
                   <motion.div
