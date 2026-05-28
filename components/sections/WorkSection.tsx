@@ -8,26 +8,6 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const projects = [
   {
-    slug:      "gastronomie",
-    href:      "/projekte/steuerberatung",
-    client:    "Gasthaus Schwarzwaldblick",
-    industry:  "Gastronomie · Titisee-Neustadt",
-    accent:    "#E8652A",
-    accentDim: "rgba(232,101,42,0.18)",
-    preview:   { bg: "#0D0704", accent: "#E8652A", style: "gastro" as const },
-    label:     "Demo-Projekt",
-  },
-  {
-    slug:      "handwerk",
-    href:      "/projekte/steuerberatung",
-    client:    "Baumeister Söhne GmbH",
-    industry:  "Handwerksbetrieb · Freiburg",
-    accent:    "#F97316",
-    accentDim: "rgba(249,115,22,0.18)",
-    preview:   { bg: "#090704", accent: "#F97316", style: "craft" as const },
-    label:     "Demo-Projekt",
-  },
-  {
     slug:      "steuerberatung",
     href:      "/projekte/steuerberatung",
     client:    "Hoffmann Steuerberatung",
@@ -35,17 +15,17 @@ const projects = [
     accent:    "#00EEFF",
     accentDim: "rgba(0,238,255,0.15)",
     preview:   { bg: "#040407", accent: "#00EEFF", style: "fintech" as const },
-    label:     "Demo-Projekt",
+    label:     "Projekt ansehen",
   },
   {
-    slug:      "physio",
-    href:      "/projekte/steuerberatung",
-    client:    "PhysioActive Freiburg",
-    industry:  "Physiotherapie · Freiburg",
-    accent:    "#0EA5E9",
-    accentDim: "rgba(14,165,233,0.18)",
-    preview:   { bg: "#030810", accent: "#0EA5E9", style: "physio" as const },
-    label:     "Demo-Projekt",
+    slug:      "gastronomie",
+    href:      "#kontakt",
+    client:    "Gasthaus Schwarzwaldblick",
+    industry:  "Gastronomie · Titisee-Neustadt",
+    accent:    "#E8652A",
+    accentDim: "rgba(232,101,42,0.18)",
+    preview:   { bg: "#0D0704", accent: "#E8652A", style: "gastro" as const },
+    label:     "Demo-Design",
   },
 ];
 
@@ -312,9 +292,7 @@ export default function WorkSection() {
                 >
                   {/* Preview content */}
                   {p.preview.style === "gastro"  && <GastronomiePreview accent={p.preview.accent} />}
-                  {p.preview.style === "craft"   && <CraftPreview        accent={p.preview.accent} />}
-                  {p.preview.style === "fintech" && <FintechPreview       accent={p.preview.accent} />}
-                  {p.preview.style === "physio"  && <PhysioPreview        accent={p.preview.accent} />}
+                  {p.preview.style === "fintech" && <FintechPreview      accent={p.preview.accent} />}
 
                   {/* Hover overlay */}
                   <motion.div

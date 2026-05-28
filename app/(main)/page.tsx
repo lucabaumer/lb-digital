@@ -5,7 +5,7 @@ import { faqItems } from "@/app/schema";
 export const metadata: Metadata = {
   title: "Webdesign Freiburg – LB Digital | Individuelle Websites & SEO",
   description:
-    "Webdesign Freiburg: Individuelle Next.js-Websites & lokales SEO für Unternehmen in Freiburg und der Region. Kein Template, kein Baukasten — Lighthouse 95+, schnell, maßgeschneidert.",
+    "Webdesign Freiburg: Individuelle Next.js-Websites & lokales SEO für Unternehmen in Freiburg und der Region. Lighthouse 95+, schnell, maßgeschneidert.",
   alternates: {
     canonical: "https://www.lb-digital.agency",
   },
@@ -21,7 +21,6 @@ const faqSchema = {
   })),
 };
 
-import TrustBar from "@/components/sections/TrustBar";
 import ServicesSection from "@/components/sections/ServicesSection";
 import WorkSection from "@/components/sections/WorkSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -39,7 +38,6 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <HeroSection />
-      <TrustBar />
       <SectionReveal><ServicesSection /></SectionReveal>
       <SectionReveal><WorkSection /></SectionReveal>
       <SectionReveal><TestimonialsSection /></SectionReveal>
