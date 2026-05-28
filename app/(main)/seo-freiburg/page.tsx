@@ -1,5 +1,5 @@
 export { metadata } from "./metadata";
-import SEOFreiburgContent from "./content";
+import SEOFreiburgContent from "./Content";
 
 export default function SEOFreiburgPage() {
   return <SEOFreiburgContent />;

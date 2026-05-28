@@ -1,5 +1,5 @@
 export { metadata } from "./metadata";
-import WebdesignFreiburgContent from "./content";
+import WebdesignFreiburgContent from "./Content";
 
 export default function WebdesignFreiburgPage() {
   return <WebdesignFreiburgContent />;
