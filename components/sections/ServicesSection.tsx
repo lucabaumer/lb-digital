@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
-import { useRef, MouseEvent, useState, useCallback } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -64,49 +64,21 @@ const services = [
   },
 ];
 
-function TiltCard({ service, index, inView }: { service: typeof services[0]; index: number; inView: boolean }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-120, 120], [6, -6]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(x, [-120, 120], [-6, 6]), { stiffness: 200, damping: 20 });
-
-  function onMouseMove(e: MouseEvent<HTMLDivElement>) {
-    const rect = cardRef.current!.getBoundingClientRect();
-    x.set(e.clientX - rect.left - rect.width / 2);
-    y.set(e.clientY - rect.top - rect.height / 2);
-  }
-  function onMouseLeave() { x.set(0); y.set(0); }
-
+function ServiceCard({ service, index, inView }: { service: typeof services[0]; index: number; inView: boolean }) {
   return (
     <motion.div
-      ref={cardRef}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      style={{ rotateX, rotateY, transformPerspective: 900, transformStyle: "preserve-3d" }}
-      initial={{ opacity: 0, y: 60, scale: 0.97 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.75, delay: index * 0.18, ease }}
-      className="rounded-2xl p-8 lg:p-10 flex flex-col gap-6 cursor-default"
-      whileHover={{ scale: 1.012 }}
-      whileTap={{ scale: 0.99 }}
+      initial={{ opacity: 0, y: 48 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.15, ease }}
+      className="relative rounded-2xl p-8 flex flex-col gap-6 cursor-default"
+      style={{ flex: "0 0 300px", minWidth: "300px", background: service.bg, border: "1px solid rgba(255,255,255,0.07)" }}
     >
-      {/* Card background */}
-      <div
-        className="absolute inset-0 rounded-2xl"
-        style={{
-          background: service.bg,
-          border: `1px solid rgba(255,255,255,0.07)`,
-          zIndex: 0,
-        }}
-      />
       {/* Accent glow top-right */}
       <div
         className="absolute top-0 right-0 w-48 h-48 rounded-full pointer-events-none"
         style={{
           background: `radial-gradient(circle, ${service.accent}22 0%, transparent 70%)`,
           transform: "translate(30%, -30%)",
-          zIndex: 0,
         }}
       />
 
@@ -121,7 +93,6 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
           lineHeight: 1,
           color: "rgba(255,255,255,0.04)",
           letterSpacing: "-0.05em",
-          zIndex: 0,
         }}
       >
         {service.number}
@@ -147,7 +118,7 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
         {/* Title */}
         <h3
           className="font-display font-bold text-white leading-tight whitespace-pre-line"
-          style={{ fontSize: "clamp(26px, 3vw, 38px)" }}
+          style={{ fontSize: "clamp(24px, 2.5vw, 34px)" }}
         >
           {service.title}
         </h3>
@@ -173,7 +144,7 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
               className="flex items-start gap-3 text-sm"
               initial={{ opacity: 0, x: -12 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.18 + 0.35 + i * 0.07, ease }}
+              transition={{ duration: 0.4, delay: index * 0.15 + 0.35 + i * 0.07, ease }}
             >
               <span
                 className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5"
@@ -206,7 +177,6 @@ function TiltCard({ service, index, inView }: { service: typeof services[0]; ind
   );
 }
 
-// Scroll-driven number counter that animates as section enters viewport
 function ScrollLine({ inView, delay = 0 }: { inView: boolean; delay?: number }) {
   return (
     <motion.div
@@ -222,24 +192,12 @@ function ScrollLine({ inView, delay = 0 }: { inView: boolean; delay?: number }) 
 export default function ServicesSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const scrollTo = useCallback((index: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const card = el.children[index] as HTMLElement;
-    if (!card) return;
-    el.scrollTo({ left: card.offsetLeft - 16, behavior: "smooth" });
-    setActiveIndex(index);
-  }, []);
 
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  // Subtle parallax on the headline block
   const headlineY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
@@ -255,7 +213,7 @@ export default function ServicesSection() {
 
       <div className="container-xl" ref={ref}>
 
-        {/* Headline with subtle parallax */}
+        {/* Headline */}
         <motion.div className="mb-16 max-w-3xl" style={{ y: headlineY }}>
           <motion.p
             className="eyebrow mb-4"
@@ -286,118 +244,39 @@ export default function ServicesSection() {
           </motion.p>
         </motion.div>
 
-        {/* Cards — horizontal scroll on mobile, 3-col grid on desktop */}
-        <div className="lg:hidden">
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4"
-            style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
-          >
-            {services.map((s, i) => (
-              <div
-                key={s.id}
-                className="relative flex-shrink-0"
-                style={{ width: "78vw", maxWidth: "320px", scrollSnapAlign: "start" }}
-              >
-                <TiltCard service={s} index={i} inView={inView} />
-                <ScrollLine inView={inView} delay={0.4 + i * 0.18} />
-              </div>
-            ))}
-          </div>
-
-          {/* Arrows + dots */}
-          <div className="flex items-center justify-between mt-5 px-1">
-            {/* Dots */}
-            <div className="flex items-center gap-2">
-              {services.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => scrollTo(i)}
-                  aria-label={`Karte ${i + 1}`}
-                  style={{
-                    width: activeIndex === i ? "20px" : "6px",
-                    height: "6px",
-                    borderRadius: "99px",
-                    background: activeIndex === i ? "#1264F1" : "rgba(255,255,255,0.2)",
-                    border: "none",
-                    padding: 0,
-                    transition: "all 0.25s ease",
-                    cursor: "pointer",
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Prev / Next */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => scrollTo(Math.max(0, activeIndex - 1))}
-                disabled={activeIndex === 0}
-                aria-label="Vorherige Karte"
-                style={{
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: activeIndex === 0 ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.08)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: activeIndex === 0 ? "not-allowed" : "pointer",
-                  opacity: activeIndex === 0 ? 0.4 : 1,
-                  transition: "all 0.2s ease",
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M10 12L6 8L10 4" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              <button
-                onClick={() => scrollTo(Math.min(services.length - 1, activeIndex + 1))}
-                disabled={activeIndex === services.length - 1}
-                aria-label="Nächste Karte"
-                style={{
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: activeIndex === services.length - 1 ? "rgba(255,255,255,0.05)" : "#1264F1",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: activeIndex === services.length - 1 ? "not-allowed" : "pointer",
-                  opacity: activeIndex === services.length - 1 ? 0.4 : 1,
-                  transition: "all 0.2s ease",
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 4L10 8L6 12" stroke={activeIndex === services.length - 1 ? "#0D0D0D" : "#fff"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Asymmetric grid — 1 wide card left, 2 stacked right */}
-        <div
-          className="hidden lg:grid gap-6 relative"
-          style={{ gridTemplateColumns: "1.4fr 1fr" }}
-        >
-          <div className="relative">
-            <TiltCard service={services[0]} index={0} inView={inView} />
-            <ScrollLine inView={inView} delay={0.4} />
-          </div>
-          <div className="flex flex-col gap-6">
-            {services.slice(1).map((s, i) => (
-              <div key={s.id} className="relative flex-1">
-                <TiltCard service={s} index={i + 1} inView={inView} />
-                <ScrollLine inView={inView} delay={0.4 + (i + 1) * 0.18} />
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
+
+      {/* Cards — horizontal scroll, 3 side by side when space allows */}
+      <div
+        className="px-6 md:px-10"
+        style={{ maxWidth: "1200px", marginInline: "auto" }}
+      >
+        <div
+          className="flex gap-5 overflow-x-auto pb-4"
+          style={{
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {services.map((s, i) => (
+            <div
+              key={s.id}
+              className="relative"
+              style={{
+                flex: "1 1 300px",
+                minWidth: "300px",
+                scrollSnapAlign: "start",
+              }}
+            >
+              <ServiceCard service={s} index={i} inView={inView} />
+              <ScrollLine inView={inView} delay={0.4 + i * 0.15} />
+            </div>
+          ))}
+        </div>
+      </div>
+
     </section>
   );
 }
