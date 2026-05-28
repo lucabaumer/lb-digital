@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { type CSSProperties, type FormEvent, type ReactNode, useRef, useState, useEffect } from 'react';
 import {
@@ -20,7 +20,7 @@ const PHOTOS = {
   work2:     'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=900&q=80&auto=format&fit=crop',
 };
 
-// â”€â”€â”€ Scroll Progress â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Scroll Progress ──────────────────────────────────────────────────────────
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   return (
@@ -32,7 +32,7 @@ function ScrollProgress() {
   );
 }
 
-// â”€â”€â”€ Counter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Counter ──────────────────────────────────────────────────────────────────
 function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
@@ -47,7 +47,7 @@ function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
   return <span ref={ref}>0{suffix}</span>;
 }
 
-// â”€â”€â”€ Magnetic â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Magnetic ─────────────────────────────────────────────────────────────────
 function Magnetic({ children, strength = 0.35 }: { children: ReactNode; strength?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -68,7 +68,7 @@ function Magnetic({ children, strength = 0.35 }: { children: ReactNode; strength
   );
 }
 
-// â”€â”€â”€ Marquee â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Marquee ──────────────────────────────────────────────────────────────────
 function Marquee() {
   const items = ['KERN ELEKTROTECHNIK', 'FREIBURG IM BREISGAU', 'SEIT 1987', 'MEISTERBETRIEB', '24/7 NOTDIENST', '1800+ PROJEKTE'];
   return (
@@ -92,7 +92,7 @@ function Marquee() {
   );
 }
 
-// â”€â”€â”€ Nav â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Nav ──────────────────────────────────────────────────────────────────────
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
@@ -109,7 +109,7 @@ function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
-  const NAV_LINKS = ['Leistungen', 'Projekte', 'Ãœber uns', 'Kontakt'] as const;
+  const NAV_LINKS = ['Leistungen', 'Projekte', 'Über uns', 'Kontakt'] as const;
 
   return (
     <>
@@ -121,7 +121,7 @@ function Nav() {
         transition: 'background 0.35s, backdrop-filter 0.35s, box-shadow 0.35s',
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
-          <a href="/" aria-label="KERN Elektrotechnik â€“ Startseite" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+          <a href="/" aria-label="KERN Elektrotechnik – Startseite" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <div style={{ width: 32, height: 32, background: O, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <svg width="14" height="14" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
@@ -137,7 +137,7 @@ function Nav() {
             className="kern-desktop-nav">
             {NAV_LINKS.map(l => (
               <a key={l}
-                href={`#${l.toLowerCase().replace(' ', '-').replace('Ã¼', 'u')}`}
+                href={`#${l.toLowerCase().replace(' ', '-').replace('ü', 'u')}`}
                 style={{ fontSize: 14, color: scrolled ? '#555' : 'rgba(255,255,255,0.75)', fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s', position: 'relative', paddingBottom: 3 }}
                 onMouseEnter={e => { e.currentTarget.style.color = scrolled ? '#000' : '#fff'; setHoveredNav(l); }}
                 onMouseLeave={e => { e.currentTarget.style.color = scrolled ? '#555' : 'rgba(255,255,255,0.75)'; setHoveredNav(null); }}
@@ -163,7 +163,7 @@ function Nav() {
 
           {/* Hamburger (mobile) */}
           <button
-            aria-label={mobileOpen ? 'MenÃ¼ schlieÃŸen' : 'MenÃ¼ Ã¶ffnen'}
+            aria-label={mobileOpen ? 'Menü schließen' : 'Menü öffnen'}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(v => !v)}
             style={{ display: 'none', flexDirection: 'column', gap: 5, background: 'none', border: 'none', cursor: 'pointer', padding: 6, zIndex: 60 }}
@@ -194,7 +194,7 @@ function Nav() {
             <nav style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {NAV_LINKS.map((l, i) => (
                 <motion.a key={l}
-                  href={`#${l.toLowerCase().replace(' ', '-').replace('Ã¼', 'u')}`}
+                  href={`#${l.toLowerCase().replace(' ', '-').replace('ü', 'u')}`}
                   onClick={() => setMobileOpen(false)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -222,7 +222,7 @@ function Nav() {
             </motion.a>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.38 }}
               style={{ fontSize: 12, color: '#aaa', marginTop: 6 }}>
-              Notdienst 24/7 verfÃ¼gbar
+              Notdienst 24/7 verfügbar
             </motion.p>
           </motion.div>
         )}
@@ -238,7 +238,7 @@ function Nav() {
   );
 }
 
-// â”€â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -260,7 +260,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
             <div style={{ width: 32, height: 1, background: O }} aria-hidden="true" />
             <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: O }}>
-              Meisterbetrieb Â· Freiburg seit 1987
+              Meisterbetrieb · Freiburg seit 1987
             </span>
           </motion.div>
 
@@ -274,7 +274,7 @@ function Hero() {
 
           <motion.p style={{ fontSize: 17, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, maxWidth: 520, margin: '0 0 36px' }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.35 }}>
-            Elektroinstallation, Smart Home und Photovoltaik fÃ¼r Privat- und Gewerbekunden in Freiburg und Umgebung.
+            Elektroinstallation, Smart Home und Photovoltaik für Privat- und Gewerbekunden in Freiburg und Umgebung.
           </motion.p>
 
           <motion.div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}
@@ -283,7 +283,7 @@ function Hero() {
               <motion.a href="#kontakt"
                 whileHover={{ opacity: 0.87 }} whileTap={{ scale: 0.97 }}
                 style={{ fontSize: 14, fontWeight: 700, color: '#fff', background: O, padding: '15px 36px', textDecoration: 'none', letterSpacing: '0.02em', display: 'inline-block' }}>
-                Kostenloses ErstgesprÃ¤ch â†’
+                Kostenloses Erstgespräch →
               </motion.a>
             </Magnetic>
             <motion.a href="#leistungen" whileTap={{ scale: 0.97 }}
@@ -296,7 +296,7 @@ function Hero() {
 
           <motion.div style={{ display: 'flex', gap: 40, marginTop: 60, paddingTop: 36, borderTop: '1px solid rgba(255,255,255,0.1)', flexWrap: 'wrap' }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75 }}>
-            {[{ n: '37+', l: 'Jahre' }, { n: '1800+', l: 'Projekte' }, { n: '24/7', l: 'Notdienst' }, { n: '4.9â˜…', l: 'Google' }].map((t, i) => (
+            {[{ n: '37+', l: 'Jahre' }, { n: '1800+', l: 'Projekte' }, { n: '24/7', l: 'Notdienst' }, { n: '4.9★', l: 'Google' }].map((t, i) => (
               <div key={i}>
                 <div style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>{t.n}</div>
                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{t.l}</div>
@@ -309,14 +309,14 @@ function Hero() {
   );
 }
 
-// â”€â”€â”€ Services â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Services ─────────────────────────────────────────────────────────────────
 const SERVICES = [
-  { n: '01', title: 'Elektroinstallation', desc: 'Neubau, Umbau, Sanierung â€” normgerecht und sauber fÃ¼r Wohn- und Gewerbeobjekte in der Region Freiburg.', photo: PHOTOS.wiring },
-  { n: '02', title: 'Smart Home', desc: 'KNX, Loxone, Digitalstrom â€” Licht, Heizung, Jalousien und Sicherheit vollstÃ¤ndig vernetzt und per App steuerbar.', photo: PHOTOS.smarthome },
-  { n: '03', title: 'Photovoltaik', desc: 'PV-Anlage mit Speicher, Wallbox und Einspeisemanagement â€” komplett aus einer Hand, von Planung bis Inbetriebnahme.', photo: PHOTOS.solar },
-  { n: '04', title: 'Gewerbe & Industrie', desc: 'Schaltschrankbau, Maschinenverkabelung, MSR-Technik â€” zuverlÃ¤ssig fÃ¼r Betriebe und Industrieanlagen.', photo: PHOTOS.panel },
-  { n: '05', title: 'Notdienst 24/7', desc: 'Stromausfall oder Kurzschluss â€” wir sind rund um die Uhr erreichbar und in 60 Minuten vor Ort.', photo: PHOTOS.work1 },
-  { n: '06', title: 'PrÃ¼fung & Wartung', desc: 'DGUV V3, E-Check, VDE-PrÃ¼fung â€” fÃ¼r Rechtssicherheit, Versicherungsschutz und den Schutz Ihrer Mitarbeiter.', photo: PHOTOS.work2 },
+  { n: '01', title: 'Elektroinstallation', desc: 'Neubau, Umbau, Sanierung — normgerecht und sauber für Wohn- und Gewerbeobjekte in der Region Freiburg.', photo: PHOTOS.wiring },
+  { n: '02', title: 'Smart Home', desc: 'KNX, Loxone, Digitalstrom — Licht, Heizung, Jalousien und Sicherheit vollständig vernetzt und per App steuerbar.', photo: PHOTOS.smarthome },
+  { n: '03', title: 'Photovoltaik', desc: 'PV-Anlage mit Speicher, Wallbox und Einspeisemanagement — komplett aus einer Hand, von Planung bis Inbetriebnahme.', photo: PHOTOS.solar },
+  { n: '04', title: 'Gewerbe & Industrie', desc: 'Schaltschrankbau, Maschinenverkabelung, MSR-Technik — zuverlässig für Betriebe und Industrieanlagen.', photo: PHOTOS.panel },
+  { n: '05', title: 'Notdienst 24/7', desc: 'Stromausfall oder Kurzschluss — wir sind rund um die Uhr erreichbar und in 60 Minuten vor Ort.', photo: PHOTOS.work1 },
+  { n: '06', title: 'Prüfung & Wartung', desc: 'DGUV V3, E-Check, VDE-Prüfung — für Rechtssicherheit, Versicherungsschutz und den Schutz Ihrer Mitarbeiter.', photo: PHOTOS.work2 },
 ];
 
 function Services() {
@@ -390,7 +390,7 @@ function Services() {
             <motion.div key={active} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -28 }}
               transition={{ duration: 0.48, ease: EASE }} style={{ position: 'relative', zIndex: 1 }}>
               <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.15em', color: O, textTransform: 'uppercase', marginBottom: 18 }}>
-                {SERVICES[active].n} â€” {String(SERVICES.length).padStart(2, '0')}
+                {SERVICES[active].n} — {String(SERVICES.length).padStart(2, '0')}
               </div>
               <h2 style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: 'clamp(2.6rem, 4.5vw, 4rem)', fontWeight: 800, color: '#0A0A0A', letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 22px' }}>
                 {SERVICES[active].title}
@@ -398,7 +398,7 @@ function Services() {
               <p style={{ fontSize: 16, color: '#666', lineHeight: 1.8, maxWidth: 380, margin: '0 0 36px' }}>{SERVICES[active].desc}</p>
               <motion.a href="#kontakt" whileHover={{ opacity: 0.85 }} whileTap={{ scale: 0.97 }}
                 style={{ display: 'inline-block', fontSize: 13, fontWeight: 700, color: '#fff', background: O, padding: '13px 28px', textDecoration: 'none', letterSpacing: '0.02em' }}>
-                Jetzt anfragen â†’
+                Jetzt anfragen →
               </motion.a>
             </motion.div>
           </AnimatePresence>
@@ -413,7 +413,7 @@ function Services() {
               {active === 0 && (
                 <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   style={{ fontSize: 11, color: '#bbb', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Scroll fÃ¼r mehr
+                  Scroll für mehr
                 </motion.span>
               )}
             </AnimatePresence>
@@ -445,7 +445,7 @@ function Services() {
   );
 }
 
-// â”€â”€â”€ Stats Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Stats Banner ─────────────────────────────────────────────────────────────
 function StatsBanner() {
   const stats = [
     { n: 37, suf: '', label: 'Jahre', sub: 'Erfahrung' },
@@ -501,12 +501,12 @@ function StatsBanner() {
   );
 }
 
-// â”€â”€â”€ Projects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Projects ─────────────────────────────────────────────────────────────────
 const PROJECTS = [
-  { title: 'Neubau Wohnanlage Wiehre', loc: 'Freiburg-Wiehre Â· 2024', tag: 'Elektroinstallation', photo: PHOTOS.wiring, tall: true },
-  { title: 'Smart Home Villa', loc: 'Kirchzarten Â· 2024', tag: 'KNX / Loxone', photo: PHOTOS.smarthome, tall: false },
-  { title: 'PV-Anlage 48 kWp', loc: 'Breisach Â· 2023', tag: 'Photovoltaik', photo: PHOTOS.solar, tall: false },
-  { title: 'Schaltschrankbau Industrie', loc: 'Freiburg-Nord Â· 2023', tag: 'Gewerbe', photo: PHOTOS.panel, tall: true },
+  { title: 'Neubau Wohnanlage Wiehre', loc: 'Freiburg-Wiehre · 2024', tag: 'Elektroinstallation', photo: PHOTOS.wiring, tall: true },
+  { title: 'Smart Home Villa', loc: 'Kirchzarten · 2024', tag: 'KNX / Loxone', photo: PHOTOS.smarthome, tall: false },
+  { title: 'PV-Anlage 48 kWp', loc: 'Breisach · 2023', tag: 'Photovoltaik', photo: PHOTOS.solar, tall: false },
+  { title: 'Schaltschrankbau Industrie', loc: 'Freiburg-Nord · 2023', tag: 'Gewerbe', photo: PHOTOS.panel, tall: true },
 ];
 
 function ProjectCard({ p, i }: { p: typeof PROJECTS[0]; i: number }) {
@@ -562,7 +562,7 @@ function Projects() {
             <a href="#kontakt" style={{ fontSize: 13, fontWeight: 600, color: O, textDecoration: 'none', transition: 'opacity 0.2s' }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}>
-              Alle ansehen â†’
+              Alle ansehen →
             </a>
           </div>
           <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 3 }}>
@@ -577,7 +577,7 @@ function Projects() {
   );
 }
 
-// â”€â”€â”€ About â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── About ────────────────────────────────────────────────────────────────────
 function About() {
   const imgRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: imgRef, offset: ['start 85%', 'end 15%'] });
@@ -603,7 +603,7 @@ function About() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 28, height: 2, background: O }} aria-hidden="true" />
-                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: O }}>Ãœber uns</span>
+                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: O }}>Über uns</span>
               </div>
               <motion.blockquote
                 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
@@ -614,7 +614,7 @@ function About() {
                   color: '#0A0A0A', lineHeight: 1.25, letterSpacing: '-0.025em',
                   margin: 0, borderLeft: `4px solid ${O}`, paddingLeft: '1.5rem',
                 }}>
-                â€žSaubere Arbeit,<br />klare Kommunikation â€”<br />seit 1987."
+                „Saubere Arbeit,<br />klare Kommunikation —<br />seit 1987."
               </motion.blockquote>
               <motion.h2 id="about-heading"
                 style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: 'clamp(1.8rem,3vw,2.6rem)', fontWeight: 800, color: '#0A0A0A', letterSpacing: '-0.02em', lineHeight: 1.1, margin: '2.5rem 0 0' }}
@@ -628,14 +628,14 @@ function About() {
               <div className="about-img-wrap" style={{ aspectRatio: '4/5', overflow: 'hidden', position: 'relative' }}>
                 <motion.div style={{ height: '100%', clipPath }}>
                   <motion.img src={PHOTOS.team} alt="Das KERN-Team beim Einsatz in Freiburg"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', scale: imgScale } as CSSProperties} />
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', scale: imgScale }} />
                 </motion.div>
               </div>
               <motion.div className="about-badge" aria-hidden="true"
                 style={{ position: 'absolute', bottom: -20, right: -20, background: O, padding: '20px 24px', zIndex: 10 }}
                 animate={{ y: [0, -6, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}>
                 <div style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: 36, fontWeight: 800, color: '#fff', lineHeight: 1 }}>18</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 3, fontWeight: 600 }}>FachkrÃ¤fte</div>
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 3, fontWeight: 600 }}>Fachkräfte</div>
               </motion.div>
             </div>
           </div>
@@ -650,10 +650,10 @@ function About() {
               fontFamily: 'monospace', fontSize: 'clamp(0.65rem, 1.2vw, 0.75rem)',
               color: '#888', letterSpacing: '0.08em', flexWrap: 'wrap',
             }}>
-            {['Seit 1987', '18 FachkrÃ¤fte', 'Freiburg im Breisgau', 'Innungsbetrieb', 'ZVEH-Mitglied'].map((f, i, arr) => (
+            {['Seit 1987', '18 Fachkräfte', 'Freiburg im Breisgau', 'Innungsbetrieb', 'ZVEH-Mitglied'].map((f, i, arr) => (
               <span key={f} style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
                 <span style={{ padding: '0 clamp(0.75rem, 2vw, 1.5rem)', whiteSpace: 'nowrap' }}>{f}</span>
-                {i < arr.length - 1 && <span style={{ color: O, fontSize: '1.1em' }}>Â·</span>}
+                {i < arr.length - 1 && <span style={{ color: O, fontSize: '1.1em' }}>·</span>}
               </span>
             ))}
           </motion.div>
@@ -663,16 +663,16 @@ function About() {
             <div>
               <motion.p style={{ fontSize: 15, color: '#666', lineHeight: 1.85, margin: '0 0 18px' }}
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-                Was 1987 als Einmann-Betrieb begann, ist heute ein Team aus 18 ElektrofachkrÃ¤ften. Unser Versprechen ist dasselbe geblieben: saubere Arbeit, klare Kommunikation, keine Ãœberraschungen.
+                Was 1987 als Einmann-Betrieb begann, ist heute ein Team aus 18 Elektrofachkräften. Unser Versprechen ist dasselbe geblieben: saubere Arbeit, klare Kommunikation, keine Überraschungen.
               </motion.p>
               <motion.p style={{ fontSize: 15, color: '#aaa', lineHeight: 1.85, margin: '0 0 36px' }}
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
-                Wir arbeiten ausschlieÃŸlich in der Region Freiburg â€” kurze Wege, schnelle Reaktion, echte Beziehungen.
+                Wir arbeiten ausschließlich in der Region Freiburg — kurze Wege, schnelle Reaktion, echte Beziehungen.
               </motion.p>
               <Magnetic>
                 <motion.a href="#kontakt" whileHover={{ opacity: 0.87 }} whileTap={{ scale: 0.97 }}
                   style={{ fontSize: 14, fontWeight: 700, color: '#fff', background: O, padding: '13px 28px', textDecoration: 'none', display: 'inline-block' }}>
-                  Kontakt aufnehmen â†’
+                  Kontakt aufnehmen →
                 </motion.a>
               </Magnetic>
             </div>
@@ -701,11 +701,11 @@ function About() {
   );
 }
 
-// â”€â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Testimonials ─────────────────────────────────────────────────────────────
 const REVIEWS = [
-  { name: 'Michael Brenner', role: 'Bauherr, Freiburg-Herdern', text: 'KERN hat unseren Neubau komplett verkabelt. Sauber, pÃ¼nktlich, kein einziger Nachbesserungsbedarf. Klare Weiterempfehlung.' },
-  { name: 'Sandra KÃ¼hle', role: 'CafÃ©-Betreiberin, Freiburg-Mitte', text: 'Kurzschluss am Samstagabend â€” ein Anruf, 45 Minuten spÃ¤ter alles behoben. Der Notdienst hat meinen Betrieb gerettet.' },
-  { name: 'Thomas WeiÃŸ', role: 'Gewerbeimmobilie GÃ¼terbahnhof', text: 'Schaltschrankbau fÃ¼r unsere Werkshalle: technisch einwandfrei, termingerecht, transparent in der Kommunikation.' },
+  { name: 'Michael Brenner', role: 'Bauherr, Freiburg-Herdern', text: 'KERN hat unseren Neubau komplett verkabelt. Sauber, pünktlich, kein einziger Nachbesserungsbedarf. Klare Weiterempfehlung.' },
+  { name: 'Sandra Kühle', role: 'Café-Betreiberin, Freiburg-Mitte', text: 'Kurzschluss am Samstagabend — ein Anruf, 45 Minuten später alles behoben. Der Notdienst hat meinen Betrieb gerettet.' },
+  { name: 'Thomas Weiß', role: 'Gewerbeimmobilie Güterbahnhof', text: 'Schaltschrankbau für unsere Werkshalle: technisch einwandfrei, termingerecht, transparent in der Kommunikation.' },
 ];
 
 function Testimonials() {
@@ -776,7 +776,7 @@ function Testimonials() {
   );
 }
 
-// â”€â”€â”€ Contact â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Contact ──────────────────────────────────────────────────────────────────
 type FormState = 'idle' | 'submitting' | 'success';
 
 function Contact() {
@@ -817,7 +817,7 @@ function Contact() {
               <motion.p
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
                 style={{ fontSize: 14, color: '#aaa', lineHeight: 1.65, margin: '0 0 2rem', fontStyle: 'italic' }}>
-                â€žAntwort innerhalb von 24 Stunden â€” garantiert."
+                „Antwort innerhalb von 24 Stunden — garantiert."
               </motion.p>
 
               <div style={{ width: '100%', height: 1, background: '#F0F0F0', marginBottom: '2rem' }} aria-hidden="true" />
@@ -827,7 +827,7 @@ function Contact() {
                   {
                     icon: <svg width="16" height="16" fill="none" stroke={O} strokeWidth="2" strokeLinecap="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.19-1.19a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>,
                     main: '0761 123 45 678',
-                    sub: 'Moâ€“Fr 7â€“18 Uhr Â· Notdienst 24/7',
+                    sub: 'Mo–Fr 7–18 Uhr · Notdienst 24/7',
                     mono: true,
                   },
                   {
@@ -878,7 +878,7 @@ function Contact() {
                           <svg width="22" height="22" fill="none" stroke={O} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
                         </div>
                         <h3 style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, color: '#0A0A0A', margin: '0 0 8px' }}>Anfrage gesendet!</h3>
-                        <p style={{ fontSize: 14, color: '#888', margin: 0, lineHeight: 1.6 }}>Wir melden uns innerhalb von 24 Stunden persÃ¶nlich bei Ihnen.</p>
+                        <p style={{ fontSize: 14, color: '#888', margin: 0, lineHeight: 1.6 }}>Wir melden uns innerhalb von 24 Stunden persönlich bei Ihnen.</p>
                       </motion.div>
                     ) : (
                       <motion.form key="form" onSubmit={handleSubmit} exit={{ opacity: 0 }} noValidate>
@@ -886,7 +886,7 @@ function Contact() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                           {([
                             { id: 'name', l: 'Ihr Name', p: 'Max Mustermann', t: 'text' },
-                            { id: 'phone', l: 'Telefon', p: '0761 â€¦', t: 'tel' },
+                            { id: 'phone', l: 'Telefon', p: '0761 …', t: 'tel' },
                             { id: 'email', l: 'E-Mail', p: 'name@firma.de', t: 'email' },
                           ] as const).map(f => (
                             <div key={f.id}>
@@ -899,7 +899,7 @@ function Contact() {
                           ))}
                           <div>
                             <label htmlFor="message" style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>Nachricht</label>
-                            <textarea id="message" rows={3} placeholder="Kurze Projektbeschreibungâ€¦"
+                            <textarea id="message" rows={3} placeholder="Kurze Projektbeschreibung…"
                               style={{ width: '100%', padding: '11px 14px', background: '#fff', border: '1px solid #E8E8E8', fontSize: 14, color: '#0A0A0A', outline: 'none', resize: 'none', transition: 'border-color 0.2s', fontFamily: 'inherit', boxSizing: 'border-box' } as CSSProperties}
                               onFocus={e => (e.currentTarget.style.borderColor = O)}
                               onBlur={e => (e.currentTarget.style.borderColor = '#E8E8E8')} />
@@ -911,9 +911,9 @@ function Contact() {
                               <>
                                 <motion.span animate={{ rotate: 360 }} transition={{ duration: 0.7, repeat: Infinity, ease: 'linear' }}
                                   style={{ display: 'inline-block', width: 14, height: 14, border: '2px solid rgba(255,255,255,0.35)', borderTopColor: '#fff', borderRadius: '50%' }} />
-                                Wird gesendetâ€¦
+                                Wird gesendet…
                               </>
-                            ) : 'Anfrage absenden â†’'}
+                            ) : 'Anfrage absenden →'}
                           </motion.button>
                         </div>
                       </motion.form>
@@ -930,7 +930,7 @@ function Contact() {
   );
 }
 
-// â”€â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
     <>
@@ -965,7 +965,7 @@ function Footer() {
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#333', marginBottom: 18 }}>Leistungen</div>
               <nav aria-label="Footer Leistungen">
                 <ul className="footer-nav-list" style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {['Elektroinstallation', 'Smart Home', 'Photovoltaik', 'Notdienst 24/7', 'Gewerbe & Industrie', 'PrÃ¼fung & Wartung'].map(l => (
+                  {['Elektroinstallation', 'Smart Home', 'Photovoltaik', 'Notdienst 24/7', 'Gewerbe & Industrie', 'Prüfung & Wartung'].map(l => (
                     <li key={l}>
                       <a href="#leistungen" style={{ fontSize: 13, color: '#4a4f5a', textDecoration: 'none', transition: 'color 0.2s' }}
                         onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
@@ -1002,7 +1002,7 @@ function Footer() {
 
           {/* Bottom bar */}
           <div className="footer-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 0', gap: 16 }}>
-            <span style={{ fontSize: 12, color: '#2a2f38' }}>Â© 2026 KERN Elektrotechnik GmbH Â· Freiburg i. Br.</span>
+            <span style={{ fontSize: 12, color: '#2a2f38' }}>© 2026 KERN Elektrotechnik GmbH · Freiburg i. Br.</span>
             <nav aria-label="Rechtliches" style={{ display: 'flex', gap: 24 }}>
               {['Impressum', 'Datenschutz', 'AGB'].map(l => (
                 <a key={l} href="#"
@@ -1018,7 +1018,7 @@ function Footer() {
   );
 }
 
-// â”€â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Page() {
   return (
     <MotionConfig reducedMotion="user">
@@ -1038,4 +1038,3 @@ export default function Page() {
     </MotionConfig>
   );
 }
-
