@@ -22,6 +22,7 @@ const faqSchema = {
 };
 
 import ServicesSection from "@/components/sections/ServicesSection";
+import PainSection from "@/components/sections/PainSection";
 import WorkSection from "@/components/sections/WorkSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import WhySection from "@/components/sections/WhySection";
@@ -38,6 +39,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <HeroSection />
+      <PainSection />
       <SectionReveal><ServicesSection /></SectionReveal>
       <SectionReveal><WorkSection /></SectionReveal>
       <SectionReveal><TestimonialsSection /></SectionReveal>

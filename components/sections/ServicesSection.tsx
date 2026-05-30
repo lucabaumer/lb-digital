@@ -10,52 +10,52 @@ const ACCENT = "#1264F1";
 
 const services = [
   {
-    id: "fundament",
+    id: "starter",
     number: "01",
-    title: "Fundament",
-    hook: "Damit kein Kunde mehr zweifelt, ob Sie seriös sind.",
+    title: "Starter",
+    hook: "Kein verpasster Anruf. Mehr Google Reviews. Ab Tag 1.",
     description:
-      "Viele Betriebe verlieren Aufträge — nicht weil sie schlechte Arbeit leisten, sondern weil ihre Website das Gegenteil vermittelt. Das ändern wir.",
+      "Das Fundament für jeden Handwerksbetrieb. Verpasste Anrufe kosten bares Geld — dieses System holt sie automatisch zurück.",
     benefits: [
-      "Professionelle Website — maßgeschneidert für Ihr Unternehmen",
-      "Mobile & Tablet optimiert, schnell ladend, DSGVO-konform",
-      "Monatlicher Bericht über Besucher & Anfragen",
+      "Website (3 Seiten) — fertig in 2–3 Tagen",
+      "Missed-Call SMS: automatische Rückmeldung in 60 Sekunden",
+      "Google Review Automation nach jedem abgeschlossenen Auftrag",
     ],
     href: "#kontakt",
     linkLabel: "Paket anfragen",
-    pricing: { monthly: "99 €/Monat", once: "ab 790 €" },
+    pricing: { monthly: "150 €/Monat", once: "ab 800 €" },
   },
   {
-    id: "sichtbarkeit",
+    id: "growth",
     number: "02",
-    title: "Sichtbarkeit",
-    hook: "Damit neue Kunden Sie finden — bevor sie wissen, dass Sie existieren.",
+    title: "Growth",
+    hook: "Kein Angebot bleibt mehr unbeantwortet.",
     description:
-      "Wer in Freiburg nach Ihrer Leistung sucht, soll auf Sie stoßen — nicht auf die Konkurrenz.",
+      "Für Betriebe die wachsen wollen. Automatisches Followup, Terminbuchung direkt auf der Website und alle Nachrichten an einem Ort.",
     benefits: [
-      "Professionelle Website mit mehreren Leistungsseiten",
-      "Lokale Google-Optimierung & Google My Business Einrichtung",
-      "Monatlicher Bericht + direkte Ansprechpartner ohne Wartezeit",
+      "Alles aus Starter — plus Terminbuchungs-System",
+      "Angebots-Followup: automatische SMS nach 3, 7 und 14 Tagen",
+      "Unified Inbox: SMS, Email & Messenger in einem Dashboard",
     ],
     href: "#kontakt",
     linkLabel: "Paket anfragen",
-    pricing: { monthly: "179 €/Monat", once: "ab 1.490 €" },
+    pricing: { monthly: "250 €/Monat", once: "ab 1.500 €" },
   },
   {
-    id: "vollstaendig",
+    id: "pro",
     number: "03",
-    title: "Vollständig",
-    hook: "Damit Ihr gesamtes Angebot online sichtbar ist — für jede Leistung.",
+    title: "Pro",
+    hook: "Ihr Betrieb akquiriert — auch wenn Sie schlafen.",
     description:
-      "Für Betriebe die nicht nur eine Seite wollen, sondern eine vollständige digitale Präsenz — mit Strategie.",
+      "Vollautomatisch. KI nimmt Anrufe entgegen, bucht Termine und reaktiviert alte Leads. Für Betriebe die maximales Wachstum wollen.",
     benefits: [
-      "Individuelle Landingpages pro Leistung & Stadtteil",
-      "Vollständige SEO-Strategie & technische Optimierung",
-      "Detailliertes monatliches Reporting mit konkreten Maßnahmen",
+      "Alles aus Growth — plus AI Chatbot auf der Website (24/7)",
+      "Voice AI: nimmt Anrufe entgegen, bucht Termine automatisch",
+      "Social Media Planung (8 Posts/Monat) + Reaktivierungs-Kampagnen",
     ],
     href: "#kontakt",
     linkLabel: "Paket anfragen",
-    pricing: { monthly: "299 €/Monat", once: "ab 2.490 €" },
+    pricing: { monthly: "450 €/Monat", once: "ab 2.500 €" },
   },
 ];
 
@@ -250,7 +250,7 @@ export default function ServicesSection() {
             transition={{ duration: 0.65, delay: 0.08, ease }}
           >
             Drei Pakete.{" "}
-            <span style={{ color: "rgba(255,255,255,0.2)" }}>Transparent bepreist.</span>
+            <span style={{ color: "rgba(255,255,255,0.2)" }}>Monatlich kündbar.</span>
           </motion.h2>
           <motion.p
             className="mt-5 text-base leading-relaxed max-w-xl"
@@ -259,7 +259,7 @@ export default function ServicesSection() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.18 }}
           >
-            Sie entscheiden wie Sie zahlen — monatlich oder als Festbetrag. Erster Monat kostenlos, monatlich kündbar.
+            Einmalige Setup-Gebühr, dann monatlich kündbar. Erster Monat kostenlos — erst zahlen wenn Sie Ergebnisse sehen.
           </motion.p>
         </motion.div>
 

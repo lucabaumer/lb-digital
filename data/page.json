@@ -1,141 +1,171 @@
 {
   "meta": {
-    "title": "LB Digital – Webdesign Agentur Freiburg",
-    "description": "Professionelles Webdesign und SEO aus Freiburg. Individuelle Next.js-Websites, die bei Google gefunden werden und Kunden überzeugen."
+    "title": "LB Digital – Mehr Aufträge für Handwerker | Freiburg",
+    "description": "Die meisten Handwerksbetriebe haben kein Lead-Problem. Sie haben ein Systemproblem. Wir lösen es — automatisch, in einer Woche."
   },
   "nav": {
     "links": [
-      { "label": "Leistungen", "href": "#leistungen" },
-      { "label": "Über uns", "href": "#warum" },
+      { "label": "Wie es funktioniert", "href": "#ablauf" },
+      { "label": "Pakete", "href": "#leistungen" },
       { "label": "FAQ", "href": "#faq" },
       { "label": "Kontakt", "href": "#kontakt" }
     ],
-    "cta": "Kostenloses Gespräch"
+    "cta": "Kostenlose Demo"
   },
   "hero": {
-    "eyebrow": "Webagentur · Freiburg im Breisgau",
-    "headline_line1": "Mehr Anfragen",
-    "headline_line2": "aus Freiburg.",
-    "subheadline": "Durch Webdesign, das Google und Menschen überzeugt.",
-    "body": "Für Handwerker, Gastronomie und lokale Unternehmen — die wachsen wollen.",
-    "cta_primary": "Kostenloses Gespräch",
-    "cta_secondary": "Projekte ansehen",
-    "pillars": ["Handwerker", "Gastronomie", "Lokale Unternehmen", "Freiburg"]
+    "eyebrow": "Für Dachdecker · Elektriker · Heizung & Sanitär",
+    "headline_line1": "Kein Lead-Problem.",
+    "headline_line2": "Ein Systemproblem.",
+    "subheadline": "Die meisten Handwerksbetriebe verlieren 20–40 % ihrer Aufträge — nicht weil das Telefon nicht klingelt, sondern weil kein System dahinter ist.",
+    "body": "Wir bauen es. In einer Woche. Ohne Aufwand für dich.",
+    "cta_primary": "Kostenlose 30-Min Demo",
+    "cta_secondary": "Wie es funktioniert",
+    "pillars": ["Setup in 1 Woche", "Monatlich kündbar", "Ergebnisse in 30 Tagen", "Kein technisches Wissen nötig"]
+  },
+  "pain": {
+    "eyebrow": "Klingt das vertraut?",
+    "headline": "Du verlierst Aufträge — ohne es zu merken.",
+    "items": [
+      {
+        "title": "Du verpasst Anrufe auf der Baustelle",
+        "description": "Kunde ruft an, niemand geht ran. Kunde ruft den nächsten an. Auftrag weg — und du weißt es nicht mal."
+      },
+      {
+        "title": "Angebote die einfach versanden",
+        "description": "Du gibst ein Angebot ab, hörst nie wieder was. Kein Followup, kein Nachfassen. Auftrag geht an die Konkurrenz."
+      },
+      {
+        "title": "Zu wenige Google Reviews",
+        "description": "Dein Konkurrent hat 200 Bewertungen, du hast 20. Er steht auf Platz 1, du auf Seite 2. Neue Kunden finden ihn — nicht dich."
+      },
+      {
+        "title": "Nachrichten überall verteilt",
+        "description": "WhatsApp, Email, Facebook, Instagram — alles auf verschiedenen Geräten. Anfragen gehen unter. Chaos statt System."
+      },
+      {
+        "title": "Keine Zeit für Marketing",
+        "description": "Du bist Handwerker, kein Marketer. Du willst arbeiten — nicht Nachrichten schreiben, Bewertungen sammeln und Leads nachfassen."
+      }
+    ]
   },
   "services": [
     {
-      "id": "webdesign",
-      "eyebrow": "Leistung 01",
-      "title": "Webdesign & Entwicklung",
-      "description": "Jede Website wird von Grund auf für Ihr Unternehmen entworfen — mit durchdachtem Layout, starker Typografie und einer Nutzererfahrung, die Vertrauen schafft.",
-      "tags": ["Next.js", "TypeScript", "Mobile-First", "Responsive"]
+      "id": "starter",
+      "eyebrow": "Paket 01",
+      "title": "Starter",
+      "description": "Das Fundament. Kein verpasster Anruf, automatische Google Reviews — sofort einsatzbereit.",
+      "tags": ["Missed-Call SMS", "Review Automation", "Website", "CRM"]
     },
     {
-      "id": "branding",
-      "eyebrow": "Leistung 02",
-      "title": "Logo & Branding",
-      "description": "Ihr Logo ist das Erste, was Kunden sehen — und das Letzte, was sie vergessen. Wir gestalten Logos und visuelle Identitäten, die zu Ihrem Unternehmen passen, professionell wirken und auf jeder Fläche funktionieren.",
-      "tags": ["Logo Design", "Corporate Identity", "Farben & Schriften", "SVG & PNG"]
+      "id": "growth",
+      "eyebrow": "Paket 02",
+      "title": "Growth",
+      "description": "Für Betriebe die wachsen wollen. Automatisches Followup, Terminbuchung und alles in einem Postfach.",
+      "tags": ["Terminbuchung", "Angebots-Followup", "Unified Inbox", "Reporting"]
     },
     {
-      "id": "seo",
-      "eyebrow": "Leistung 03",
-      "title": "SEO & lokale Sichtbarkeit",
-      "description": "Damit Ihre Kunden Sie bei Google finden, bevor sie zur Konkurrenz gehen. Technisches SEO, lokale Optimierung und strukturierte Daten — alles aus einer Hand.",
-      "tags": ["Local SEO", "On-Page SEO", "Google My Business", "Schema.org"]
+      "id": "pro",
+      "eyebrow": "Paket 03",
+      "title": "Pro",
+      "description": "Vollautomatisch. KI übernimmt Anrufe, bucht Termine und hält deine Leads warm.",
+      "tags": ["AI Chatbot", "Voice AI", "Social Media", "Reaktivierung"]
     }
   ],
   "about": {
     "eyebrow": "Warum LB Digital",
-    "headline": "Weniger Agentur. Mehr Partner.",
-    "body": "Kein anonymes Großstudio, kein Offshore-Team. Sie arbeiten direkt mit uns — einer kleinen, spezialisierten Einheit aus Freiburg, die weiß, was Handwerksbetriebe, Gastronomiebetriebe und lokale Unternehmen wirklich brauchen.",
+    "headline": "Weniger Aufwand. Mehr Aufträge.",
+    "body": "Wir bauen kein generisches CRM. Wir bauen ein maßgeschneidertes System für deinen Betrieb — das funktioniert, während du auf der Baustelle bist.",
     "usps": [
       {
         "number": "01",
-        "title": "Direkte Kommunikation",
-        "description": "Kein Projektmanager als Puffer. Sie sprechen direkt mit dem Entwickler — schnelle Entscheidungen, keine Missverständnisse."
+        "title": "Setup in einer Woche",
+        "description": "Kein monatelanger Prozess. Wir richten alles ein — du musst nichts installieren, nichts konfigurieren, nichts lernen."
       },
       {
         "number": "02",
-        "title": "Individuell entwickelt",
-        "description": "Jede Website wird von Grund auf für Ihr Unternehmen gebaut — mit Ihren Farben, Ihrer Botschaft und Ihrer Zielgruppe im Mittelpunkt."
+        "title": "Ergebnisse in 30 Tagen",
+        "description": "Erste Google Reviews und gerettete Anrufe bereits in der ersten Woche. Messbare Resultate — keine leeren Versprechen."
       },
       {
         "number": "03",
-        "title": "Freiburg kennt Freiburg",
-        "description": "Wir wissen, wie der lokale Markt tickt. Regionaler Fokus, persönliche Beratung — und bei Bedarf auch ein Treffen vor Ort."
+        "title": "Monatlich kündbar",
+        "description": "Kein Jahresvertrag, kein Risiko. Wenn das System keine Ergebnisse liefert — kündige. Kein Kleingedrucktes."
       },
       {
         "number": "04",
-        "title": "Schnell online",
-        "description": "Kein monatelanger Prozess. Eine Standard-Website ist in 2–3 Wochen fertig — mit klarem Zeitplan, der eingehalten wird."
+        "title": "Direkt. Lokal. Persönlich.",
+        "description": "Kein anonymes Großstudio. Du sprichst direkt mit uns — aus Freiburg, für die Region."
       }
     ]
   },
   "process": {
-    "eyebrow": "Ablauf",
-    "headline": "Von der Idee zur fertigen Website.",
+    "eyebrow": "Wie es funktioniert",
+    "headline": "Von null auf live in einer Woche.",
     "steps": [
       {
         "number": "01",
-        "title": "Kennenlernen",
-        "description": "Kostenloses Erstgespräch. Wir verstehen Ihr Unternehmen, Ihre Zielgruppe und was Sie wirklich brauchen — kein Verkaufsgespräch.",
-        "duration": "1–2 Tage"
+        "title": "Kostenlose Demo (30 Min)",
+        "description": "Wir zeigen dir live wie das System für deinen Betrieb aussieht. Du siehst genau was du bekommst — bevor du einen Cent ausgibst.",
+        "duration": "Tag 1"
       },
       {
         "number": "02",
-        "title": "Konzept & Design",
-        "description": "Maßgeschneidertes Design-Konzept auf Basis Ihrer Marke. Sie geben Feedback, wir feinen ab — bis es wirklich passt.",
-        "duration": "3–5 Tage"
+        "title": "Setup & Konfiguration",
+        "description": "Wir bauen alles auf — Website, Missed-Call SMS, Review-Automation, CRM. Komplett konfiguriert für deinen Betrieb.",
+        "duration": "Tag 2–4"
       },
       {
         "number": "03",
-        "title": "Entwicklung",
-        "description": "Technische Umsetzung in Next.js. Schnell, sauber, performant — mit regelmäßigen Updates und direktem Kontakt zu uns.",
-        "duration": "5–10 Tage"
+        "title": "Go-Live & Test",
+        "description": "Wir testen jeden Schritt gemeinsam. Erst wenn alles funktioniert gehen wir live — du entscheidest.",
+        "duration": "Tag 5–7"
       },
       {
         "number": "04",
-        "title": "Launch & Betreuung",
-        "description": "Go-live und SEO-Setup. Wir bleiben als Partner — für Updates, Fragen und die Weiterentwicklung Ihrer Online-Präsenz.",
+        "title": "Laufende Betreuung",
+        "description": "Monatliches Reporting, direkte Ansprechpartner, kontinuierliche Optimierung. Du konzentrierst dich aufs Handwerk.",
         "duration": "Fortlaufend"
       }
     ]
   },
   "faq": {
     "eyebrow": "FAQ",
-    "headline": "Häufig gestellte Fragen",
+    "headline": "Deine Fragen. Ehrliche Antworten.",
     "items": [
       {
-        "q": "Warum bringt meine aktuelle Website keine Anfragen?",
-        "a": "Meistens liegt es an drei Dingen: kein klarer Call-to-Action, zu viel Text ohne Struktur, und eine schlechte mobile Darstellung. Wir analysieren Ihre Seite kostenlos und zeigen genau, was fehlt."
+        "q": "Muss ich mich selbst um etwas kümmern?",
+        "a": "Nein. Wir richten alles ein — du musst weder Software installieren noch etwas konfigurieren. Das System läuft im Hintergrund während du arbeitest."
       },
       {
-        "q": "Wie lange dauert die Erstellung?",
-        "a": "Eine Standard-Website ist in 2–3 Wochen live. Kein monatelanger Prozess — mit klarem Zeitplan, der eingehalten wird."
+        "q": "Was wenn ein einziger Auftrag mehr pro Monat reinkommt?",
+        "a": "Dann hat sich das Starter-Paket (€150/mo) schon gerechnet — mehrfach. Ein Dachdecker-Auftrag bringt €800–5.000. Ein verpasster Anruf weniger pro Woche macht das System zur Null-Kosten-Investition."
       },
       {
-        "q": "Was kostet eine professionelle Website?",
-        "a": "Eine maßgeschneiderte Website beginnt bei ca. 1.500 € — je nach Umfang und Anforderungen. Im Erstgespräch bekommen Sie ein transparentes Festpreisangebot ohne versteckte Kosten."
+        "q": "Wie schnell sehe ich erste Ergebnisse?",
+        "a": "Die Missed-Call SMS ist ab Tag 1 aktiv. Erste Google Reviews kommen typischerweise in der ersten Woche. Nach 30 Tagen siehst du konkrete Zahlen im Dashboard."
       },
       {
-        "q": "Kann ich die Website später selbst bearbeiten?",
-        "a": "Ja. Auf Wunsch bauen wir ein CMS ein, über das Sie Texte und Bilder eigenständig pflegen können — ohne Programmierkenntnisse."
+        "q": "Kann ich jederzeit kündigen?",
+        "a": "Ja. Kein Jahresvertrag, keine Mindestlaufzeit, kein Kleingedrucktes. Monatlich kündbar — weil wir überzeugt sind dass du bleiben willst."
       },
       {
-        "q": "Arbeiten Sie auch außerhalb von Freiburg?",
-        "a": "Unser Schwerpunkt liegt in Freiburg und der Region. Für Projekte darüber hinaus arbeiten wir remote — DACH-weit."
+        "q": "Gibt es eine Garantie?",
+        "a": "Ja. Wenn du in den ersten 30 Tagen nicht mindestens 5 neue Google Reviews bekommst und das Missed-Call System nicht funktioniert — zahlst du nichts. Kein Risiko."
+      },
+      {
+        "q": "Was kostet der erste Monat?",
+        "a": "Der erste Monat ist kostenlos. Du zahlst die Setup-Gebühr und siehst 30 Tage lang Ergebnisse — erst dann entscheidest du ob es weitergeht."
       }
     ]
   },
   "cta": {
     "eyebrow": "Nächster Schritt",
-    "headline": "Ihre Website bringt keine Anfragen?",
-    "body": "Ich schaue mir Ihre aktuelle Seite kostenlos an und zeige Ihnen konkret, was sich verbessern lässt — ohne Verkaufsdruck.",
-    "button": "Jetzt Rückruf anfordern"
+    "headline": "Sieh live wie es für deinen Betrieb aussieht.",
+    "body": "30 Minuten. Kostenlos. Wir zeigen dir genau welche Aufträge du aktuell verlierst — und wie das System sie zurückholt. Kein Verkaufsdruck.",
+    "button": "Kostenlose Demo anfragen"
   },
   "footer": {
-    "tagline": "Webdesign & SEO aus Freiburg.",
+    "tagline": "Lead & Growth System für Handwerker.",
     "email": "hallo@lb-digital.agency",
     "phone": "01785881195",
     "copyright": "© 2026 LB Digital"
