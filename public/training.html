@@ -110,6 +110,16 @@
   .mini{padding:12px 16px;border-radius:14px;border:none;background:var(--ink);color:#121214;font-weight:800;font-size:14px;font-family:var(--f);cursor:pointer}
   .mini.ghost{background:var(--panel2);color:var(--mut)}
   .reset{margin-top:16px;width:100%;padding:13px;border-radius:15px;border:none;background:var(--panel2);color:var(--mut);font-weight:700;font-size:13px;font-family:var(--f);cursor:pointer}
+  .finish-btn{margin-top:16px;width:100%;padding:15px;border-radius:15px;border:none;background:var(--green);color:#0E0E11;font-weight:900;font-size:15px;font-family:var(--f);cursor:pointer}
+
+  /* Trainings-Abschluss Overlay */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:flex-end;justify-content:center}
+  .overlay.show{display:flex}
+  .sheet{width:100%;max-width:520px;max-height:82vh;overflow-y:auto;background:var(--panel);border-radius:26px 26px 0 0;padding:14px 22px calc(24px + env(safe-area-inset-bottom));animation:sheetup .25s ease}
+  .sheetbar{width:40px;height:4px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+  @keyframes sheetup{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .finishvol{font-size:16px;padding-bottom:14px!important}
+  .finishrow span b{display:block;margin-top:3px}
 
   /* Essen */
   .macro{display:flex;justify-content:space-between;font-size:13.5px;font-weight:800;margin-bottom:7px}
@@ -266,6 +276,15 @@
   </div>
 </div>
 
+<div class="overlay" id="finishOverlay">
+  <div class="sheet">
+    <div class="sheetbar"></div>
+    <h3>🏁 Training abgeschlossen</h3>
+    <div id="finishContent"></div>
+    <button class="mini" style="width:100%;margin-top:18px" onclick="closeFinish()">Fertig</button>
+  </div>
+</div>
+
 <nav>
   <button id="tab-day" class="on"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>Heute</button>
   <button id="tab-stats"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Statistik</button>
@@ -303,6 +322,7 @@ const EXTYPE={};
 PLAN.forEach(p=>{if(p.ex)p.ex.forEach(e=>{EXTYPE[e[0]]=e[3]||"w";});});
 function exType(n){return EXTYPE[n]||"w";}
 function fmtSet(n,s){const t=exType(n);if(t==="w")return `${s[0]} kg × ${s[1]}`;if(t==="t")return `${s[1]} s`;if(t==="p")return "✓";return `${s[1]} Wdh`;}
+function fmtNum(n){return (Math.round(n*10)/10).toString();}
 
 /* ---- Spiele (bei neuen Spielen: Luca schickt Claude den Spielplan) ---- */
 const MATCHES=[
@@ -482,6 +502,113 @@ function todaySets(exName){
   return h.find(e=>e.d===todayKey())||null;
 }
 
+/* ---------- Trainings-Abschluss & Zusammenfassung ---------- */
+function sessionSummary(){
+  const p=PLAN[sel];
+  if(!p||!p.ex)return null;
+  const rows=[];
+  let volToday=0,volLast=0,hasVolCompare=false,anyLogged=false;
+  p.ex.forEach(raw=>{
+    let e=raw;
+    if(raw[0]==="Pogo Hops"){const st=plyoStage();e=[st.n,st.s,raw[2],"p"];}
+    const exName=e[0].replace(/'/g,"");
+    const type=e[3]||"w";
+    const ts=todaySets(exName);
+    const today=ts&&ts.sets?ts.sets.filter(Boolean):[];
+    if(!today.length)return;
+    anyLogged=true;
+    const last=lastSession(exName);
+    const prev=last&&last.sets?last.sets.filter(Boolean):[];
+
+    let todayVal=null,lastVal=null,unit="";
+    if(type==="w"){
+      todayVal=today.reduce((s,x)=>s+(+x[0])*(+x[1]),0);
+      volToday+=todayVal;
+      unit="kg";
+      if(prev.length){lastVal=prev.reduce((s,x)=>s+(+x[0])*(+x[1]),0);volLast+=lastVal;hasVolCompare=true;}
+    }else if(type==="r"||type==="t"){
+      todayVal=today.reduce((s,x)=>s+(+x[1]),0);
+      unit=type==="t"?"s":"Wdh";
+      if(prev.length)lastVal=prev.reduce((s,x)=>s+(+x[1]),0);
+    }
+
+    let cmp="eq",diffTxt="=";
+    if(todayVal!==null&&lastVal!==null){
+      const diff=todayVal-lastVal;
+      const diffStr=fmtNum(Math.abs(diff))+(unit==="kg"?" kg":unit==="s"?" s":" "+unit);
+      if(diff>0){cmp="up";diffTxt=`▲ +${diffStr}`;}
+      else if(diff<0){cmp="down";diffTxt=`▼ -${diffStr}`;}
+      else{cmp="eq";diffTxt="=";}
+    }else if(type==="p"){
+      cmp="eq";diffTxt="✓";
+    }else{
+      cmp="eq";diffTxt="–";
+    }
+
+    let isPR=false;
+    if(type==="w"){
+      const maxToday=Math.max(...today.map(s=>+s[0]));
+      const hist=S.lifts[exName]||[];
+      let maxHist=-Infinity;
+      hist.forEach(entry=>{
+        if(entry.d===todayKey())return;
+        (entry.sets||[]).filter(Boolean).forEach(s=>{if(+s[0]>maxHist)maxHist=+s[0];});
+      });
+      isPR=maxToday>maxHist;
+    }
+
+    rows.push({name:e[0],setsTxt:today.map(s=>fmtSet(exName,s)).join(" · "),cmp,diffTxt,isPR});
+  });
+  return {anyLogged,volToday,volLast,hasVolCompare,rows};
+}
+
+window.finishTraining=()=>{
+  const sum=sessionSummary();
+  if(!sum||!sum.anyLogged){
+    alert("Noch keine Sätze für heute erfasst. Trag zuerst ein paar Sätze ein, bevor du abschließt!");
+    return;
+  }
+  renderFinishOverlay(sum);
+  document.getElementById("finishOverlay").classList.add("show");
+};
+window.closeFinish=()=>{
+  document.getElementById("finishOverlay").classList.remove("show");
+};
+function renderFinishOverlay(sum){
+  const prCount=sum.rows.filter(r=>r.isPR).length;
+  const upCount=sum.rows.filter(r=>r.cmp==="up").length;
+  const downCount=sum.rows.filter(r=>r.cmp==="down").length;
+
+  let motiTxt;
+  if(prCount>0)motiTxt="🏆 Neuer Rekord! Genau so sieht Fortschritt aus.";
+  else if(upCount>0&&upCount>=downCount)motiTxt="💪 Stärker als letztes Mal – weiter so!";
+  else if(upCount>0&&downCount>0)motiTxt="🔄 Gemischtes Ergebnis heute – nicht jeder Tag ist ein Rekordtag. Dranbleiben zahlt sich aus.";
+  else motiTxt="✅ Level gehalten. Konstanz ist auch Fortschritt.";
+
+  const volDiff=sum.volToday-sum.volLast;
+  const volDiffHtml=sum.hasVolCompare?
+    ` <span style="font-size:13px;font-weight:800;color:${volDiff>=0?"var(--green)":"var(--accent)"}">(${volDiff>=0?"+":"-"}${fmtNum(Math.abs(volDiff))} kg)</span>`:"";
+
+  const rowsHtml=sum.rows.map(r=>{
+    const color=r.cmp==="up"?"var(--green)":r.cmp==="down"?"var(--accent)":"var(--mut)";
+    return `<div class="statrow finishrow" style="align-items:flex-start">
+      <span>${r.name}${r.isPR?' <span style="color:var(--gold);font-size:11px;font-weight:800">🏆 PR!</span>':""}<br><span style="font-size:12.5px;color:var(--mut);font-weight:600">${r.setsTxt}</span></span>
+      <b style="color:${color};white-space:nowrap">${r.diffTxt}</b>
+    </div>`;
+  }).join("");
+
+  document.getElementById("finishContent").innerHTML=`
+    <div class="statrow finishvol">
+      <span>Gesamtvolumen heute</span>
+      <b>${fmtNum(sum.volToday)} kg${volDiffHtml}</b>
+    </div>
+    ${rowsHtml}
+    <div class="moti" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
+      <div class="mtx">${motiTxt}</div>
+    </div>
+  `;
+}
+
 /* ---------- Rendering ---------- */
 function renderStrip(){
   const s=document.getElementById("strip");s.innerHTML="";
@@ -495,6 +622,11 @@ function renderStrip(){
   });
 }
 function renderDay(){
+  const dayContentEl=document.getElementById("dayContent");
+  const savedInputs={};
+  if(dayContentEl){
+    dayContentEl.querySelectorAll("input[id]").forEach(inp=>{savedInputs[inp.id]=inp.value;});
+  }
   const p=PLAN[sel],today=new Date().getDay()===sel;
   document.getElementById("headline").innerHTML=
     (today?"Das steht heute an: ":DAYS[sel]+": ")+`<span class="num">${p.name}</span>`;
@@ -565,11 +697,16 @@ function renderDay(){
       h+=`</div>`;
     });
     h+=`<div class="note">${p.note} — Tipp auf eine Übung öffnet den Satz-Logger.</div>
+      <button class="finish-btn" onclick="finishTraining()">🏁 Training abschließen</button>
       <button class="reset" onclick="S.checks['${key}']=[];sset('v2-checks',S.checks);renderDay()">Häkchen zurücksetzen</button></div>`;
   }else{
     h+=`<div class="card"><h3>Heute wichtig</h3><div class="note" style="border:none;padding:0;margin:0">${p.note}</div></div>`;
   }
   document.getElementById("dayContent").innerHTML=h;
+  Object.keys(savedInputs).forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&savedInputs[id])el.value=savedInputs[id];
+  });
 }
 function renderWeek(){
   const order=[1,2,3,4,5,6,0];
