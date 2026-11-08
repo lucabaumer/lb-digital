@@ -30,7 +30,31 @@
   .navbtn{flex:0 0 auto;width:40px;height:40px;border-radius:13px;border:none;background:var(--panel);color:var(--ink);font-size:17px;font-weight:800;cursor:pointer}
   .datelabel{flex:1;text-align:center;font-weight:800;font-size:16px;letter-spacing:-.01em}
   .todaybtn{flex:0 0 auto;padding:10px 14px;border-radius:13px;border:none;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:12.5px;font-family:var(--f);cursor:pointer}
-  .daytype{font-size:12.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;text-align:center;margin-bottom:14px}
+  .daytype{font-size:12.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;text-align:center;margin-bottom:10px}
+  .gymrow{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px}
+  .gymrow label{font-size:12px;color:var(--mut);font-weight:700}
+  #gymSelect{padding:9px 12px;border-radius:12px;border:none;background:var(--panel2);color:var(--ink);font-family:var(--f);font-weight:800;font-size:13px}
+
+  .excat{flex:0 0 auto;padding:5px 10px;border-radius:20px;border:none;font-family:var(--f);font-weight:800;font-size:10.5px;cursor:pointer;white-space:nowrap}
+  .excat.gym{background:var(--accent-soft);color:var(--accent)}
+  .excat.global{background:rgba(142,142,151,.16);color:var(--mut)}
+  .exest{font-size:11.5px;color:var(--gold);font-weight:800;margin-top:2px}
+
+  .gymmgmt-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .gymmgmt-row:last-child{border-bottom:none}
+  .gymmgmt-row .gn{flex:1;font-weight:700;font-size:14.5px}
+  .gymmgmt-row .gn small{display:block;font-size:12px;color:var(--mut);font-weight:600;margin-top:2px}
+  .gymmgmt-row .gbtns{display:flex;gap:6px}
+  .gymmgmt-row .gbtns button{flex:0 0 auto;width:30px;height:30px;border-radius:10px;border:none;background:var(--panel2);color:var(--mut);font-weight:800;font-size:12px;cursor:pointer}
+  .gymaddform{display:flex;gap:8px;margin-top:14px}
+  .gymaddform input{padding:12px;border-radius:13px;border:none;background:var(--panel2);color:var(--ink);font-family:var(--f);font-weight:700;font-size:14px;min-width:0}
+  .gymaddform input:first-child{flex:1.3}
+  .gymaddform input:nth-child(2){flex:1}
+  .gymaddform .mini{flex:0 0 auto;padding:12px 16px;border-radius:13px;border:none;background:var(--green);color:#0E0E11;font-weight:900;font-family:var(--f);font-size:14px;cursor:pointer}
+
+  .gymfilter{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+  .gymfilter label{font-size:12px;color:var(--mut);font-weight:700}
+  #gymFilterSelect{flex:1;padding:12px;border-radius:13px;border:none;background:var(--panel2);color:var(--ink);font-family:var(--f);font-weight:800;font-size:13.5px}
 
   .planrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
   .planrow:last-child{border-bottom:none}
@@ -123,6 +147,10 @@
       <button class="todaybtn hide" id="todayBtn" onclick="gotoToday()">Heute</button>
     </div>
     <div class="daytype hide" id="dayTypeLabel"></div>
+    <div class="gymrow">
+      <label for="gymSelect">Gym:</label>
+      <select id="gymSelect" onchange="setDayGym(this.value)"></select>
+    </div>
     <div id="logList"></div>
     <button class="addexbtn" onclick="toggleAddEx()">+ Übung hinzufügen</button>
     <div class="addexform hide" id="addExForm">
@@ -138,6 +166,10 @@
       <button class="navbtn" onclick="prevMonth()">‹</button>
       <div class="datelabel" id="monthLabel">…</div>
       <button class="navbtn" onclick="nextMonth()">›</button>
+    </div>
+    <div class="gymfilter">
+      <label for="gymFilterSelect">Gym:</label>
+      <select id="gymFilterSelect" onchange="setGymFilter(this.value)"></select>
     </div>
     <div class="card">
       <h3>Überblick</h3>
@@ -159,6 +191,15 @@
   </section>
 
   <section id="view-plan" class="hide">
+    <div class="card">
+      <h3>Gyms</h3>
+      <div id="gymList"></div>
+      <div class="gymaddform">
+        <input type="text" id="newGymName" placeholder="Name">
+        <input type="text" id="newGymLoc" placeholder="Ort (optional)">
+        <button class="mini" onclick="addGym()">+</button>
+      </div>
+    </div>
     <div class="card">
       <h3 id="planNameA">…</h3>
       <div id="planListA"></div>
@@ -230,19 +271,93 @@ function fmtKg(n){return Math.round(n).toLocaleString("de-DE")+" kg";}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
 /* ---------- State ---------- */
-let S={log:{},plan:{},dayType:{}};
+let S={log:{},plan:{},dayType:{},gyms:[],dayGym:{},exCategory:{},lastGym:null};
 let curDate=todayKey();
 let curMonth=todayKey().slice(0,7);
+let curGymFilter="all";
+
+/* ---------- Gyms & pro-Gym-/übergreifende Übungen ---------- */
+// Freie Gewichte & Körpergewicht: gym-übergreifend. Alles andere (Standard):
+// pro Gym, da Maschinen/Kabelzüge sich unterscheiden. Pro Übung manuell umstellbar.
+const GLOBAL_EXERCISES=["bankdrücken","seitheben","preacher curls","hammer curls",
+  "schrägbank-rudern kh","beinheben","preacher curls einarmig kh","dips"];
+function genGymId(){return "gym"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function exCategory(name){
+  const key=normName(name);
+  if(S.exCategory[key])return S.exCategory[key];
+  return GLOBAL_EXERCISES.includes(key)?"global":"gym";
+}
+window.toggleExCategory=async(name)=>{
+  const key=normName(name);
+  S.exCategory[key]=exCategory(name)==="gym"?"global":"gym";
+  await sset("v3-excat",S.exCategory);
+  renderLog();
+};
+window.addGym=async()=>{
+  const nameEl=document.getElementById("newGymName"),locEl=document.getElementById("newGymLoc");
+  const name=nameEl.value.trim();
+  if(!name)return;
+  S.gyms.push({id:genGymId(),name,location:locEl.value.trim()});
+  await sset("v3-gyms",S.gyms);
+  nameEl.value="";locEl.value="";
+  renderGyms();renderGymSelect();renderGymFilter();
+};
+window.renameGym=async(id)=>{
+  const g=S.gyms.find(x=>x.id===id);
+  if(!g)return;
+  const name=prompt("Name:",g.name);
+  if(name===null||!name.trim())return;
+  const loc=prompt("Ort (optional):",g.location||"");
+  g.name=name.trim();g.location=(loc||"").trim();
+  await sset("v3-gyms",S.gyms);
+  renderGyms();renderGymSelect();renderGymFilter();renderLog();
+};
+window.deleteGym=async(id)=>{
+  if(!confirm("Gym wirklich löschen? Bereits eingetragene Tage bleiben zugeordnet, lassen sich aber nicht mehr danach filtern."))return;
+  S.gyms=S.gyms.filter(g=>g.id!==id);
+  await sset("v3-gyms",S.gyms);
+  renderGyms();renderGymSelect();renderGymFilter();
+};
+function renderGyms(){
+  document.getElementById("gymList").innerHTML=S.gyms.length?S.gyms.map(g=>
+    `<div class="gymmgmt-row">
+      <div class="gn">${esc(g.name)}${g.location?`<small>${esc(g.location)}</small>`:""}</div>
+      <div class="gbtns">
+        <button onclick="renameGym('${g.id}')">✎</button>
+        <button onclick="deleteGym('${g.id}')">✕</button>
+      </div>
+    </div>`).join(""):'<div class="empty">Noch keine Gyms angelegt.</div>';
+}
+window.setDayGym=async(gymId)=>{
+  S.dayGym[curDate]=gymId;
+  S.lastGym=gymId;
+  await sset("v3-daygym",S.dayGym);
+  await sset("v3-lastgym",S.lastGym);
+  renderLog();
+};
+function renderGymSelect(){
+  const sel=document.getElementById("gymSelect");
+  sel.innerHTML=S.gyms.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");
+  sel.value=S.dayGym[curDate]||S.lastGym||(S.gyms[0]&&S.gyms[0].id)||"";
+}
+window.setGymFilter=(val)=>{curGymFilter=val;renderMonth();};
+function renderGymFilter(){
+  const sel=document.getElementById("gymFilterSelect");
+  sel.innerHTML=`<option value="all">Alle Gyms</option>`+S.gyms.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");
+  sel.value=curGymFilter;
+}
+function gymName(id){const g=S.gyms.find(x=>x.id===id);return g?g.name:null;}
 
 /* ---------- Übungs-Helfer ---------- */
 function normName(n){return n.trim().toLowerCase();}
 function fmtSet(s){return (s.w!=null&&s.w!=="")?`${s.w} kg × ${s.r}`:`${s.r} Wdh`;}
-function lastForExercise(name,beforeDate){
+function lastForExercise(name,beforeDate,gymId){
   const target=normName(name);
   const dates=Object.keys(S.log).filter(d=>d<beforeDate).sort().reverse();
   for(const d of dates){
+    if(gymId!==undefined&&S.dayGym[d]!==gymId)continue;
     const ex=(S.log[d]||[]).find(e=>normName(e.name)===target);
-    if(ex&&ex.sets&&ex.sets.length)return {date:d,sets:ex.sets};
+    if(ex&&ex.sets&&ex.sets.length)return {date:d,sets:ex.sets,gym:S.dayGym[d]};
   }
   return null;
 }
@@ -276,9 +391,21 @@ function buildTargetReps(){
   return t;
 }
 function roundHalf(n){return Math.round(n*2)/2;}
-function latestSessionForExercise(name){return lastForExercise(name,"9999-12-31");}
+function latestSessionForExercise(name,gymId){return lastForExercise(name,"9999-12-31",gymId);}
+// Liefert die relevante letzte Session für eine Übung am aktuell gewählten Tag/Gym,
+// inkl. Kennzeichnung, ob es sich um eine Schätzung aus einem anderen Gym handelt.
+function relevantLast(name,beforeDate){
+  if(exCategory(name)!=="gym")return{session:lastForExercise(name,beforeDate),estimate:false};
+  const gymId=S.dayGym[curDate];
+  const own=lastForExercise(name,beforeDate,gymId);
+  if(own)return{session:own,estimate:false};
+  return{session:lastForExercise(name,beforeDate),estimate:true};
+}
 function suggestNext(name){
-  const last=latestSessionForExercise(name);
+  const gymId=exCategory(name)==="gym"?S.dayGym[curDate]:undefined;
+  let last=latestSessionForExercise(name,gymId);
+  let estimate=false;
+  if(!last&&gymId!==undefined){last=latestSessionForExercise(name);estimate=!!last;}
   if(!last)return null;
   const sets=last.sets.filter(Boolean);
   if(!sets.length)return null;
@@ -288,13 +415,13 @@ function suggestNext(name){
     const topW=Math.max(...sets.filter(s=>s.w!=null).map(s=>s.w));
     const bestReps=Math.max(...sets.filter(s=>s.w===topW).map(s=>parseFloat(s.r)||0));
     const lower=target?target[0]:8,upper=target?target[1]:12;
-    if(bestReps>=upper)return{weight:roundHalf(topW+2.5),reps:lower,up:true};
-    return{weight:topW,reps:Math.min(upper,bestReps+1),up:false};
+    if(bestReps>=upper)return{weight:roundHalf(topW+2.5),reps:lower,up:true,estimate};
+    return{weight:topW,reps:Math.min(upper,bestReps+1),up:false,estimate};
   }else{
     const bestReps=Math.max(...sets.map(s=>parseFloat(s.r)||0));
     const upper=target?target[1]:15;
-    if(bestReps>=upper)return{weight:null,reps:bestReps,up:true,harder:true};
-    return{weight:null,reps:bestReps+1,up:false};
+    if(bestReps>=upper)return{weight:null,reps:bestReps,up:true,harder:true,estimate};
+    return{weight:null,reps:bestReps+1,up:false,estimate};
   }
 }
 
@@ -357,6 +484,7 @@ function renderLog(){
   const dtLabel=document.getElementById("dayTypeLabel");
   dtLabel.classList.toggle("hide",!dt||!S.plan[dt]);
   if(dt&&S.plan[dt])dtLabel.textContent=S.plan[dt].name;
+  renderGymSelect();
 
   const list=S.log[curDate]||[];
   let h="";
@@ -364,9 +492,11 @@ function renderLog(){
     h+=`<div class="empty">Noch keine Übungen für diesen Tag.<br>Leg los mit „+ Übung hinzufügen".</div>`;
   }
   list.forEach((ex,idx)=>{
-    const last=lastForExercise(ex.name,curDate);
-    const cmp=last?compareToLast(ex.sets,last.sets):null;
+    const cat=exCategory(ex.name);
+    const {session:last,estimate}=relevantLast(ex.name,curDate);
+    const cmp=(last&&!estimate)?compareToLast(ex.sets,last.sets):null;
     const pctHtml=cmp?` <span style="font-weight:800;color:${cmp.pct>0?"var(--green)":cmp.pct<0?"var(--accent)":"var(--mut)"}">${cmp.pct>0?"▲ +":cmp.pct<0?"▼ ":"± "}${cmp.pct}%</span>`:"";
+    const lastGymTxt=last&&last.gym?gymName(last.gym):null;
     const sug=!ex.sets.length?suggestNext(ex.name):null;
     let sugTxt="";
     if(sug){
@@ -377,10 +507,12 @@ function renderLog(){
     h+=`<div class="excard">
       <div class="exhead">
         <div class="exname">${esc(ex.name)}</div>
+        <button class="excat ${cat}" onclick="toggleExCategory('${ex.name.replace(/'/g,"\\'")}')">${cat==="gym"?"📍 Pro Gym":"🌐 Übergreifend"}</button>
         <button class="exdel" onclick="deleteExercise('${curDate}',${idx})">✕</button>
       </div>
-      ${last?`<div class="exlast">Letztes Mal (${fmtDateShort(last.date)}): ${last.sets.map(fmtSet).join(" · ")}${pctHtml}</div>`:""}
-      ${sugTxt?`<div class="exsug">${sugTxt}</div>`:""}
+      ${last?`<div class="exlast">Letztes Mal (${fmtDateShort(last.date)}${estimate&&lastGymTxt?", "+lastGymTxt:""}): ${last.sets.map(fmtSet).join(" · ")}${pctHtml}</div>`:""}
+      ${estimate&&last?`<div class="exest">≈ Schätzung – in diesem Gym noch keine Daten für diese Übung</div>`:""}
+      ${sugTxt?`<div class="exsug">${sugTxt}${sug&&sug.estimate?" (Schätzung)":""}</div>`:""}
       ${ex.sets.length?`<div class="setlist">${ex.sets.map((s,si)=>
         `<div class="setrow2">
           <span class="setnum2">Satz ${si+1}</span>
@@ -402,7 +534,7 @@ function renderLog(){
 
 /* ---------- Rendering: Monat ---------- */
 function monthStats(){
-  const dates=Object.keys(S.log).filter(d=>d.startsWith(curMonth)).sort();
+  const dates=Object.keys(S.log).filter(d=>d.startsWith(curMonth)&&(curGymFilter==="all"||S.dayGym[d]===curGymFilter)).sort();
   let totalVol=0,totalSets=0;
   const perEx={};
   const dayVol=[];
@@ -469,6 +601,7 @@ function renderVolumeChart(st){
 }
 function renderMonth(){
   document.getElementById("monthLabel").textContent=fmtMonth(curMonth);
+  renderGymFilter();
   const st=monthStats();
   document.getElementById("monthOverview").innerHTML=
     `<div class="statrow"><span>Trainingstage</span><b>${st.days}</b></div>
@@ -524,7 +657,7 @@ Object.keys(tabs).forEach(t=>{
     });
     if(t==="log")renderLog();
     if(t==="month")renderMonth();
-    if(t==="plan")renderPlan();
+    if(t==="plan"){renderGyms();renderPlan();}
   };
 });
 
@@ -677,20 +810,36 @@ const DEFAULT_PLAN={
   ]}
 };
 
+/* ---------- Default-Gyms & historische Gym-Zuordnung ---------- */
+const DEFAULT_GYMS=[
+  {id:"waldkirch",name:"Waldkirch",location:"Haupt-Gym"},
+  {id:"gutach",name:"Fitness Pur",location:"Gutach"}
+];
+const SEED_DAYGYM_GUTACH=["2026-10-11","2026-10-15","2026-11-08"];
+
 /* ---------- Boot ---------- */
 async function boot(){
   S.log=(await sget("v3-log"))||{};
   S.plan=(await sget("v3-plan"))||DEFAULT_PLAN;
   S.dayType=(await sget("v3-daytype"))||{};
+  S.gyms=(await sget("v3-gyms"))||DEFAULT_GYMS;
+  S.dayGym=(await sget("v3-daygym"))||{};
+  S.exCategory=(await sget("v3-excat"))||{};
+  S.lastGym=(await sget("v3-lastgym"))||null;
   const imported=await sget("v3-seed-import1");
   if(!imported){
     Object.keys(SEED_IMPORT).forEach(d=>{
       S.log[d]=SEED_IMPORT[d].map(e=>({name:e.name,sets:e.sets.map(s=>({w:s.w,r:s.r}))}));
+      S.dayGym[d]=SEED_DAYGYM_GUTACH.includes(d)?"gutach":"waldkirch";
     });
     S.dayType["2026-11-08"]="A";
+    S.lastGym=S.dayGym["2026-11-08"];
     await sset("v3-log",S.log);
     await sset("v3-plan",S.plan);
     await sset("v3-daytype",S.dayType);
+    await sset("v3-gyms",S.gyms);
+    await sset("v3-daygym",S.dayGym);
+    await sset("v3-lastgym",S.lastGym);
     await sset("v3-seed-import1",true);
   }
 
@@ -703,8 +852,10 @@ async function boot(){
     if(S.plan[nextType]&&S.plan[nextType].items.length){
       S.log[curDate]=S.plan[nextType].items.map(it=>({name:it.name,sets:[]}));
       S.dayType[curDate]=nextType;
+      if(S.lastGym)S.dayGym[curDate]=S.lastGym;
       await sset("v3-log",S.log);
       await sset("v3-daytype",S.dayType);
+      await sset("v3-daygym",S.dayGym);
     }
   }
   renderLog();
