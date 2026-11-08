@@ -30,6 +30,17 @@
   .navbtn{flex:0 0 auto;width:40px;height:40px;border-radius:13px;border:none;background:var(--panel);color:var(--ink);font-size:17px;font-weight:800;cursor:pointer}
   .datelabel{flex:1;text-align:center;font-weight:800;font-size:16px;letter-spacing:-.01em}
   .todaybtn{flex:0 0 auto;padding:10px 14px;border-radius:13px;border:none;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:12.5px;font-family:var(--f);cursor:pointer}
+  .daytype{font-size:12.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;text-align:center;margin-bottom:14px}
+
+  .planrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .planrow:last-child{border-bottom:none}
+  .planrow .pn{flex:1;font-weight:700;font-size:14.5px}
+  .planrow .pr{font-size:12.5px;color:var(--mut);font-weight:700;white-space:nowrap}
+  .planaddform{display:flex;gap:8px;margin-top:14px}
+  .planaddform input{padding:12px;border-radius:13px;border:none;background:var(--panel2);color:var(--ink);font-family:var(--f);font-weight:700;font-size:14px;min-width:0}
+  .planaddform input[type=text]{flex:1}
+  .planaddform input[type=number]{width:52px;text-align:center}
+  .planaddform .mini{flex:0 0 auto;padding:12px 16px;border-radius:13px;border:none;background:var(--green);color:#0E0E11;font-weight:900;font-family:var(--f);font-size:14px;cursor:pointer}
 
   .card{background:var(--panel);border-radius:26px;padding:22px;margin-bottom:16px;position:relative;overflow:hidden}
   h3{font-size:18px;font-weight:800;letter-spacing:-.01em;margin-bottom:14px}
@@ -111,6 +122,7 @@
       <button class="navbtn" onclick="nextDay()">›</button>
       <button class="todaybtn hide" id="todayBtn" onclick="gotoToday()">Heute</button>
     </div>
+    <div class="daytype hide" id="dayTypeLabel"></div>
     <div id="logList"></div>
     <button class="addexbtn" onclick="toggleAddEx()">+ Übung hinzufügen</button>
     <div class="addexform hide" id="addExForm">
@@ -145,11 +157,35 @@
       <div id="monthExList"></div>
     </div>
   </section>
+
+  <section id="view-plan" class="hide">
+    <div class="card">
+      <h3 id="planNameA">…</h3>
+      <div id="planListA"></div>
+      <div class="planaddform">
+        <input type="text" id="planNewNameA" placeholder="Übung">
+        <input type="number" id="planNewLowA" placeholder="von">
+        <input type="number" id="planNewHighA" placeholder="bis">
+        <button class="mini" onclick="addPlanItem('A')">+</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 id="planNameB">…</h3>
+      <div id="planListB"></div>
+      <div class="planaddform">
+        <input type="text" id="planNewNameB" placeholder="Übung">
+        <input type="number" id="planNewLowB" placeholder="von">
+        <input type="number" id="planNewHighB" placeholder="bis">
+        <button class="mini" onclick="addPlanItem('B')">+</button>
+      </div>
+    </div>
+  </section>
 </main>
 
 <nav>
   <button id="tab-log" class="on"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>Log</button>
   <button id="tab-month"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Monat</button>
+  <button id="tab-plan"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Plan</button>
 </nav>
 
 <script>
@@ -194,7 +230,7 @@ function fmtKg(n){return Math.round(n).toLocaleString("de-DE")+" kg";}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
 /* ---------- State ---------- */
-let S={log:{}};
+let S={log:{},plan:{},dayType:{}};
 let curDate=todayKey();
 let curMonth=todayKey().slice(0,7);
 
@@ -229,18 +265,16 @@ function compareToLast(todaySets,lastSets){
 }
 
 /* ---------- Gewicht/Wdh-Vorschlag ---------- */
-// Explizite Zielbereiche aus dem aktuellen Plan bzw. Prioritäten (Bankdrücken = Kraftfokus).
-// Alles andere fällt auf einen generischen Hypertrophie-Bereich zurück.
-const TARGET_REPS={
-  "bankdrück-maschine":[6,10],
-  "latzug maschine":[8,10],
-  "schulterdrücken":[8,11],
-  "breites brustgestütztes rudern":[8,9],
-  "butterfly":[8,10],
-  "seitheben maschine":[10,12],
-  "reverse butterfly einarmig":[10,12],
-  "bankdrücken":[5,8]
-};
+// Zielbereiche kommen aus dem editierbaren Plan (Tab "Plan"). Bankdrücken (Kraftfokus,
+// nicht Teil eines Plan-Tages) ist fest hinterlegt. Alles ohne Zielbereich fällt auf
+// einen generischen Hypertrophie-Bereich zurück.
+function buildTargetReps(){
+  const t={"bankdrücken":[5,8]};
+  ["A","B"].forEach(k=>{
+    ((S.plan[k]||{}).items||[]).forEach(it=>{t[normName(it.name)]=[it.low,it.high];});
+  });
+  return t;
+}
 function roundHalf(n){return Math.round(n*2)/2;}
 function latestSessionForExercise(name){return lastForExercise(name,"9999-12-31");}
 function suggestNext(name){
@@ -249,7 +283,7 @@ function suggestNext(name){
   const sets=last.sets.filter(Boolean);
   if(!sets.length)return null;
   const hasWeight=sets.some(s=>s.w!=null);
-  const target=TARGET_REPS[normName(name)];
+  const target=buildTargetReps()[normName(name)];
   if(hasWeight){
     const topW=Math.max(...sets.filter(s=>s.w!=null).map(s=>s.w));
     const bestReps=Math.max(...sets.filter(s=>s.w===topW).map(s=>parseFloat(s.r)||0));
@@ -318,6 +352,11 @@ function renderLog(){
 
   document.getElementById("dateLabel").textContent=fmtDate(curDate)+(curDate===todayKey()?" · Heute":"");
   document.getElementById("todayBtn").classList.toggle("hide",curDate===todayKey());
+
+  const dt=S.dayType[curDate];
+  const dtLabel=document.getElementById("dayTypeLabel");
+  dtLabel.classList.toggle("hide",!dt||!S.plan[dt]);
+  if(dt&&S.plan[dt])dtLabel.textContent=S.plan[dt].name;
 
   const list=S.log[curDate]||[];
   let h="";
@@ -443,8 +482,40 @@ function renderMonth(){
     '<div class="empty">Noch keine Daten in diesem Monat.</div>';
 }
 
+/* ---------- Plan (Vorlagen für die beiden abwechselnden Trainingstage) ---------- */
+window.addPlanItem=async(type)=>{
+  const nameEl=document.getElementById("planNewName"+type);
+  const lowEl=document.getElementById("planNewLow"+type);
+  const highEl=document.getElementById("planNewHigh"+type);
+  const name=nameEl.value.trim();
+  const low=parseInt(lowEl.value),high=parseInt(highEl.value);
+  if(!name||!low||!high)return;
+  S.plan[type].items.push({name,low,high});
+  await sset("v3-plan",S.plan);
+  nameEl.value="";lowEl.value="";highEl.value="";
+  renderPlan();
+};
+window.deletePlanItem=async(type,idx)=>{
+  S.plan[type].items.splice(idx,1);
+  await sset("v3-plan",S.plan);
+  renderPlan();
+};
+function renderPlan(){
+  ["A","B"].forEach(type=>{
+    document.getElementById("planName"+type).textContent=S.plan[type].name;
+    const items=S.plan[type].items;
+    document.getElementById("planList"+type).innerHTML=items.length?items.map((it,idx)=>
+      `<div class="planrow">
+        <span class="pn">${esc(it.name)}</span>
+        <span class="pr">${it.low}–${it.high}</span>
+        <button class="exdel" onclick="deletePlanItem('${type}',${idx})">✕</button>
+      </div>`).join(""):
+      '<div class="empty">Noch keine Übungen in diesem Plan.</div>';
+  });
+}
+
 /* ---------- Tabs ---------- */
-const tabs={log:"view-log",month:"view-month"};
+const tabs={log:"view-log",month:"view-month",plan:"view-plan"};
 Object.keys(tabs).forEach(t=>{
   document.getElementById("tab-"+t).onclick=()=>{
     Object.keys(tabs).forEach(x=>{
@@ -453,6 +524,7 @@ Object.keys(tabs).forEach(t=>{
     });
     if(t==="log")renderLog();
     if(t==="month")renderMonth();
+    if(t==="plan")renderPlan();
   };
 });
 
@@ -585,18 +657,56 @@ const SEED_IMPORT={
   ]
 };
 
+/* ---------- Standard-Plan: wechselt automatisch zwischen den zwei Tagestypen ---------- */
+const DEFAULT_PLAN={
+  A:{name:"Brust/Rücken/Schultern",items:[
+    {name:"Bankdrück-Maschine",low:6,high:10},
+    {name:"Latzug Maschine",low:8,high:10},
+    {name:"Schulterdrücken",low:8,high:11},
+    {name:"Breites brustgestütztes Rudern",low:8,high:9},
+    {name:"Butterfly",low:8,high:10},
+    {name:"Seitheben Maschine",low:10,high:12},
+    {name:"Reverse Butterfly einarmig",low:10,high:12}
+  ]},
+  B:{name:"Beine/Arme",items:[
+    {name:"Beinstrecker",low:8,high:12},
+    {name:"Hammer Curls",low:8,high:12},
+    {name:"Preacher Curls",low:8,high:12},
+    {name:"Trizepsmaschine",low:8,high:12},
+    {name:"Trizeps-Pushdown einarmig",low:8,high:12}
+  ]}
+};
+
 /* ---------- Boot ---------- */
 async function boot(){
   S.log=(await sget("v3-log"))||{};
+  S.plan=(await sget("v3-plan"))||DEFAULT_PLAN;
+  S.dayType=(await sget("v3-daytype"))||{};
   const imported=await sget("v3-seed-import1");
   if(!imported){
     Object.keys(SEED_IMPORT).forEach(d=>{
       S.log[d]=SEED_IMPORT[d].map(e=>({name:e.name,sets:e.sets.map(s=>({w:s.w,r:s.r}))}));
     });
+    S.dayType["2026-11-08"]="A";
     await sset("v3-log",S.log);
+    await sset("v3-plan",S.plan);
+    await sset("v3-daytype",S.dayType);
     await sset("v3-seed-import1",true);
   }
+
   curDate=todayKey();curMonth=todayKey().slice(0,7);
+  // Nächsten Trainingstyp automatisch vorbelegen, wenn heute noch nichts eingetragen ist.
+  if(!S.log[curDate]||!S.log[curDate].length){
+    const taggedDates=Object.keys(S.dayType).filter(d=>d<curDate).sort();
+    const lastType=taggedDates.length?S.dayType[taggedDates[taggedDates.length-1]]:null;
+    const nextType=lastType==="A"?"B":"A";
+    if(S.plan[nextType]&&S.plan[nextType].items.length){
+      S.log[curDate]=S.plan[nextType].items.map(it=>({name:it.name,sets:[]}));
+      S.dayType[curDate]=nextType;
+      await sset("v3-log",S.log);
+      await sset("v3-daytype",S.dayType);
+    }
+  }
   renderLog();
 }
 boot();
