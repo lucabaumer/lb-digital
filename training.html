@@ -39,6 +39,7 @@
   .exname{font-weight:800;font-size:17px;letter-spacing:-.01em;flex:1}
   .exdel{flex:0 0 auto;background:none;border:none;color:var(--mut);font-size:18px;font-weight:800;cursor:pointer;padding:2px 6px}
   .exlast{font-size:13px;color:var(--green);font-weight:700;margin-top:8px}
+  .exsug{font-size:13px;color:var(--gold);font-weight:700;margin-top:6px}
   .setlist{margin-top:10px}
   .setrow2{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
   .setrow2:last-child{border-bottom:none}
@@ -227,6 +228,42 @@ function compareToLast(todaySets,lastSets){
   return {pct:Math.round((todayVal-lastVal)/lastVal*100)};
 }
 
+/* ---------- Gewicht/Wdh-Vorschlag ---------- */
+// Explizite Zielbereiche aus dem aktuellen Plan bzw. Prioritäten (Bankdrücken = Kraftfokus).
+// Alles andere fällt auf einen generischen Hypertrophie-Bereich zurück.
+const TARGET_REPS={
+  "bankdrück-maschine":[6,10],
+  "latzug maschine":[8,10],
+  "schulterdrücken":[8,11],
+  "breites brustgestütztes rudern":[8,9],
+  "butterfly":[8,10],
+  "seitheben maschine":[10,12],
+  "reverse butterfly einarmig":[10,12],
+  "bankdrücken":[5,8]
+};
+function roundHalf(n){return Math.round(n*2)/2;}
+function latestSessionForExercise(name){return lastForExercise(name,"9999-12-31");}
+function suggestNext(name){
+  const last=latestSessionForExercise(name);
+  if(!last)return null;
+  const sets=last.sets.filter(Boolean);
+  if(!sets.length)return null;
+  const hasWeight=sets.some(s=>s.w!=null);
+  const target=TARGET_REPS[normName(name)];
+  if(hasWeight){
+    const topW=Math.max(...sets.filter(s=>s.w!=null).map(s=>s.w));
+    const bestReps=Math.max(...sets.filter(s=>s.w===topW).map(s=>parseFloat(s.r)||0));
+    const lower=target?target[0]:8,upper=target?target[1]:12;
+    if(bestReps>=upper)return{weight:roundHalf(topW+2.5),reps:lower,up:true};
+    return{weight:topW,reps:Math.min(upper,bestReps+1),up:false};
+  }else{
+    const bestReps=Math.max(...sets.map(s=>parseFloat(s.r)||0));
+    const upper=target?target[1]:15;
+    if(bestReps>=upper)return{weight:null,reps:bestReps,up:true,harder:true};
+    return{weight:null,reps:bestReps+1,up:false};
+  }
+}
+
 /* ---------- Mutationen ---------- */
 window.toggleAddEx=()=>{
   const f=document.getElementById("addExForm");
@@ -291,12 +328,20 @@ function renderLog(){
     const last=lastForExercise(ex.name,curDate);
     const cmp=last?compareToLast(ex.sets,last.sets):null;
     const pctHtml=cmp?` <span style="font-weight:800;color:${cmp.pct>0?"var(--green)":cmp.pct<0?"var(--accent)":"var(--mut)"}">${cmp.pct>0?"▲ +":cmp.pct<0?"▼ ":"± "}${cmp.pct}%</span>`:"";
+    const sug=!ex.sets.length?suggestNext(ex.name):null;
+    let sugTxt="";
+    if(sug){
+      if(sug.harder)sugTxt=`Ziel: ${sug.reps} Wdh erreicht – Erschwerung/Zusatzgewicht probieren`;
+      else if(sug.weight!=null)sugTxt=`Ziel: ${sug.weight} kg × ${sug.reps}${sug.up?" (Gewicht hoch!)":""}`;
+      else sugTxt=`Ziel: ${sug.reps} Wdh`;
+    }
     h+=`<div class="excard">
       <div class="exhead">
         <div class="exname">${esc(ex.name)}</div>
         <button class="exdel" onclick="deleteExercise('${curDate}',${idx})">✕</button>
       </div>
       ${last?`<div class="exlast">Letztes Mal (${fmtDateShort(last.date)}): ${last.sets.map(fmtSet).join(" · ")}${pctHtml}</div>`:""}
+      ${sugTxt?`<div class="exsug">${sugTxt}</div>`:""}
       ${ex.sets.length?`<div class="setlist">${ex.sets.map((s,si)=>
         `<div class="setrow2">
           <span class="setnum2">Satz ${si+1}</span>
@@ -411,27 +456,145 @@ Object.keys(tabs).forEach(t=>{
   };
 });
 
-/* ---------- Einmaliges Seeding (03.11.2026) ---------- */
-const SEED_DATE="2026-11-03";
-const SEED_EX=[
-  {name:"Bankdrücken",sets:[{w:70,r:"7"}]},
-  {name:"Schulterdrücken",sets:[{w:55,r:"10"}]},
-  {name:"Seitheben Maschine",sets:[{w:70,r:"9-10"}]},
-  {name:"Butterfly",sets:[{w:70,r:"12"},{w:70,r:"10"}]},
-  {name:"Optimale Trizepsübung",sets:[{w:35,r:"13"},{w:35,r:"13"},{w:35,r:"13"}]},
-  {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"10-11"}]}
-];
+/* ---------- Einmaliger Import des bisherigen Trainingsverlaufs ---------- */
+// Gleichbedeutende Übungen über die Zeit vereinheitlicht (z.B. "T-Bar-Rudern" /
+// "Brustgestütztes Rudern" -> "Breites brustgestütztes Rudern", gleiche Maschine).
+const SEED_IMPORT={
+  "2026-09-14":[
+    {name:"Latzug Maschine",sets:[{w:80,r:"8"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:40,r:"9"}]}
+  ],
+  "2026-09-21":[
+    {name:"Schrägbankdrücken",sets:[{w:55,r:"6"},{w:55,r:"8"},{w:55,r:"7"}]},
+    {name:"Schulterdrücken",sets:[{w:60,r:"5"},{w:50,r:"8"},{w:50,r:"8"}]},
+    {name:"Butterfly",sets:[{w:60,r:"8"},{w:50,r:"10"},{w:45,r:"5"}]},
+    {name:"Trizepsdrücken über Kopf",sets:[{w:40,r:"5"},{w:30,r:"11"}]},
+    {name:"Seitheben",sets:[{w:15,r:"14"},{w:15,r:"13"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"10-11"},{w:25,r:"10-11"}]}
+  ],
+  "2026-09-22":[
+    {name:"Latzug Maschine",sets:[{w:80,r:"11"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:50,r:"10"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:55,r:"7"},{w:45,r:"11"}]},
+    {name:"Preacher Curls",sets:[{w:45,r:"10"}]},
+    {name:"Hammer Curls",sets:[{w:12.5,r:"12"}]}
+  ],
+  "2026-09-28":[
+    {name:"Latzug Maschine",sets:[{w:85,r:"12"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:80,r:"12"}]}
+  ],
+  "2026-09-29":[
+    {name:"Schrägbankdrücken",sets:[{w:50,r:"8"}]},
+    {name:"Butterfly",sets:[{w:65,r:"10"}]},
+    {name:"Schulterdrücken",sets:[{w:55,r:"5"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"10"}]}
+  ],
+  "2026-10-06":[
+    {name:"Butterfly",sets:[{w:60,r:"12"}]},
+    {name:"Schulterdrücken",sets:[{w:50,r:"9"}]}
+  ],
+  "2026-10-11":[
+    {name:"Latzug Maschine",sets:[{w:87,r:"8"},{w:87,r:"5"}]},
+    {name:"Schrägbank-Rudern KH",sets:[{w:15,r:"10"},{w:15,r:"10"},{w:17.5,r:"10"},{w:17.5,r:"9"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:36,r:"10"}]},
+    {name:"Bayesian Curls",sets:[{w:30,r:"9"}]},
+    {name:"Preacher Curls",sets:[{w:20,r:"7"}]}
+  ],
+  "2026-10-12":[
+    {name:"Beinheben",sets:[{w:null,r:"7-9"},{w:null,r:"7-9"}]},
+    {name:"Kabel-Crunch",sets:[{w:null,r:"9-12"},{w:null,r:"9-12"}]},
+    {name:"Butterfly",sets:[{w:65,r:"12"},{w:70,r:"8"}]},
+    {name:"Schrägbankdrücken",sets:[{w:50,r:"10"}]},
+    {name:"Seitheben einarmig Kabel",sets:[{w:15,r:"12"},{w:15,r:"12"},{w:15,r:"12"}]},
+    {name:"Schulterdrücken",sets:[{w:50,r:"10-11"},{w:55,r:"6-7"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"8-9"}]},
+    {name:"Trizepsdrücken über Kopf",sets:[{w:30,r:"8"}]}
+  ],
+  "2026-10-13":[
+    {name:"Beinstrecker",sets:[{w:65,r:"9"},{w:65,r:"9"},{w:65,r:"9"}]}
+  ],
+  "2026-10-15":[
+    {name:"Latzug Maschine",sets:[{w:78,r:"12"},{w:78,r:"12"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:70,r:"10"},{w:70,r:"12"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:36,r:"11"},{w:36,r:"11"}]},
+    {name:"Reverse Butterfly beidarmig",sets:[{w:51,r:"7"},{w:36,r:"3"}]},
+    {name:"Bayesian Curls",sets:[{w:30,r:"10"},{w:30,r:"9"},{w:30,r:"9"}]},
+    {name:"Hammer Curls",sets:[{w:15,r:"6-8"},{w:15,r:"6-7"}]}
+  ],
+  "2026-10-19":[
+    {name:"Bankdrücken",sets:[{w:70,r:"6"}]},
+    {name:"Dips",sets:[{w:null,r:"11"}]},
+    {name:"Trizepsmaschine",sets:[{w:35,r:"10"},{w:35,r:"10"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"8"}]},
+    {name:"Seitheben",sets:[{w:15,r:"17"},{w:20,r:"8-10"}]}
+  ],
+  "2026-10-20":[
+    {name:"Latzug Maschine",sets:[{w:90,r:"8"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:85,r:"9"},{w:85,r:"8"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:45,r:"13"}]},
+    {name:"Preacher Curls",sets:[{w:45,r:"11"},{w:45,r:"10"}]},
+    {name:"Hammer Curls",sets:[{w:14,r:"9"}]}
+  ],
+  "2026-10-26":[
+    {name:"Latzug Maschine",sets:[{w:90,r:"9-10"},{w:90,r:"9"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:85,r:"10-11"},{w:85,r:"9"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:45,r:"15"}]},
+    {name:"Hammer Curls",sets:[{w:15,r:"14"},{w:17.5,r:"8"}]}
+  ],
+  "2026-10-27":[
+    {name:"Butterfly",sets:[{w:70,r:"11"},{w:70,r:"9-10"}]},
+    {name:"Bankdrücken",sets:[{w:70,r:"5"}]},
+    {name:"Seitheben Maschine",sets:[{w:70,r:"8"}]},
+    {name:"Schulterdrücken",sets:[{w:55,r:"9"}]},
+    {name:"Trizepsmaschine",sets:[{w:35,r:"11"},{w:35,r:"12-13"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"9-10"}]}
+  ],
+  "2026-10-28":[
+    {name:"Latzug Maschine",sets:[{w:90,r:"10"},{w:90,r:"11"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:55,r:"7"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:50,r:"9-10"}]},
+    {name:"Preacher Curls einarmig KH",sets:[{w:12,r:"12-13"},{w:14,r:"8"}]},
+    {name:"Hammer Curls",sets:[{w:17.5,r:"9"}]}
+  ],
+  "2026-11-03":[
+    {name:"Bankdrücken",sets:[{w:70,r:"8"},{w:70,r:"7"},{w:70,r:"5"}]},
+    {name:"Butterfly",sets:[{w:70,r:"6-7"},{w:60,r:"8"}]},
+    {name:"Schulterdrücken",sets:[{w:55,r:"8"},{w:55,r:"11"}]},
+    {name:"Seitheben Maschine",sets:[{w:70,r:"9"},{w:60,r:"6-5"}]},
+    {name:"Trizepsmaschine",sets:[{w:35,r:"11"},{w:35,r:"9"},{w:35,r:"8"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:25,r:"6"},{w:20,r:"8"}]}
+  ],
+  "2026-11-05":[
+    {name:"Latzug Maschine",sets:[{w:113,r:"8-9"},{w:113,r:"8-9"},{w:113,r:"8-9"}]},
+    {name:"Breites brustgestütztes Rudern",sets:[{w:87,r:"7-8"},{w:87,r:"7-8"}]},
+    {name:"Bayesian Curls",sets:[{w:30,r:"7-8"}]},
+    {name:"Preacher Curls",sets:[{w:40,r:"6-7"}]},
+    {name:"Hammer Curls Kabel",sets:[{w:69,r:"5-6"},{w:69,r:"5-6"}]},
+    {name:"Reverse Butterfly einarmig",sets:[{w:42,r:"7"},{w:42,r:"9"}]}
+  ],
+  "2026-11-06":[
+    {name:"Bankdrücken",sets:[{w:70,r:"8"},{w:70,r:"8"}]},
+    {name:"Butterfly",sets:[{w:70,r:"7"},{w:70,r:"5"},{w:65,r:"6"}]},
+    {name:"Schulterdrücken",sets:[{w:55,r:"11"},{w:60,r:"6"}]},
+    {name:"Seitheben Maschine",sets:[{w:70,r:"8"},{w:60,r:"10"}]},
+    {name:"Trizepsmaschine",sets:[{w:40,r:"8"}]},
+    {name:"Trizeps-Pushdown einarmig",sets:[{w:20,r:"12"}]}
+  ],
+  "2026-11-08":[
+    {name:"Bankdrück-Maschine",sets:[{w:96,r:"7"},{w:96,r:"7"}]}
+  ]
+};
 
 /* ---------- Boot ---------- */
 async function boot(){
   S.log=(await sget("v3-log"))||{};
-  const seeded=await sget("v3-seed-20261103");
-  if(!seeded){
-    if(!S.log[SEED_DATE]||!S.log[SEED_DATE].length){
-      S.log[SEED_DATE]=SEED_EX.map(e=>({name:e.name,sets:e.sets.map(s=>({w:s.w,r:s.r}))}));
-      await sset("v3-log",S.log);
-    }
-    await sset("v3-seed-20261103",true);
+  const imported=await sget("v3-seed-import1");
+  if(!imported){
+    Object.keys(SEED_IMPORT).forEach(d=>{
+      S.log[d]=SEED_IMPORT[d].map(e=>({name:e.name,sets:e.sets.map(s=>({w:s.w,r:s.r}))}));
+    });
+    await sset("v3-log",S.log);
+    await sset("v3-seed-import1",true);
   }
   curDate=todayKey();curMonth=todayKey().slice(0,7);
   renderLog();
